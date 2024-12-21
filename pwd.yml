@@ -10,7 +10,7 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./sites
+        source: ./t-money
         target: /home/frappe/accounting
     environment:
       DB_HOST: db
@@ -47,7 +47,7 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./sites
+        source: ./t-money
         target: /home/frappe/accounting
 
   create-site:
@@ -61,7 +61,7 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./sites
+        source: ./t-money
         target: /home/frappe/accounting
     entrypoint:
       - bash
@@ -134,7 +134,7 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./sites
+        source: ./t-money
         target: /home/frappe/accounting
     ports:
       - "8080:8080"
@@ -155,7 +155,7 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./sites
+        source: ./t-money
         target: /home/frappe/accounting
 
   queue-short:
@@ -174,7 +174,7 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./sites
+        source: ./t-money
         target: /home/frappe/accounting
 
   redis-queue:
@@ -211,7 +211,7 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./sites
+        source: ./t-money
         target: /home/frappe/accounting
 
   websocket:
@@ -228,7 +228,7 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./sites
+        source: ./t-money
         target: /home/frappe/accounting
 
 volumes:
