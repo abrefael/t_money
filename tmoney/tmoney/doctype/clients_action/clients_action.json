@@ -1,0 +1,45 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "allow_import": 1,
+ "autoname": "format:{clients_actions}",
+ "creation": "2024-05-11 16:59:21.979879",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "clients_actions"
+ ],
+ "fields": [
+  {
+   "fieldname": "clients_actions",
+   "fieldtype": "Data",
+   "label": "\u05e4\u05e2\u05d5\u05dc\u05d5\u05ea"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-05-11 17:07:29.613320",
+ "modified_by": "Administrator",
+ "module": "\u05d4\u05e0\u05d4\u05d7\u05e9",
+ "name": "Clients Action",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
