@@ -9,6 +9,7 @@ mit
 
 For docker run:
 ```
+mkdir t-money
 docker build --build-arg CACHEBUST=$(date +%s) --tag=tmoney/accounting .
 docker compose -f pwd.yml up -d
 ```
