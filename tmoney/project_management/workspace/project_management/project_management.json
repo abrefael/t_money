@@ -1,0 +1,35 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"PxA56oWmZN\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Project Management</span>\",\"col\":12}},{\"id\":\"qCr9VB4ciz\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Project_Management\",\"col\":12}}]",
+ "creation": "2024-09-22 14:26:36.120116",
+ "custom_blocks": [
+  {
+   "custom_block_name": "Project_Management",
+   "label": "Project_Management"
+  }
+ ],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "edit-fill",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Private Practice",
+ "links": [],
+ "modified": "2024-09-22 14:57:03.673967",
+ "modified_by": "Administrator",
+ "module": "Project Management",
+ "name": "Project Management",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 2.0,
+ "shortcuts": [
+ ],
+ "title": "Project Management"
+}

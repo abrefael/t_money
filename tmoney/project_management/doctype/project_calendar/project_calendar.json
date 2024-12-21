@@ -1,0 +1,118 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-09-22 12:00:45.464988",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "go_back",
+  "column_break_I",
+  "clients",
+  "section_break_I",
+  "start",
+  "start_timer",
+  "column_break_zzpd",
+  "end",
+  "end_timer",
+  "section_break_II",
+  "item",
+  "column_break_II",
+  "project"
+ ],
+ "fields": [
+  {
+   "fieldname": "start_timer",
+   "fieldtype": "Button",
+   "label": "\u05d4\u05ea\u05d7\u05dc\u05d4"
+  },
+  {
+   "fieldname": "section_break_I",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_II",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "go_back",
+   "fieldtype": "Button",
+   "label": "\u05d7\u05d6\u05e8\u05d4 \u05dc\u05dc\u05d5\u05d7 \u05e9\u05e0\u05d4"
+  },
+  {
+   "fieldname": "end_timer",
+   "fieldtype": "Button",
+   "label": "\u05e1\u05d9\u05d5\u05dd"
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "\u05e4\u05e2\u05d9\u05dc\u05d5\u05ea",
+   "options": "Item"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "\u05e9\u05dd \u05e4\u05e8\u05d5\u05d9\u05d9\u05e7\u05d8",
+   "options": "Projects"
+  },
+  {
+   "fieldname": "start",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Session start",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_zzpd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_I",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_II",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "end",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Session end",
+   "reqd": 1
+  },
+  {
+   "fieldname": "clients",
+   "fieldtype": "Link",
+   "label": "\u05dc\u05e7\u05d5\u05d7",
+   "options": "Clients",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-09-22 14:17:54.131103",
+ "modified_by": "Administrator",
+ "module": "Project Management",
+ "name": "Project Calendar",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
