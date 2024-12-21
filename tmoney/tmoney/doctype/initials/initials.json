@@ -1,0 +1,40 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-08-12 09:03:37.420788",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "signature"
+ ],
+ "fields": [
+  {
+   "fieldname": "initials",
+   "fieldtype": "Data",
+   "label": "\u05e8\u05d0\u05e9\u05d9 \u05ea\u05d9\u05d1\u05d5\u05ea \u05e9\u05dc \u05d4\u05e9\u05dd \u05e9\u05dc\u05da (\u05d1\u05d0\u05e0\u05d2\u05dc\u05d9\u05ea)"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-08-12 09:04:00.156195",
+ "modified_by": "Administrator",
+ "module": "\u05d4\u05e0\u05d4\u05d7\u05e9",
+ "name": "Initials",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
