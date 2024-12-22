@@ -191,7 +191,7 @@
  "links": [],
  "modified": "2024-06-04 08:23:43.998658",
  "modified_by": "Administrator",
- "module": "\u05d4\u05e0\u05d4\u05d7\u05e9",
+ "module": "tmoney",
  "name": "Receipt",
  "naming_rule": "Expression",
  "owner": "Administrator",
