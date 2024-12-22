@@ -39,9 +39,6 @@ frappe.ui.form.on('Receipt', {
 
 frappe.ui.form.on('Receipt', {
 	load_lst(frm) {
-		if (frm.is_new()){
-			frm.save();
-		}
 		var inv_lst = frm.doc.inv_lst;
 		var quot_lst = frm.doc.quot_lst;
 		var invs_n_quots=[];
@@ -112,7 +109,7 @@ frappe.ui.form.on('Receipt', {
 					addChild.quant = src_lst[i].quant;
 					frm.refresh_field('item_list');
 				}
-				calculate_sum(frm);
+				frm.save();
 			});
 		}
 	}
