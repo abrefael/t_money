@@ -136,7 +136,7 @@
  "links": [],
  "modified": "2024-05-18 12:48:14.848868",
  "modified_by": "Administrator",
- "module": T-Money",
+ "module":" T-Money",
  "name": "Assets",
  "naming_rule": "By fieldname",
  "owner": "Administrator",

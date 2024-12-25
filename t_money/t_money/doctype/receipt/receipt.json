@@ -191,7 +191,7 @@
  "links": [],
  "modified": "2024-06-04 08:23:43.998658",
  "modified_by": "Administrator",
- "module": T-Money",
+ "module":" T-Money",
  "name": "Receipt",
  "naming_rule": "Expression",
  "owner": "Administrator",
