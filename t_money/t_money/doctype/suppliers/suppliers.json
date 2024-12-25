@@ -1,0 +1,96 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "allow_import": 1,
+ "autoname": "format:{supp_name}",
+ "creation": "2024-05-11 17:12:42.577691",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "stat",
+  "supp_name",
+  "id_num",
+  "email",
+  "phone",
+  "reg_date",
+  "etras",
+  "supp_act"
+ ],
+ "fields": [
+  {
+   "default": "\u05e4\u05e2\u05d9\u05dc",
+   "fieldname": "stat",
+   "fieldtype": "Select",
+   "label": "\u05e1\u05d8\u05d8\u05d5\u05e1",
+   "options": "\u05e4\u05e2\u05d9\u05dc\n\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc"
+  },
+  {
+   "fieldname": "supp_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "\u05e9\u05dd \u05e1\u05e4\u05e7",
+   "reqd": 1
+  },
+  {
+   "fieldname": "id_num",
+   "fieldtype": "Data",
+   "label": "\u05de\u05e1\u05e4\u05e8 \u05de\u05d6\u05d4\u05d4",
+   "options": "Phone",
+   "reqd": 1
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "\u05db\u05ea\u05d5\u05d1\u05ea \u05de\u05d9\u05d9\u05dc",
+   "options": "Email"
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "\u05d8\u05dc\u05e4\u05d5\u05df",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "reg_date",
+   "fieldtype": "Date",
+   "label": "\u05ea\u05d0\u05e8\u05d9\u05da \u05e8\u05d9\u05e9\u05d5\u05dd"
+  },
+  {
+   "fieldname": "etras",
+   "fieldtype": "Float",
+   "label": "\u05d9\u05d9\u05ea\u05e8\u05d5\u05ea",
+   "precision": "2"
+  },
+  {
+   "fieldname": "supp_act",
+   "fieldtype": "Link",
+   "label": "\u05e4\u05e2\u05d5\u05dc\u05d5\u05ea",
+   "options": "Suppliers action"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-05-11 17:18:29.025200",
+ "modified_by": "Administrator",
+ "module": T-Money",
+ "name": "Suppliers",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

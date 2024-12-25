@@ -1,0 +1,62 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "field:asset_type",
+ "creation": "2024-08-08 09:18:50.887105",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "asset_type",
+  "percent",
+  "additional_information"
+ ],
+ "fields": [
+  {
+   "fieldname": "asset_type",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "\u05e1\u05d5\u05d2 \u05e4\u05e8\u05d9\u05d8",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "percent",
+   "fieldtype": "Percent",
+   "in_list_view": 1,
+   "label": "\u05d0\u05d7\u05d5\u05d6 \u05e4\u05d7\u05ea \u05e9\u05e0\u05ea\u05d9",
+   "precision": "0",
+   "reqd": 1
+  },
+  {
+   "fieldname": "additional_information",
+   "fieldtype": "Button",
+   "label": "\u05dc\u05de\u05d9\u05d3\u05e2 \u05e0\u05d5\u05e1\u05e3"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-08-08 09:22:35.512241",
+ "modified_by": "Administrator",
+ "module": T-Money",
+ "name": "Asset Type List",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

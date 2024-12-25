@@ -1,0 +1,118 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "allow_import": 1,
+ "autoname": "format:I{#####}",
+ "creation": "2024-05-16 11:12:17.116431",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "create_invoice",
+  "client",
+  "item_list",
+  "section_break_I",
+  "calc_sum",
+  "discount",
+  "column_break_I",
+  "sum",
+  "discounted_sum",
+  "section_break_II",
+  "h_p",
+  "notes"
+ ],
+ "fields": [
+  {
+   "default": "0.00",
+   "fieldname": "sum",
+   "fieldtype": "Float",
+   "label": "\u05e1\u05db\u05d5\u05dd (\u05dc\u05dc\u05d0 \u05d4\u05e0\u05d7\u05d4)",
+   "precision": "2"
+  },
+  {
+   "default": "0.00",
+   "fieldname": "discounted_sum",
+   "fieldtype": "Float",
+   "label": "\u05e1\u05db\u05d5\u05dd \u05dc\u05d0\u05d7\u05e8 \u05d4\u05e0\u05d7\u05d4",
+   "precision": "2"
+  },
+  {
+   "fieldname": "calc_sum",
+   "fieldtype": "Button",
+   "label": "\u05d7\u05e9\u05d1 \u05e1\u05db\u05d5\u05dd"
+  },
+  {
+   "fieldname": "column_break_I",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_I",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_II",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "client",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "\u05e9\u05dd \u05dc\u05e7\u05d5\u05d7",
+   "options": "Clients",
+   "reqd": 1
+  },
+  {
+   "fieldname": "item_list",
+   "fieldtype": "Table",
+   "label": "\u05e4\u05e8\u05d9\u05d8\u05d9\u05dd",
+   "options": "Item Child List"
+  },
+  {
+   "default": "0.00",
+   "fieldname": "discount",
+   "fieldtype": "Float",
+   "label": "\u05d4\u05e0\u05d7\u05d4",
+   "precision": "2"
+  },
+  {
+   "fetch_from": "client.id_num",
+   "fieldname": "h_p",
+   "fieldtype": "Data",
+   "hidden": 1
+  },
+  {
+   "fieldname": "create_invoice",
+   "fieldtype": "Button",
+   "label": "\u05d4\u05e4\u05e7\u05ea \u05d7\u05e9\u05d1\u05d5\u05e0\u05d9\u05ea \u05e2\u05e1\u05e7\u05d4"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text",
+   "label": "\u05d4\u05e2\u05e8\u05d5\u05ea"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-05-18 13:23:30.335049",
+ "modified_by": "Administrator",
+ "module": T-Money",
+ "name": "Invoice",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

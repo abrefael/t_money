@@ -1,0 +1,67 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-08-12 09:03:37.420788",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "sign_img",
+  "op_num",
+  "phone_num",
+  "email_add",
+  "signature"
+ ],
+ "fields": [
+  {
+   "fieldname": "signature",
+   "fieldtype": "Text",
+   "label": "\u05d7\u05ea\u05d9\u05de\u05d4 \u05e2\u05dc \u05de\u05e1\u05de\u05db\u05d9\u05dd"
+  },
+  {
+   "fieldname": "sign_img",
+   "fieldtype": "Attach Image",
+   "label": "\u05d7\u05ea\u05d9\u05de\u05d4 (\u05ea\u05de\u05d5\u05e0\u05d4)"
+  },
+  {
+   "fieldname": "op_num",
+   "fieldtype": "Data",
+   "label": "\u05de\u05e1\u05e4\u05e8 \u05e2\u05d5\u05e1\u05e7 \u05e4\u05d8\u05d5\u05e8",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "phone_num",
+   "fieldtype": "Data",
+   "label": "\u05d8\u05dc\u05e4\u05d5\u05df",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "email_add",
+   "fieldtype": "Data",
+   "label": "\u05d3\u05d5\u05d0\"\u05dc",
+   "options": "Email"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-08-12 09:04:00.156195",
+ "modified_by": "Administrator",
+ "module": T-Money",
+ "name": "Signature",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
