@@ -1,9 +1,6 @@
 services:
   backend:
     image: tmoney/accounting
-    build:
-        context: .
-        args: CACHEBUST=$(date +%s)
     networks:
       - frappe_network
     deploy:
@@ -133,7 +130,6 @@ services:
       UPSTREAM_REAL_IP_RECURSIVE: "off"
       PROXY_READ_TIMEOUT: 120
       CLIENT_MAX_BODY_SIZE: 50m
-      PORT: "8080"
     volumes:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
@@ -141,7 +137,7 @@ services:
         source: ./output
         target: /home/frappe/accounting
     ports:
-      - "$PORT:8080"
+      - "8080:8080"
 
   queue-long:
     image: tmoney/accounting
