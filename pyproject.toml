@@ -1,5 +1,5 @@
 [project]
-name = "small_business_accounting"
+name = "T-Money"
 authors = [
     { name = "Alon Ben Refael", email = "alonbr@proton.me"}
 ]

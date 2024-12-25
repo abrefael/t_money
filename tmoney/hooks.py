@@ -1,14 +1,14 @@
-app_name = "small_business_accounting"
-app_title = "Small Business Accounting"
+app_name = "tmoney"
+app_title = "T-Money"
 app_publisher = "Alon Ben Refael"
 app_description = "Accounting for people with small business (VAT free businesses in Israel)"
 app_email = "alonbr@proton.me"
 app_license = "mit"
-app_logo_url = "/assets/small_business_accounting/images/T-money-logo.svg"
+app_logo_url = "/assets/tmoney/images/T-money-logo.svg"
 
 website_context = {
-	"favicon": "/assets/small_business_accounting/images/T-money-logo.svg",
-	"splash_image": "/assets/small_business_accounting/images/T-money-logo.svg",
+	"favicon": "/assets/tmoney/images/T-money-logo.svg",
+	"splash_image": "/assets/tmoney/images/T-money-logo.svg",
 }
 # required_apps = []
 
@@ -16,23 +16,23 @@ website_context = {
 # ------------------
 
 # include js, css files in header of desk.html
-app_include_css = "/assets/small_business_accounting/css/small_business_accounting.css"
-app_include_js = "/assets/small_business_accounting/js/small_business_accounting.js"
+app_include_css = "/assets/tmoney/css/tmoney.css"
+app_include_js = "/assets/tmoney/js/tmoney.js"
 # required_apps = []
 
 # Includes in <head>
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/small_business_accounting/css/small_business_accounting.css"
-# app_include_js = "/assets/small_business_accounting/js/small_business_accounting.js"
+# app_include_css = "/assets/tmoney/css/tmoney.css"
+# app_include_js = "/assets/tmoney/js/tmoney.js"
 
 # include js, css files in header of web template
-# web_include_css = "/assets/small_business_accounting/css/small_business_accounting.css"
-# web_include_js = "/assets/small_business_accounting/js/small_business_accounting.js"
+# web_include_css = "/assets/tmoney/css/tmoney.css"
+# web_include_js = "/assets/tmoney/js/tmoney.js"
 
 # include custom scss in every website theme (without file extension ".scss")
-# website_theme_scss = "small_business_accounting/public/scss/website"
+# website_theme_scss = "tmoney/public/scss/website"
 
 # include js, css files in header of web form
 # webform_include_js = {"doctype": "public/js/doctype.js"}
@@ -50,7 +50,7 @@ app_include_js = "/assets/small_business_accounting/js/small_business_accounting
 # Svg Icons
 # ------------------
 # include app icons in desk
-# app_include_icons = "small_business_accounting/public/icons.svg"
+# app_include_icons = "tmoney/public/icons.svg"
 
 # Home Pages
 # ----------
@@ -74,44 +74,44 @@ app_include_js = "/assets/small_business_accounting/js/small_business_accounting
 
 # add methods and filters to jinja environment
 # jinja = {
-# 	"methods": "small_business_accounting.utils.jinja_methods",
-# 	"filters": "small_business_accounting.utils.jinja_filters"
+# 	"methods": "tmoney.utils.jinja_methods",
+# 	"filters": "tmoney.utils.jinja_filters"
 # }
 
 # Installation
 # ------------
 
-# before_install = "small_business_accounting.install.before_install"
-after_install = "small_business_accounting.install.after_install"
-after_migrate = "small_business_accounting.install.after_migrate"
+# before_install = "tmoney.install.before_install"
+after_install = "tmoney.install.after_install"
+after_migrate = "tmoney.install.after_migrate"
 
 # Uninstallation
 # ------------
 
-# before_uninstall = "small_business_accounting.uninstall.before_uninstall"
-# after_uninstall = "small_business_accounting.uninstall.after_uninstall"
+# before_uninstall = "tmoney.uninstall.before_uninstall"
+# after_uninstall = "tmoney.uninstall.after_uninstall"
 
 # Integration Setup
 # ------------------
 # To set up dependencies/integrations with other apps
 # Name of the app being installed is passed as an argument
 
-# before_app_install = "small_business_accounting.utils.before_app_install"
-# after_app_install = "small_business_accounting.utils.after_app_install"
+# before_app_install = "tmoney.utils.before_app_install"
+# after_app_install = "tmoney.utils.after_app_install"
 
 # Integration Cleanup
 # -------------------
 # To clean up dependencies/integrations with other apps
 # Name of the app being uninstalled is passed as an argument
 
-# before_app_uninstall = "small_business_accounting.utils.before_app_uninstall"
-# after_app_uninstall = "small_business_accounting.utils.after_app_uninstall"
+# before_app_uninstall = "tmoney.utils.before_app_uninstall"
+# after_app_uninstall = "tmoney.utils.after_app_uninstall"
 
 # Desk Notifications
 # ------------------
 # See frappe.core.notifications.get_notification_config
 
-# notification_config = "small_business_accounting.notifications.get_notification_config"
+# notification_config = "tmoney.notifications.get_notification_config"
 
 # Permissions
 # -----------
@@ -150,39 +150,39 @@ after_migrate = "small_business_accounting.install.after_migrate"
 
 # scheduler_events = {
 # 	"all": [
-# 		"small_business_accounting.tasks.all"
+# 		"tmoney.tasks.all"
 # 	],
 # 	"daily": [
-# 		"small_business_accounting.tasks.daily"
+# 		"tmoney.tasks.daily"
 # 	],
 # 	"hourly": [
-# 		"small_business_accounting.tasks.hourly"
+# 		"tmoney.tasks.hourly"
 # 	],
 # 	"weekly": [
-# 		"small_business_accounting.tasks.weekly"
+# 		"tmoney.tasks.weekly"
 # 	],
 # 	"monthly": [
-# 		"small_business_accounting.tasks.monthly"
+# 		"tmoney.tasks.monthly"
 # 	],
 # }
 
 # Testing
 # -------
 
-# before_tests = "small_business_accounting.install.before_tests"
+# before_tests = "tmoney.install.before_tests"
 
 # Overriding Methods
 # ------------------------------
 #
 # override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "small_business_accounting.event.get_events"
+# 	"frappe.desk.doctype.event.event.get_events": "tmoney.event.get_events"
 # }
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps
 # override_doctype_dashboards = {
-# 	"Task": "small_business_accounting.task.get_dashboard_data"
+# 	"Task": "tmoney.task.get_dashboard_data"
 # }
 
 # exempt linked doctypes from being automatically cancelled
@@ -196,13 +196,13 @@ after_migrate = "small_business_accounting.install.after_migrate"
 
 # Request Events
 # ----------------
-# before_request = ["small_business_accounting.utils.before_request"]
-# after_request = ["small_business_accounting.utils.after_request"]
+# before_request = ["tmoney.utils.before_request"]
+# after_request = ["tmoney.utils.after_request"]
 
 # Job Events
 # ----------
-# before_job = ["small_business_accounting.utils.before_job"]
-# after_job = ["small_business_accounting.utils.after_job"]
+# before_job = ["tmoney.utils.before_job"]
+# after_job = ["tmoney.utils.after_job"]
 
 # User Data Protection
 # --------------------
@@ -232,7 +232,7 @@ after_migrate = "small_business_accounting.install.after_migrate"
 # --------------------------------
 
 # auth_hooks = [
-# 	"small_business_accounting.auth.validate"
+# 	"tmoney.auth.validate"
 # ]
 
 # Automatically update python controller files with type annotations for this app.

@@ -1,4 +1,4 @@
-src_fldr = '../apps/small_business_accounting/apps'
+src_fldr = '../apps/tmoney/apps'
 dest_fldr = '/home/frappe/apps'
 csv_file = '/asset_type_list.csv'
 
