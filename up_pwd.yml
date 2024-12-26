@@ -1,6 +1,6 @@
 services:
   backend:
-    image: tmoney/accounting:2.0
+    image: tmoney/accounting
     networks:
       - frappe_network
     deploy:
@@ -10,7 +10,7 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./t-money
+        source: ./output
         target: /home/frappe/accounting
     environment:
       DB_HOST: db
@@ -19,7 +19,7 @@ services:
       MARIADB_ROOT_PASSWORD: admin
 
   configurator:
-    image: tmoney/accounting:2.0
+    image: tmoney/accounting
     networks:
       - frappe_network
     deploy:
@@ -47,11 +47,11 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./t-money
+        source: ./output
         target: /home/frappe/accounting
 
   create-site:
-    image: tmoney/accounting:2.0
+    image: tmoney/accounting
     networks:
       - frappe_network
     deploy:
@@ -61,7 +61,7 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./t-money
+        source: ./output
         target: /home/frappe/accounting
     entrypoint:
       - bash
@@ -109,7 +109,7 @@ services:
       - db-data:/var/lib/mysql
 
   frontend:
-    image: tmoney/accounting:2.0
+    image: tmoney/accounting
     networks:
       - frappe_network
     depends_on:
@@ -132,13 +132,13 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./t-money
+        source: ./output
         target: /home/frappe/accounting
     ports:
       - "8080:8080"
 
   queue-long:
-    image: tmoney/accounting:2.0
+    image: tmoney/accounting
     networks:
       - frappe_network
     deploy:
@@ -153,11 +153,11 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./t-money
+        source: ./output
         target: /home/frappe/accounting
 
   queue-short:
-    image: tmoney/accounting:2.0
+    image: tmoney/accounting
     networks:
       - frappe_network
     deploy:
@@ -172,7 +172,7 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./t-money
+        source: ./output
         target: /home/frappe/accounting
 
   redis-queue:
@@ -196,7 +196,7 @@ services:
       - redis-cache-data:/data
 
   scheduler:
-    image: tmoney/accounting:2.0
+    image: tmoney/accounting
     networks:
       - frappe_network
     deploy:
@@ -209,11 +209,11 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./t-money
+        source: ./output
         target: /home/frappe/accounting
 
   websocket:
-    image: tmoney/accounting:2.0
+    image: tmoney/accounting
     networks:
       - frappe_network
     deploy:
@@ -226,7 +226,7 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./t-money
+        source: ./output
         target: /home/frappe/accounting
 
 volumes:

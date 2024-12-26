@@ -10,7 +10,7 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./output
+        source: ./t-money
         target: /home/frappe/accounting
     environment:
       DB_HOST: db
@@ -47,7 +47,7 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./output
+        source: ./t-money
         target: /home/frappe/accounting
 
   create-site:
@@ -61,7 +61,7 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./output
+        source: ./t-money
         target: /home/frappe/accounting
     entrypoint:
       - bash
@@ -84,8 +84,7 @@ services:
           fi
         done;
         echo "sites/common_site_config.json found";
-        bench new-site --mariadb-user-host-login-scope='%' --admin-password=admin --db-root-username=root --db-root-password=admin --install-app t_money --set-default frontend;
-        ln -s /home/frappe/accounting /home/frappe/frappe-bench/sites/frontend/public/files/accounting;
+        bench migrate;
 
   db:
     image: mariadb:10.6
@@ -133,10 +132,10 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./output
+        source: ./t-money
         target: /home/frappe/accounting
     ports:
-      - port_num
+      - "8080:8080"
 
   queue-long:
     image: tmoney/accounting
@@ -154,7 +153,7 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./output
+        source: ./t-money
         target: /home/frappe/accounting
 
   queue-short:
@@ -173,7 +172,7 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./output
+        source: ./t-money
         target: /home/frappe/accounting
 
   redis-queue:
@@ -210,7 +209,7 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./output
+        source: ./t-money
         target: /home/frappe/accounting
 
   websocket:
@@ -227,7 +226,7 @@ services:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
       - type: bind
-        source: ./output
+        source: ./t-money
         target: /home/frappe/accounting
 
 volumes:

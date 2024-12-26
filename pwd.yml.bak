@@ -86,6 +86,7 @@ services:
         echo "sites/common_site_config.json found";
         bench new-site --mariadb-user-host-login-scope='%' --admin-password=admin --db-root-username=root --db-root-password=admin --install-app t_money --set-default frontend;
         ln -s /home/frappe/accounting /home/frappe/frappe-bench/sites/frontend/public/files/accounting;
+        echo "yeah!;"
 
   db:
     image: mariadb:10.6
@@ -136,7 +137,7 @@ services:
         source: ./output
         target: /home/frappe/accounting
     ports:
-      - port_num
+      - "8080:8080"
 
   queue-long:
     image: tmoney/accounting
