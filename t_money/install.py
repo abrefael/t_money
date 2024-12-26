@@ -1,13 +1,9 @@
-src_fldr = '../apps/t_money/apps'
-dest_fldr = '/home/frappe/apps'
-csv_file = '/asset_type_list.csv'
+csv_file = '/home/frappe/frappe-bench/apps/t_money/apps/asset_type_list.csv'
 
 import frappe
 import shutil, os, csv
 
 def after_install():
-	from getpass import getpass
-	import subprocess
 	frappe.db.sql("""
 	INSERT
 	INTO `tabCustom HTML Block`
@@ -23,8 +19,7 @@ def after_install():
 		script='',
 		style='';
 	""")
-	os.system("cp -rf '" + src_fldr + "' '" + dest_fldr + "'")
-	file = open(dest_fldr + csv_file,'r')
+	file = open(csv_file, 'r')
 	reader = csv.reader(file, delimiter=',')
 	for row in reader:
 		doc = frappe.new_doc('Asset Type List')
@@ -37,23 +32,20 @@ def after_install():
 
 
 def after_migrate():
-	import filecmp
-	if not filecmp.cmp(src_fldr + csv_file, dest_fldr + csv_file):
-		os.system("cp -rf '" + src_fldr + csv_file + "' '" + dest_fldr + csv_file + "'")
-		file = open(dest_fldr + csv_file,'r')
-		reader = csv.reader(file, delimiter=',')
-		for row in reader:
-			type = row[0]
-			percent = float(row[1])
-			try:
-				doc = frappe.get_doc('Asset Type List', type)
-			except:
-				doc = frappe.new_doc('Asset Type List')
-				doc.name = type
-				doc.asset_type = type
+	file = open(csv_file, 'r')
+	reader = csv.reader(file, delimiter=',')
+	for row in reader:
+		type = row[0]
+		percent = float(row[1])
+		try:
+			doc = frappe.get_doc('Asset Type List', type)
+		except:
+			doc = frappe.new_doc('Asset Type List')
+			doc.name = type
+			doc.asset_type = type
+			doc.percent = percent
+			doc.insert()
+		else:
+			if not percent == doc.percent:
 				doc.percent = percent
-				doc.insert()
-			else:
-				if not percent == doc.percent:
-					doc.percent = percent
-					doc.save()
+				doc.save()
