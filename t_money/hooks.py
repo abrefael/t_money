@@ -82,8 +82,8 @@ app_include_js = "/assets/t_money/js/t_money.js"
 # ------------
 
 # before_install = "t_money.install.before_install"
-after_install = "t_money.install.after_install"
-after_migrate = "t_money.install.after_migrate"
+# after_install = "t_money.install.after_install"
+# after_migrate = "t_money.install.after_migrate"
 
 # Uninstallation
 # ------------
