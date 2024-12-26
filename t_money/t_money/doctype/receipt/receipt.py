@@ -52,10 +52,19 @@ def Create_Receipt(q_num, origin, objective, notes):
 		table.set_span((column - 4, row_number, column - 1, row_number), merge=True)
 		return row_number
 	TARGET = q_num + "(" + origin + ").odt"
-	document = Document("/home/frappe/frappe-bench/apps/small_business_accounting/apps/template.odt")
+	document = Document("assets/t_money/template.odt")
 	e = document.styles.root.get_elements('office:master-styles')[0].get_elements('style:master-page')[0].get_elements('style:header')[0]
-	e.children[0].replace('HEADER',frappe.utils.get_fullname())
-	table = e.children[1]
+	i=0
+	head_in_temp = e.children[i]
+	if not isinstance(head_in_temp,Paragraph):
+		i+= 1
+		head_in_temp = e.children[i]
+	head_in_temp.replace('HEADER',frappe.utils.get_fullname())
+	i += 1
+	if not isinstance(head_in_temp,Table):
+		i+= 1
+		head_in_temp = e.children[i]
+	table = head_in_temp
 	row = table.rows[0]
 	row.set_value('B',frappe.db.get_single_value('Signature','op_num'))
 	table.set_row(row.y, row)
@@ -65,6 +74,7 @@ def Create_Receipt(q_num, origin, objective, notes):
 	row = table.rows[2]
 	row.set_value('B',frappe.db.get_single_value('Signature','email_add'))
 	table.set_row(row.y, row)
+	del head_in_temp
 	del e
 	body = document.body
 	doc = frappe.get_doc('Receipt', q_num)
@@ -218,7 +228,7 @@ def cancel_receipt(q_num):
 	try:
 		OUTPUT_DIR = os.getcwd() + '/' + cstr(frappe.local.site) + '/public/files/'
 		src_file = OUTPUT_DIR + "accounting/" + q_num + '(מקור).pdf'
-		cancel_file = "/home/frappe/frappe-bench/apps/small_business_accounting/apps/canceled.pdf"
+		cancel_file = "assets/t_money/canceled.pdf"
 		stamp = PdfReader(cancel_file).pages[0]
 		writer = PdfWriter(clone_from=src_file)
 		for page in writer.pages:
