@@ -50,8 +50,8 @@ chmod -R o+rx .
 cd frappe-bench/
 bench new-site accounting.local --db-root-password $sql_passwrd --admin-password $admn_passwrd
 bench use accounting.local
-bench get-app --resolve-deps https://github.com/abrefael/small_business_accounting.git
-bench install-app small_business_accounting
+bench get-app --resolve-deps https://github.com/abrefael/t_money.git
+bench install-app t_money
 echo $passwrd | sudo -S sed -i -e 's/include:/include_tasks:/g' /usr/local/lib/python3.10/dist-packages/bench/playbooks/roles/mariadb/tasks/main.yml
 yes | sudo bench setup production $USER
 FILE="/etc/supervisor/supervisord.conf"
