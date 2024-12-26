@@ -1,4 +1,4 @@
-csv_file = '/home/frappe/frappe-bench/apps/t_money/apps/asset_type_list.csv'
+csv_file = 'assets/asset_type_list.csv'
 
 import frappe
 import shutil, os, csv
