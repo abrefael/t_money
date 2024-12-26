@@ -94,7 +94,7 @@
  "links": [],
  "modified": "2024-05-18 13:23:30.335049",
  "modified_by": "Administrator",
- "module":" T-Money",
+ "module":"T-Money",
  "name": "Invoice",
  "naming_rule": "Expression",
  "owner": "Administrator",
