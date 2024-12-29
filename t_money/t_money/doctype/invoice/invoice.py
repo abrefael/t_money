@@ -52,7 +52,12 @@ def Create_Invoice(q_num, objective, notes):
 		table.set_span((column - 4, row_number, column - 1, row_number), merge=True)
 		return row_number
 	TARGET = q_num + ".odt"
-	document = Document("assets/t_money/template.odt")
+	f_uri = frappe.db.get_single_value("Signature", "reupload")
+	if f_uri == '':
+		document = Document("assets/t_money/template.odt")
+	else:
+		if f_uri.split('/')[1] == 'files':
+			document = cstr(frappe.local.site) + '/public/' + f_uri
 	e = document.styles.root.get_elements('office:master-styles')[0].get_elements('style:master-page')[0].get_elements('style:header')[0]
 	i=0
 	head_in_temp = e.children[i]
