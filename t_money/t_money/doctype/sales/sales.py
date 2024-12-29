@@ -172,4 +172,5 @@ def Create_Quotation(q_num, objective, notes):
 	body.append(paragraph)
 	save_new(document,TARGET)
 	frappe.db.set_value('Sales', q_num,'attached_file', '/files/accounting/' + TARGET)
+	frappe.db.commit()
 
