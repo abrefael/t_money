@@ -171,4 +171,5 @@ def Create_Quotation(q_num, objective, notes):
 	paragraph.append(image_frame)
 	body.append(paragraph)
 	save_new(document,TARGET)
+	frappe.db.set_value('Sales', q_num,'attached_file', '/files/accounting/' + TARGET)
 

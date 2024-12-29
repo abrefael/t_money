@@ -17,6 +17,7 @@
   "sum",
   "discounted_sum",
   "section_break_II",
+  "attached_file",
   "h_p",
   "notes"
  ],
@@ -27,6 +28,14 @@
    "fieldtype": "Float",
    "label": "\u05e1\u05db\u05d5\u05dd (\u05dc\u05dc\u05d0 \u05d4\u05e0\u05d7\u05d4)",
    "precision": "2"
+  },
+  {
+   "fieldname": "attached_file",
+   "fieldtype": "Data",
+   "label":"\u05e7\u05d5\u05d1\u05e5 \u05d7\u05e9\u05d1\u05d5\u05e0\u05d9\u05ea",
+   "options": "URL",
+   "read_only": 1,
+   "in_list_view": 1
   },
   {
    "default": "0.00",

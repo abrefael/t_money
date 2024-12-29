@@ -30,6 +30,7 @@ def Create_Receipt(q_num, origin, objective, notes):
 		new_path = OUTPUT_DIR + name
 		document.save(new_path, pretty=True)
 		os.system(f"/usr/bin/soffice --headless --convert-to pdf:writer_pdf_Export --outdir {OUTPUT_DIR} '{new_path}'")
+		
 	def populate_items(prod, desc, val, quant, cost, row_number):
 		row = Row()
 		row.set_value("A", prod)
@@ -193,7 +194,10 @@ def Create_Receipt(q_num, origin, objective, notes):
 	row.set_value(6, f"{total:,.0f}")
 	table.set_row(2, row)
 	table.set_span('A3:F3', merge=True)
-	uri = document.add_file(os.getcwd() + '/' + cstr(frappe.local.site) + '/public/' + frappe.db.get_single_value('Signature','sign_img'))
+	if frappe.db.get_value('File',{'attached_to_name':'Signature'},'is_private') == 1:
+		uri = document.add_file(os.getcwd() + '/' + cstr(frappe.local.site) + frappe.db.get_single_value('Signature','sign_img'))
+	else:
+		uri = document.add_file(os.getcwd() + '/' + cstr(frappe.local.site) + '/public/' + frappe.db.get_single_value('Signature','sign_img'))
 	image_frame = Frame.image_frame(
 		uri,
 		size=("2.2cm", "1cm"),
@@ -215,6 +219,7 @@ def Create_Receipt(q_num, origin, objective, notes):
 	save_new(document,TARGET)
 	if origin == 'מקור':
 		frappe.db.set_value('Receipt', q_num, 'created', 1)
+		frappe.db.set_value('Receipt', q_num,'attached_file', '/files/accounting/' + TARGET)
 		frappe.db.commit()
 
 

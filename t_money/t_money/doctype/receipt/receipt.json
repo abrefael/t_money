@@ -34,9 +34,18 @@
   "cancel_r",
   "caceled",
   "created",
+  "attached_file",
   "r_name"
  ],
  "fields": [
+  {
+   "fieldname": "attached_file",
+   "fieldtype": "Data",
+   "label":"\u05e7\u05d5\u05d1\u05e5 \u05e7\u05d1\u05dc\u05d4",
+   "options": "URL",
+   "read_only": 1,
+   "in_list_view": 1
+  },
   {
    "fieldname": "client",
    "fieldtype": "Link",
