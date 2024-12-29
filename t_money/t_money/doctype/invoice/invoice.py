@@ -33,14 +33,9 @@ def Create_Invoice(q_num, objective, notes):
 	def populate_items(prod, desc, val, quant, cost, row_number):
 		row = Row()
 		row.set_value("A", prod)
-			   
 		row.set_value("B", desc)
-						 
-						 
 		row.set_value("C", val)
-			   
 		row.set_value("D", quant)
-						 
 		row.set_value("E", cost)
 		row_number += 1
 		table.set_row(row_number, row)
@@ -174,4 +169,5 @@ def Create_Invoice(q_num, objective, notes):
 	body.append(paragraph)
 	save_new(document,TARGET)
 	frappe.db.set_value('Invoice', q_num,'attached_file', '/files/accounting/' + TARGET)
+	frappe.db.commit()
 
