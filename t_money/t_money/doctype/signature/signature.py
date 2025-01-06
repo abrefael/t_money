@@ -31,8 +31,7 @@ def build_template():
 		Paragraph,
 		Row,
 		Table,
-		Style,
-		create_table_cell_style,
+		Style
 	)
 	import os
 	f_uri = frappe.db.get_single_value("Signature", "reupload")
