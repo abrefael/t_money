@@ -34,7 +34,6 @@ def build_template(f_uri):
 		Style,
 		create_table_cell_style,
 	)
-	OUTPUT_DIR = os.getcwd() + '/' + cstr(frappe.local.site) + '/public/files/accounting/'
 	f_uri = frappe.db.get_single_value("Signature", "reupload")
 	if f_uri == '' or f_uri is None:
 		f_uri = "assets/t_money/template.odt"
@@ -64,5 +63,5 @@ def build_template(f_uri):
 	row.set_value('B',frappe.db.get_single_value('Signature','email_add'))
 	head_in_temp.set_row(row.y, row)
 	document.save(pretty=True)
-	os.system(f"/usr/bin/soffice --headless --convert-to pdf:writer_pdf_Export --outdir {OUTPUT_DIR} '{f_uri}'")
+	os.system(f"/usr/bin/soffice --headless --convert-to pdf:writer_pdf_Export --outdir 'assets/t_money' '{f_uri}'")
 
