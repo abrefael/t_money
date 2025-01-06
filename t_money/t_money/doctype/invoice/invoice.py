@@ -58,29 +58,6 @@ def Create_Invoice(q_num, objective, notes):
 	else:
 		if f_uri.split('/')[1] == 'files':
 			document = cstr(frappe.local.site) + '/public/' + f_uri
-	e = document.styles.root.get_elements('office:master-styles')[0].get_elements('style:master-page')[0].get_elements('style:header')[0]
-	i=0
-	head_in_temp = e.children[i]
-	if not isinstance(head_in_temp,Paragraph):
-		i+= 1
-		head_in_temp = e.children[i]
-	head_in_temp.replace('HEADER',frappe.utils.get_fullname())
-	i += 1
-	if not isinstance(head_in_temp,Table):
-		i+= 1
-		head_in_temp = e.children[i]
-	table = head_in_temp
-	row = table.rows[0]
-	row.set_value('B',frappe.db.get_single_value('Signature','op_num'))
-	table.set_row(row.y, row)
-	row = table.rows[1]
-	row.set_value('B',frappe.db.get_single_value('Signature','phone_num'))
-	table.set_row(row.y, row)
-	row = table.rows[2]
-	row.set_value('B',frappe.db.get_single_value('Signature','email_add'))
-	table.set_row(row.y, row)
-	del head_in_temp
-	del e
 	body = document.body
 	doc = frappe.get_doc('Invoice', q_num)
 	paragraph = Paragraph(doc.creation.strftime('%d/%m/%Y'), style="head_of_file")
