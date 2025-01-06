@@ -156,7 +156,10 @@ def Create_Quotation(q_num, objective, notes):
 		i = i+1
 		column.style = col_style
 		table.set_column(column.x, column)
-	uri = document.add_file(os.getcwd() + '/' + cstr(frappe.local.site) + '/public/' + frappe.db.get_single_value('Signature','sign_img'))
+	if frappe.db.get_value('File',{'attached_to_name':'Signature'},'is_private') == 1:
+		uri = document.add_file(os.getcwd() + '/' + cstr(frappe.local.site) + frappe.db.get_single_value('Signature','sign_img'))
+	else:
+		uri = document.add_file(os.getcwd() + '/' + cstr(frappe.local.site) + '/public/' + frappe.db.get_single_value('Signature','sign_img'))
 	image_frame = Frame.image_frame(
 		uri,
 		size=("2.2cm", "1cm"),
