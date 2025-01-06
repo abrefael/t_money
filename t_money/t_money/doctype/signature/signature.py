@@ -19,3 +19,47 @@ def update_template(f_uri):
 		odfdo.Document(cstr(frappe.local.site) + f_uri)
 	except:
 		return 1
+
+
+@frappe.whitelist()
+def build_template(f_uri):
+	from odfdo import (
+		Cell,
+		Frame,
+		Document,
+		Header,
+		Paragraph,
+		Row,
+		Table,
+		Style,
+		create_table_cell_style,
+	)
+	f_uri = frappe.db.get_single_value("Signature", "reupload")
+	if f_uri == '' or f_uri is None:
+		document = Document("assets/t_money/template.odt")
+	else:
+		if f_uri.split('/')[1] == 'files':
+			document = cstr(frappe.local.site) + '/public/' + f_uri
+	e = document.styles.root.get_elements('office:master-styles')[0].get_elements('style:master-page')[0].get_elements('style:header')[0]
+	i=0
+	head_in_temp = e.children[i]
+	while not isinstance(head_in_temp,Paragraph):
+		i+= 1
+		head_in_temp = e.children[i]
+	head_in_temp.replace('HEADER',frappe.utils.get_fullname())
+	i=0
+	head_in_temp = e.children[i]
+	while not isinstance(head_in_temp,Table):
+		i+= 1
+		head_in_temp = e.children[i]
+	row = head_in_temp.rows[0]
+	row.set_value('B',frappe.db.get_single_value('Signature','op_num'))
+	head_in_temp.set_row(row.y, row)
+	row = head_in_temp.rows[1]
+	row.set_value('B',frappe.db.get_single_value('Signature','phone_num'))
+	head_in_temp.set_row(row.y, row)
+	row = head_in_temp.rows[2]
+	row.set_value('B',frappe.db.get_single_value('Signature','email_add'))
+	head_in_temp.set_row(row.y, row)
+	document.save(pretty=True)
+
