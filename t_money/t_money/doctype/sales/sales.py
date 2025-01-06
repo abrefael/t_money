@@ -12,7 +12,7 @@ class Sales(Document):
 @frappe.whitelist()
 def Create_Quotation(q_num, objective, notes):
 	import odfdo, json, os
-	OUTPUT_DIR = os.getcwd() + '/' + cstr(frappe.local.site) + '/public/files/accounting/'
+	OUTPUT_DIR = os.getcwd() + '/' + cstr(frappe.local.site) + '/frontend/public/templates/accounting/'
 	from odfdo import (
 		Cell,
 		Frame,
