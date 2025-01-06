@@ -34,6 +34,7 @@ def build_template():
 		Style,
 		create_table_cell_style,
 	)
+	import os
 	f_uri = frappe.db.get_single_value("Signature", "reupload")
 	if f_uri == '' or f_uri is None:
 		f_uri = "assets/t_money/template.odt"
