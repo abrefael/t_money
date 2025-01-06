@@ -55,7 +55,7 @@ frappe.ui.form.on('Invoice', {
 	        notes = frm.doc.notes;
 	    }
 	    var q_num = frm.doc.name;
-        frappe.call({method:'small_business_accounting.%D7%94%D7%A0%D7%94%D7%97%D7%A9.doctype.invoice.invoice.Create_Invoice',
+        frappe.call({method:'t_money.t_money.doctype.invoice.invoice.Create_Invoice',
         args: {
         'q_num': q_num,
         'objective':"חשבונית עסקה מס'",
