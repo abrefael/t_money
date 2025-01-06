@@ -22,7 +22,7 @@ def update_template(f_uri):
 
 
 @frappe.whitelist()
-def build_template(f_uri):
+def build_template():
 	from odfdo import (
 		Cell,
 		Frame,
