@@ -181,7 +181,7 @@ function build_the_receipt(frm,origin,q_num){
 				}
 			}
 			var discount = frm.doc.discount;
-			frappe.call({method:'small_business_accounting.%D7%94%D7%A0%D7%94%D7%97%D7%A9.doctype.receipt.receipt.Create_Receipt',
+			frappe.call({method:'t_money.t_money.doctype.receipt.receipt.Create_Receipt',
 			args: {
 			'q_num': q_num,
 			'origin': origin,
@@ -254,7 +254,7 @@ frappe.ui.form.on('Receipt', {
 
 frappe.ui.form.on('Receipt', {
 	cancel_r(frm) {
-		frappe.call({method:'small_business_accounting.%D7%94%D7%A0%D7%94%D7%97%D7%A9.doctype.receipt.receipt.cancel_receipt',
+		frappe.call({method:'t_money.t_money.doctype.receipt.receipt.cancel_receipt',
 		args: {
 		'q_num': frm.doc.name
 		}
