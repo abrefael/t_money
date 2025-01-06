@@ -13,7 +13,10 @@ frappe.ui.form.on("Signature", {
 
 frappe.ui.form.on("Signature", {
 	reupload(frm) {
-		frappe.call({method:'t_money.t_money.doctype.signature.signature.update_template'
+		frappe.call({method:'t_money.t_money.doctype.signature.signature.update_template',
+		args: {
+        'f_uri': frm.doc.reupload
+        }
 		}).then(r => {
             if (r.massage == 1){
 				frappe.throw(__('You need to use LibreOffice writer (.odt) or template (.ott) file'))
