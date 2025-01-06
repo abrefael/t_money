@@ -147,17 +147,7 @@ def Create_Receipt(q_num, origin, objective, notes):
 		table.set_column(i, column)
 		i = i+1
 	row = Row()
-	cell_style = create_table_cell_style(
-	background_color="#468a1a",
-	padding_right="1mm"
-	)
-	style_name = document.insert_style(style=cell_style, automatic=True)
 	row.set_values(['אמצעי תשלום','תאריך','בנק','סניף','מס’ חשבון','אסמכתא','סכום (₪)'])
-	# row.set_values(['שם פריט/מק"ט', 'תיאור', 'מחיר', 'כמות', 'לתשלום'],style = style_name)
-	# style = document.get_style(family="paragraph", display_name="italic-white")
-	# for cell in row.traverse():
-		# cell.get_element('text:p').style=style
-		# row.set_cell(x=cell.x, cell=cell)
 	table.set_row("A1", row)
 	cell_style = create_table_cell_style(background_color="#eeeeee")
 	style_name = document.insert_style(style=cell_style, automatic=True)
