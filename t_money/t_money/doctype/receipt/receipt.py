@@ -201,7 +201,7 @@ def Create_Receipt(q_num, origin, objective, notes):
 	save_new(document,TARGET)
 	if origin == 'מקור':
 		frappe.db.set_value('Receipt', q_num, 'created', 1)
-		frappe.db.set_value('Receipt', q_num,'attached_file', '/files/accounting/' + TARGET)
+		frappe.db.set_value('Receipt', q_num,'attached_file', '/files/accounting/' + q_num + "(" + origin + ").pdf")
 		frappe.db.commit()
 
 
