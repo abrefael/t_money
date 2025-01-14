@@ -14,8 +14,12 @@ def update_template(f_uri):
 	import odfdo
 	from frappe import cstr
 	if not 'private' in f_uri:
+		frappe.flags.mute_messages = True
 		f_uri = '/public/' + f_uri
-	odfdo.Document(cstr(frappe.local.site) + f_uri)
+	try:
+		odfdo.Document(cstr(frappe.local.site) + f_uri)
+	except:
+		pass
 
 
 
