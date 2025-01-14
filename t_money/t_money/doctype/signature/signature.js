@@ -12,7 +12,7 @@ frappe.ui.form.on("Signature", {
 
 
 frappe.ui.form.on("Signature", {
-	reupload(frm) {
+	validate(frm) {
 		f_uri = frm.doc.reupload;
 		if (!(f_uri == '')){
 			frappe.call({method:'t_money.t_money.doctype.signature.signature.update_template',
