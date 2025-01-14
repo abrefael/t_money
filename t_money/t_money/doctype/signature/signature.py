@@ -13,12 +13,15 @@ class Signature(Document):
 def update_template(f_uri):
 	import odfdo
 	from frappe import cstr
-	if f_uri.split('/')[1] == 'files':
+	if not 'private' in f_uri:
 		f_uri = '/public/' + f_uri
 	try:
 		odfdo.Document(cstr(frappe.local.site) + f_uri)
 	except:
-		return 1
+		frappe.throw("Block and Level already exist")
+		
+
+
 
 
 @frappe.whitelist()
