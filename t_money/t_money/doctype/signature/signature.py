@@ -19,7 +19,7 @@ def update_template(f_uri):
 	try:
 		odfdo.Document(cstr(frappe.local.site) + f_uri)
 	except:
-		frappe.throw(title='Error',msg='This file does not exist')
+		frappe.throw(_(title='Error',msg='This file does not exist'))
 
 
 
