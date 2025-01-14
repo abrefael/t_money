@@ -20,14 +20,17 @@ frappe.ui.form.on("Signature", {
 				'f_uri': frm.doc.reupload
 				},
 				callback: (r) => {
-					if (r.message.message == 1){
-						frappe.msgprint({
-							title: __('Error'),
-							indicator: 'red',
-							message: __('You need to use LibreOffice writer (.odt) or template (.ott) file.<br>I recommand you try to use the original file from: <a href="https://github.com/abrefael/t_money/raw/refs/heads/main/t_money/public/template.odt">here</a>')
-						})
-						validate = false;
-					}
+					// if (r.message.message == 1){
+						// frappe.msgprint({
+							// title: __('Error'),
+							// indicator: 'red',
+							// message: __('You need to use LibreOffice writer (.odt) or template (.ott) file.<br>I recommand you try to use the original file from: <a href="https://github.com/abrefael/t_money/raw/refs/heads/main/t_money/public/template.odt">here</a>')
+						// })
+						// validate = false;
+					},
+				error: (r) => {
+					validate = false;
+				}
 				}
 			});
 		}
