@@ -21,7 +21,7 @@ frappe.ui.form.on("Signature", {
 				},
 				error: function(r) {
 						frappe.throw(__('You need to use LibreOffice writer (.odt) or template (.ott) file.<br>I recommand you try to use the original file from: <a href="https://github.com/abrefael/t_money/raw/refs/heads/main/t_money/public/template.odt">here</a>'))
-						validated = false;
+						validate = false;
 				}
 			});
 		}
