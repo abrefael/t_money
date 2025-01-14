@@ -15,11 +15,7 @@ def update_template(f_uri):
 	from frappe import cstr
 	if not 'private' in f_uri:
 		f_uri = '/public/' + f_uri
-	try:
-		odfdo.Document(cstr(frappe.local.site) + f_uri)
-	except:
-		frappe.throw("Block and Level already exist")
-		
+	odfdo.Document(cstr(frappe.local.site) + f_uri)
 
 
 
