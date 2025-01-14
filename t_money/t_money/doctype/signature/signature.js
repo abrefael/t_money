@@ -31,7 +31,6 @@ frappe.ui.form.on("Signature", {
 				error: (r) => {
 					validate = false;
 				}
-				}
 			});
 		}
 	}
