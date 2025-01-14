@@ -5,7 +5,7 @@ frappe.ui.form.on("Signature", {
 	build(frm) {
 		frappe.call({method:'t_money.t_money.doctype.signature.signature.build_template'
         }).then(r => {
-            window.open('/public/templates/template.pdf', '_blank').focus();
+            window.open('/templates/template.pdf', '_blank').focus();
 		});
 	}
 });
