@@ -16,11 +16,9 @@ def update_template(f_uri):
 	if not 'private' in f_uri:
 		f_uri = '/public/' + f_uri
 	try:
-		frappe.flags.mute_messages = True
 		odfdo.Document(cstr(frappe.local.site) + f_uri)
-		return {"message": 0}
 	except:
-		return {"message": 1}
+		frappe.throw(title='Error',msg='This file does not exist')
 
 
 
