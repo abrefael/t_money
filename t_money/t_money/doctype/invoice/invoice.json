@@ -8,6 +8,8 @@
  "engine": "InnoDB",
  "field_order": [
   "create_invoice",
+  "column_break_II",
+  "send_mail",
   "client",
   "item_list",
   "section_break_I",
@@ -54,6 +56,10 @@
    "fieldtype": "Column Break"
   },
   {
+   "fieldname": "column_break_II",
+   "fieldtype": "Column Break"
+  },
+  {
    "fieldname": "section_break_I",
    "fieldtype": "Section Break"
   },
@@ -92,6 +98,11 @@
    "fieldname": "create_invoice",
    "fieldtype": "Button",
    "label": "\u05d4\u05e4\u05e7\u05ea \u05d7\u05e9\u05d1\u05d5\u05e0\u05d9\u05ea \u05e2\u05e1\u05e7\u05d4"
+  },
+  {
+   "fieldname": "send_mail",
+   "fieldtype": "Button",
+   "label": "\u05e9\u05dc\u05d7 \u05d7\u05e9\u05d1\u05d5\u05e0\u05d9\u05ea \u05e2\u05e1\u05e7\u05d4"
   },
   {
    "fieldname": "notes",

@@ -9,6 +9,8 @@
  "field_order": [
   "quotation",
   "column_break_I",
+  "send_mail",
+  "column_break_IV",
   "invoice",
   "section_break_I",
   "client",
@@ -54,6 +56,10 @@
   },
   {
    "fieldname": "column_break_I",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_IV",
    "fieldtype": "Column Break"
   },
   {
@@ -109,6 +115,11 @@
    "fieldname": "notes",
    "fieldtype": "Text",
    "label": "\u05d4\u05e2\u05e8\u05d5\u05ea"
+  },
+  {
+   "fieldname": "send_mail",
+   "fieldtype": "Button",
+   "label": "\u05e9\u05dc\u05d7 \u05d4\u05e6\u05e2\u05ea \u05de\u05d7\u05d9\u05e8"
   },
   {
    "fieldname": "invoice",

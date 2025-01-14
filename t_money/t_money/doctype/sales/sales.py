@@ -159,3 +159,27 @@ def Create_Quotation(q_num, objective, notes):
 	frappe.db.set_value('Sales', q_num,'attached_file', '/files/accounting/' + q_num + '.pdf')
 	frappe.db.commit()
 
+@frappe.whitelist()
+def send_mail(recipient, subject, mail_text, q_num):
+	import os
+	f_url = 'frontend/public/files/accounting/' + q_num + '.pdf'
+	doc = frappe.new_doc('File')
+	f_name = f_url.split("/")[-1]
+	doc.file_name = f_name
+	file_url = "/files/accounting/" + f_name
+	doc.file_url = file_url
+	doc.insert()
+	name = frappe.db.get_value("File", {"file_name":f_name},'name')
+	frappe.db.set_value("File", name,'file_url','/files/accounting/' + f_name)
+	frappe.db.set_value('Sales', q_num,'attached_file', file_url)
+	frappe.db.commit()
+	os.remove(f_url.replace("/accounting",""))
+	frappe.sendmail(
+		recipients=[recipient],
+		sender="Yaft Ben Refael <yfatfrechter@gmail.com>",
+		subject=subject,
+		message=mail_text,
+		attachments=[{"file_url": "/files/accounting/" + q_num + ".pdf"}],
+		as_markdown=False,
+		delayed=False
+		)

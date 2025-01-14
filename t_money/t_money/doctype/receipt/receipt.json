@@ -8,7 +8,10 @@
  "engine": "InnoDB",
  "field_order": [
   "create_draft",
+  "column_break_ii",
   "creat_receipt",
+  "column_break_iii",
+  "send_mail",
   "client",
   "column_break_wofg",
   "receipt_date",
@@ -134,6 +137,11 @@
    "unique": 1
   },
   {
+   "fieldname": "send_mail",
+   "fieldtype": "Button",
+   "label": "\u05e9\u05dc\u05d7 \u05e7\u05d1\u05dc\u05d4"
+  },
+  {
    "default": "Today",
    "fieldname": "receipt_date",
    "fieldtype": "Date",
@@ -187,6 +195,14 @@
   },
   {
    "fieldname": "column_break_i",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_ii",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_iii",
    "fieldtype": "Column Break"
   },
   {

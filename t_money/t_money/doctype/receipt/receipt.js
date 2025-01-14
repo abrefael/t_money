@@ -6,6 +6,62 @@
 
 // 	},
 // });small_business_accounting
+
+frappe.ui.form.on('Receipt', {
+	send_mail(frm) {
+		frappe.db.get_value(
+			'Clients',
+			frm.doc.client,
+			'email'
+		).then(r =>{
+			let email;
+			if (!(r.message.email)){
+				email = "";
+			}
+			else {
+				email = r.message.email;
+			}
+			let q_num = frm.doc.name;
+			let d = new frappe.ui.Dialog({
+				title: 'פרטי שליחה',
+				fields: [
+					{
+						label: 'שלח אל',
+						default: email,
+						fieldname: 'recipient',
+						fieldtype: 'Data',
+						options: "Email",
+						"reqd": 1
+					},
+					{
+						label: 'נושא',
+						fieldname: 'subject',
+						fieldtype: 'Data',
+						"reqd": 1
+					},
+					{
+						label: 'תוכן',
+						fieldname: 'mail_text',
+						fieldtype: 'Text',
+						default: ''
+					}
+				],
+				size: 'small', // small, large, extra-large 
+				primary_action_label: 'שלח',
+				primary_action(values) {
+					values.q_num = q_num;
+					console.log(values);
+					frappe.call({method:'t_money.t_money.doctype.receipt.receipt.send_mail',
+						args: values
+						});
+					d.hide();
+				}
+			});
+			d.show();
+		})
+	}
+});
+
 frappe.ui.form.on('Receipt', {
 	onload(frm) {
 		if((!frm.doc.r_name)||(frm.doc.name.includes("new-receipt"))){
