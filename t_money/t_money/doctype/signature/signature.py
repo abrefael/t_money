@@ -14,12 +14,13 @@ def update_template(f_uri):
 	import odfdo
 	from frappe import cstr
 	if not 'private' in f_uri:
-		frappe.flags.mute_messages = True
 		f_uri = '/public/' + f_uri
 	try:
+		frappe.flags.mute_messages = True
 		odfdo.Document(cstr(frappe.local.site) + f_uri)
+		return {"message": 0}
 	except:
-		frappe.throw(_(title='Error',msg='This file does not exist'))
+		return {"message": 1}
 
 
 
