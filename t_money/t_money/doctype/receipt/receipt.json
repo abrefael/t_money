@@ -12,6 +12,7 @@
   "creat_receipt",
   "column_break_iii",
   "send_mail",
+  "section_break_xm",
   "client",
   "column_break_wofg",
   "receipt_date",
@@ -171,6 +172,10 @@
   },
   {
    "fieldname": "section_break_xmaw",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_xm",
    "fieldtype": "Section Break"
   },
   {
