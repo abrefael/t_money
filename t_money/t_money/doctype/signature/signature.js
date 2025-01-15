@@ -19,17 +19,14 @@ frappe.ui.form.on("Signature", {
 				args: {
 				'f_uri': frm.doc.reupload
 				},
-				callback: (r) => {
-					// if (r.message.message == 1){
-						// frappe.msgprint({
-							// title: __('Error'),
-							// indicator: 'red',
-							// message: __('You need to use LibreOffice writer (.odt) or template (.ott) file.<br>I recommand you try to use the original file from: <a href="https://github.com/abrefael/t_money/raw/refs/heads/main/t_money/public/template.odt">here</a>')
-						// })
-						// validate = false;
+			}).then(r => {
+				if(r.message == '1'){
+					frappe.warn('<p style="direction: rtl">סוג קובץ לא מתאים</p>','<p style="direction: rtl; text-align: right;">סוג הקובץ אינו מתאים. יש צורך בקובץ מסוג ODT או OTT. </p><p style="direction: rtl; text-align: right;">דוגמה לקובץ מתאים ניתן להוריד מכאן</p>',
+					() => {
+						window.open('https://github.com/abrefael/t_money/raw/refs/heads/main/t_money/public/template.odt', '_blank').focus();
 					},
-				error: (r) => {
-					validate = false;
+					'כאן'
+					);
 				}
 			});
 		}
