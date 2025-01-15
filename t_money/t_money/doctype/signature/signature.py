@@ -11,15 +11,20 @@ class Signature(Document):
 
 @frappe.whitelist()
 def update_template(f_uri):
-	import odfdo
 	from frappe import cstr
+	def check_the_file(f_uri):
+		import odfdo
+		try:
+			odfdo.Document(cstr(frappe.local.site) + f_uri)
+		except:
+			return 1
+	
 	if not 'private' in f_uri:
-		f_uri = '/public/' + f_uri
-	try:
-		odfdo.Document(cstr(frappe.local.site) + f_uri)
-	except:
-		frappe.throw(title='Error',msg='This file does not exist')
-
+		f_uri = '/public' + f_uri
+	if check_the_file(f_uri) == 1:
+		return('1')
+	else:
+		return('0')
 
 
 
