@@ -16,5 +16,5 @@ sed -i "s/port_num/\"$port_num\"/" pwd.yml
 docker compose -f pwd.yml up --force-recreate -d
 sed -i '87d' pwd.yml
 sed -i '87s/.*/        bench migrate;/' pwd.yml
-sed -i sed -i 's/read/# read/' setup.sh
+sed -i 's/read/# read/' setup.sh
 sed -i 's/sed/# sed/' setup.sh
