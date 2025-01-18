@@ -6,6 +6,7 @@ if [ $port_num=='' ] ; then
 fi
 
 mkdir -p output
+mkdir -p assets
 if [ -f Dockerfile ]; then 
   docker build --build-arg CACHEBUST=$(date +%s) --tag=tmoney/accounting .;
 fi
