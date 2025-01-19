@@ -12,6 +12,9 @@ services:
       - type: bind
         source: ./output
         target: /home/frappe/accounting
+      - type: bind
+        source: ./assets
+        target: /home/frappe/assets
     environment:
       DB_HOST: db
       DB_PORT: "3306"
@@ -49,6 +52,9 @@ services:
       - type: bind
         source: ./output
         target: /home/frappe/accounting
+      - type: bind
+        source: ./assets
+        target: /home/frappe/assets
 
   create-site:
     image: tmoney/accounting
@@ -63,6 +69,9 @@ services:
       - type: bind
         source: ./output
         target: /home/frappe/accounting
+      - type: bind
+        source: ./assets
+        target: /home/frappe/assets
     entrypoint:
       - bash
       - -c
@@ -137,6 +146,9 @@ services:
       - type: bind
         source: ./output
         target: /home/frappe/accounting
+      - type: bind
+        source: ./assets
+        target: /home/frappe/assets
     ports:
       - port_num
 
@@ -158,6 +170,9 @@ services:
       - type: bind
         source: ./output
         target: /home/frappe/accounting
+      - type: bind
+        source: ./assets
+        target: /home/frappe/assets
 
   queue-short:
     image: tmoney/accounting
@@ -177,6 +192,9 @@ services:
       - type: bind
         source: ./output
         target: /home/frappe/accounting
+      - type: bind
+        source: ./assets
+        target: /home/frappe/assets
 
   redis-queue:
     image: redis:6.2-alpine
@@ -214,6 +232,9 @@ services:
       - type: bind
         source: ./output
         target: /home/frappe/accounting
+      - type: bind
+        source: ./assets
+        target: /home/frappe/assets
 
   websocket:
     image: tmoney/accounting
@@ -231,6 +252,9 @@ services:
       - type: bind
         source: ./output
         target: /home/frappe/accounting
+      - type: bind
+        source: ./assets
+        target: /home/frappe/assets
 
 volumes:
   db-data:
@@ -238,6 +262,7 @@ volumes:
   redis-cache-data:
   sites:
   frontend:
+  assets:
   logs:
 
 networks:
