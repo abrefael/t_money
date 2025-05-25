@@ -7,7 +7,7 @@
 frappe.ui.form.on('Income Loss Report', {
 	calc(frm) {
 		frappe.call({
-			method: 'small_business_accounting.%D7%94%D7%A0%D7%94%D7%97%D7%A9.doctype.income_loss_report.income_loss_report.get_data',
+			method: 't_money.t_money.doctype.income_loss_report.income_loss_report.get_data',
 			args: {
 				"fisc_year": frm.doc.year
 			}
