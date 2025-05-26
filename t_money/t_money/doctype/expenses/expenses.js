@@ -9,7 +9,18 @@
 
 frappe.ui.form.on('Expenses', {
 	before_save(frm) {
-	    frm.set_value('actual_sum', frm.doc.sum * frm.doc.impact);
-		// your code here
+		var actual_sum = frm.doc.sum * frm.doc.impact;
+		frm.set_value('actual_sum', actual_sum);
+		var when = frm.doc.when;
+		when = when.split('-')[0];
+		frappe.call({
+			method: 't_money.t_money.doctype.expenses.expenses.add_expenss',
+			args: {
+				"fisc_year": when,
+				"actual_sum": actual_sum,
+				"sum": frm.doc.sum,
+				"type": frm.doc.type
+			}
+		})
 	}
 })
