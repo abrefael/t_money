@@ -30,7 +30,7 @@ def add_expenss(fisc_year, actual_sum, sum_var, ex_type):
 #	Add the relative price payed to the relevant expense type
 	doc.db_set(ex_type, curr_val + actual_sum, commit=True))
 	if ex_type == 'car':
-#	adds the payments for car expenses to the "car not deductable expenses"
+#	adds the payments for car expenses to the "non-deductable car expenses"
 		curr_val = frappe.db.get_value('Income Loss Report', fisc_year, 'car_non')
 		doc.db_set('car_non', curr_val + sum_var - actual_sum, commit=True)
 
