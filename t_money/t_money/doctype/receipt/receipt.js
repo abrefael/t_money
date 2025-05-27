@@ -310,8 +310,11 @@ frappe.ui.form.on('Receipt', {
 
 frappe.ui.form.on('Receipt', {
 	cancel_r(frm) {
+		var when = frm.doc.when;
+		when = when.split('-')[0];
 		frappe.call({method:'t_money.t_money.doctype.receipt.receipt.cancel_receipt',
 		args: {
+		"fisc_year": when,
 		'q_num': frm.doc.name
 		}
 		}).then(r => {
