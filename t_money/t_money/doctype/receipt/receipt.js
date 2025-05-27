@@ -174,13 +174,21 @@ frappe.ui.form.on('Receipt', {
 function calculate_sum(frm){
 	var items = frm.doc.item_list;
 	var sum = 0;
+	var row_sum = 0;
+	var highest_sum = 0;
 	var discounted_sum = 0;
 	var discount = frm.doc.discount;
 	for (let i = 0; i < items.length; i++){
 		let row = items[i];
 		let quant = row.quant;
 		let price = row.price;
-		sum += quant * price;
+		row_sum = quant * price;
+		sum += row_sum;
+		if (row_sum > highest_sum){
+			frm.set_value("most_impact",row.item);
+			refresh_field("most_impact");
+			highest_sum = row_sum;
+		}
 	}
 	if (discount > 1){
 		discounted_sum = sum - discount;
@@ -224,17 +232,6 @@ function build_the_receipt(frm,origin,q_num){
 			}
 			else{
 				notes = frm.doc.notes;
-			}
-			for (let i = 0; i < items.length; i++){
-				let row = items[i];
-				let price = row.price;
-				let q = row.quant;
-				let sum = price * q;
-				if (sum > highest_sum){
-					frm.set_value("most_impact",row.item);
-					refresh_field("most_impact");
-					highest_sum = sum;
-				}
 			}
 			var discount = frm.doc.discount;
 			frappe.call({method:'t_money.t_money.doctype.receipt.receipt.Create_Receipt',
