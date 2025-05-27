@@ -12,50 +12,23 @@ class Expenses(Document):
 
 @frappe.whitelist()
 def add_expenss(fisc_year, actual_sum, sum_var, ex_type):
-	type_dic = {"משרדיות ואחזקה":'office',}
+	type_dic = {'משרדיות ואחזקה':'office','הוצאות רכב':'car','ביטוח מקצועי והשתלמויות':'insurance','קבלני משנה':'subconturctors','נסיעות (תחב"ץ)':'transport'}
+#	If there is no Income loss report already for the specific year, create it.
 	if not frappe.db.exists("Income Loss Report", fisc_year):
-		doc.insert("Income Loss Report",
-			fisc_year,
+		doc = frappe.new_doc({"doctype":"Income Loss Report"})
+		doc.title = fisc_year
+		doc.insert(
 			ignore_permissions=True,
 			ignore_links=True, # ignore Link validation in the document
 			ignore_if_duplicate=True, # dont insert if DuplicateEntryError is thrown
 			ignore_mandatory=True # insert even if mandatory fields are not set
 		)
-	curr_val = frappe.db.get_value('Income Loss Report', fisc_year, type_dic[ex_type])
-	nex_val = curr_val + actual_sum
-	
-
-
-
-
-
-
-	fisc_year = str(fisc_year)
-	expenses = frappe.db.get_list('Expenses',filters={'when': ['between', [fisc_year+'-01-01', fisc_year+'-12-31']]},fields=['type', 'sum', 'actual_sum'],as_list=True)
-	ass_db = frappe.db.get_list('Assets',filters={'fiscal_year':int(fisc_year)},fields=['loss_requested'],as_list=True)
-	asset = 0
-	for itm in ass_db:
-		asset += itm[0]
-	receipts = frappe.db.get_list('Receipt',filters={'receipt_date': ['between', [fisc_year+'-01-01', fisc_year+'-12-31']],'caceled':0},fields=['most_impact', 'total'],as_list=True)
-	ex_dic = {}
-	car_non = 0
-	for itm in expenses:
-		val = itm[1]
-		typ = itm[0]
-		sum = itm[2]
-		if typ in ex_dic:
-			ex_dic[typ] += val
-		else:
-			ex_dic[typ] = itm[1]
-		car_non = car_non + val - sum
-	rec_dic = {}
-	for itm in receipts:
-		typ = itm[0]
-		val = itm[1]
-		if typ in rec_dic:
-			rec_dic[typ] += val
-		else:
-			rec_dic[typ] = val
-	db = [car_non,ex_dic, asset,rec_dic]
-	return db
+		doc.db_set("year", int(fisc_year), commit=True)
+	doc = frappe.get_doc('Income Loss Report', fisc_year)
+	ex_type = type_dic[ex_type]
+	curr_val = frappe.db.get_value('Income Loss Report', fisc_year, ex_type)
+	doc.db_set(ex_type, curr_val + actual_sum, commit=True))
+	if ex_type == 'car':
+		curr_val = frappe.db.get_value('Income Loss Report', fisc_year, 'car_non')
+		doc.db_set('car_non', curr_val + sum_var - actual_sum, commit=True)
 
