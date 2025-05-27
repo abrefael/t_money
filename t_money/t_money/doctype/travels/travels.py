@@ -166,7 +166,7 @@ def add_travel_expenss(fisc_year, total):
 	doc = frappe.get_doc('Income Loss Report', fisc_year)
 	curr_val = frappe.db.get_value('Income Loss Report', fisc_year, 'travel')
 #	Add the relative price payed to the relevant expense type
-	doc.db_set('travel', curr_val + total, commit=True))
+	doc.db_set('travel', curr_val + total, commit=True)
 
 
 
