@@ -22,7 +22,9 @@ def add_expenss(fisc_year, actual_sum, sum_var, ex_type):
 			ignore_if_duplicate=True, # dont insert if DuplicateEntryError is thrown
 			ignore_mandatory=True # insert even if mandatory fields are not set
 		)
-		doc.db_set("name",fisc_year)
+		title = doc.get_title()
+		frappe.rename_doc('Income Loss Report', title, fisc_year)
+#		doc.db_set("name",fisc_year)
 		doc.db_set("year", int(fisc_year), commit=True)
 	doc = frappe.get_doc('Income Loss Report', fisc_year)
 	ex_type = type_dic[ex_type]
