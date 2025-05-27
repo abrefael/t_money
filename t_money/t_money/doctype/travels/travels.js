@@ -12,14 +12,14 @@ frappe.ui.form.on('Travels', {
 	build_report(frm) {
 		frm.save();
 		var fiscal_year = 0;
-	    var dests = frm.doc.lst_of_dest;
+		var dests = frm.doc.lst_of_dest;
 		var N = dests.length;
 		var trip_name = frm.doc.trip_name;
 		trip_name = trip_name.replace(' ','_');
-	    if (N == 0){
-	        frappe.throw(__('נדרש יעד אחד לפחות'));
-	        return;
-	    }
+		if (N == 0){
+		frappe.throw(__('נדרש יעד אחד לפחות'));
+		return;
+		}
 		var dest_lst = "[";
 		var year_flag = false;
 		if (frm.doc.fiscal_year == 0){
@@ -42,11 +42,11 @@ frappe.ui.form.on('Travels', {
 		() => {
 			console.log('continue');
 		}, () => {
-        return;
+	return;
 		})
 		dest_lst = dest_lst.replace('"] ["','"],["');
 		dest_lst += "]";
-	    var objective = frm.doc.objective;
+		var objective = frm.doc.objective;
 		if (frm.doc.objective_more_I){
 			objective += ' ' + objective_more_I;
 		}
@@ -58,7 +58,7 @@ frappe.ui.form.on('Travels', {
 		if (N == 0){
 			frappe.throw(__('שכחתם להוסיף הוצאות לרשימה...'));
 			return;
-	    }
+		}
 		var ex_lst = "{";
 		for (let i = 0; i < N; i++){
 			let ex = expenses[i];
@@ -78,25 +78,30 @@ frappe.ui.form.on('Travels', {
 		}
 		ex_lst = ex_lst.replace("'] '","'],'");
 		ex_lst += "}";
-        frappe.call({
-			method:'small_business_accounting.%D7%94%D7%A0%D7%94%D7%97%D7%A9.doctype.travels.travels.Create_Travel_Report',
+	frappe.call({
+			method:'t_money.t_money.doctype.travels.travels.Create_Travel_Report',
 			args: {
 				'objective': objective,
 				'lst_of_dest': dest_lst,
 				'expenses': ex_lst,
 				'trip_name': trip_name
 			}
-        }).then(r => {
-			frm.set_value("total",Number(r.message));
+	}).then(r => {
+			let tot = Number(r.message)
+			frm.set_value("total",tot);
 			refresh_field("total");
+//We need to update the Income Loss Report...
+			frappe.call({
+				method:'t_money.t_money.doctype.travels.travels.add_travel_expenss',
+				args: {
+					'fisc_year': String(fisc_year),
+					'total': tot
+				}
+			})
 			frm.save();
-            window.open(`${window.location.origin}/files/accounting/${trip_name}.pdf`, '_blank').focus();
-        });
+		window.open(`${window.location.origin}/files/accounting/${trip_name}.pdf`, '_blank').focus();
+	});
 	}
 });
 
-// frm.call().then(r => {
-	// frm.set_value(total,r.message);
-	// frm.refresh_feild(total);
-	// frm.save();
-// });
+
