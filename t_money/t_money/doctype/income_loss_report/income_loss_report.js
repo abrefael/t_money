@@ -24,5 +24,5 @@ frappe.ui.form.on('Income Loss Report', {
 		frm.set_value('profit_adj', net_adj);
 		frm.refresh();
 		frm.save();
-	});
+	};
 });
