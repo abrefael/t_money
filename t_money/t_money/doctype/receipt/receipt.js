@@ -234,11 +234,14 @@ function build_the_receipt(frm,origin,q_num){
 				notes = frm.doc.notes;
 			}
 			var discount = frm.doc.discount;
+			var when = frm.doc.when;
+			when = when.split('-')[0];
 			frappe.call({method:'t_money.t_money.doctype.receipt.receipt.Create_Receipt',
 			args: {
 			'q_num': q_num,
 			'origin': origin,
 			'objective':"קבלה מס'",
+			"fisc_year": when,
 			'notes': notes
 			}
 			}).then(r => {
