@@ -10,11 +10,20 @@ class Receipt(Document):
 	
 
 @frappe.whitelist()
-def Create_Receipt(q_num, origin, objective, notes):
+def Create_Receipt(q_num, origin, objective, fisc_year, notes):
+	if not frappe.db.exists("Income Loss Report", fisc_year):
+		doc = frappe.new_doc({"doctype":"Income Loss Report"})
+		doc.title = fisc_year
+		doc.insert(
+			ignore_permissions=True,
+			ignore_links=True, # ignore Link validation in the document
+			ignore_if_duplicate=True, # dont insert if DuplicateEntryError is thrown
+			ignore_mandatory=True # insert even if mandatory fields are not set
+		)
+		doc.db_set("year", int(fisc_year), commit=True)
 	import odfdo, json, os
 	from datetime import datetime
 	OUTPUT_DIR = cstr(frappe.local.site) + '/public/files/accounting/'
-								  
 	from odfdo import (
 		Cell,
 		Frame,
@@ -87,12 +96,17 @@ def Create_Receipt(q_num, origin, objective, notes):
 	)
 	style_name = document.insert_style(style=cell_style, automatic=True)
 	total = 0
+	high_price = 0
+	most_impact = ''
 	for itm in itms:
 		prod = itm.item
 		desc = itm.desc
 		price = itm.price
 		quant = itm.quant
 		cost = price * quant
+		if cost > high_impact:
+			high_impact = cost
+			most_impact = prod
 		row_number = populate_items(prod, desc, f"{price:,.2f} ₪", str(quant), f"{cost:,.2f} ₪", row_number)
 		total = total + cost
 	cols = table.width
@@ -201,14 +215,28 @@ def Create_Receipt(q_num, origin, objective, notes):
 	body.append(paragraph)
 	save_new(document,TARGET)
 	if origin == 'מקור':
-		frappe.db.set_value('Receipt', q_num, 'created', 1)
-		frappe.db.set_value('Receipt', q_num,'attached_file', '/files/accounting/' + q_num + "(" + origin + ").pdf")
-		frappe.db.commit()
+		doc.db_set('created', 1, commit=True)
+		doc.db_set('attached_file', '/files/accounting/' + q_num + "(" + origin + ").pdf", commit=True)
+		incoms = frappe.db.get_all("Income Child Table", {'parent':fisc_year},['item','sum'])
+		for inc in incoms:
+			if inc[item] == most_impact:
+				frappe.db.set_value("Income Child Table", {'parent':fisc_year,'item':most_impact},'sum',total + inc[sum])
+				frappe.db.commit()
+				return
+		doc = frappe.get_doc("Income Loss Report", fisc_year)
+		doc.append("items", {
+			"item": most_impact,
+			"sum": total,
+		})
 
 
 @frappe.whitelist()
-def cancel_receipt(q_num):
+def cancel_receipt(q_num, fisc_year):
 	frappe.db.set_value('Receipt', q_num, 'caceled', 1)
+	frappe.db.commit()
+	most_impact, total = frappe.db.get_value('Receipt', q_num, 'most_impact','total')
+	total = frappe.db.get_value("Income Child Table", {'parent':fisc_year,'item':most_impact},'sum') - total
+	frappe.db.set_value("Income Child Table", {'parent':fisc_year,'item':most_impact},'sum', total)
 	frappe.db.commit()
 	frappe.rename_doc('Receipt', q_num, q_num+'(מבוטלת)', merge=False)
 	from pypdf import PdfWriter, PdfReader
