@@ -40,11 +40,15 @@ function perform_calc(frm, prev_total_loss){
 		var diff = purchase_date - start;
 		var oneDay = 1000 * 60 * 60 * 24;
 		var day = Math.floor(diff / oneDay);
+//If the product was purchase that same year, the loos on it is relative
+//to the time passed since buying and the end of the year. Thus we need to calculate the relative loss
 		frm.set_value ('loss_requested', frm.doc.total * (frm.doc.rate_loss / 100) * ((365-day) / 365));
 	}
 	else{
+//Otherwise, we calculate the loss as a precentage of the current value (after losses)
 		frm.set_value ('loss_requested', frm.doc.total * frm.doc.rate_loss  / 100);
 	}
+//We need to update the Income Loss Report...
 	frappe.db.set_value(
 		'Income Loss Report',
 		String(frm.doc.fiscal_year),
