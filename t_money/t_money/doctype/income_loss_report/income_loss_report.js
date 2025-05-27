@@ -9,9 +9,7 @@ frappe.ui.form.on('Income Loss Report', {
 		var total_income = 0;
 		var incoms = frm.doc.items;
 //	Calculate the total incom from receipts.
-		for (let i = 0; i < incoms.length; i++) {
-			total_income += incoms[i].sum;
-		}
+		for (let i = 0; i < incoms.length; i++) {total_income += incoms[i].sum;}
 //	Calculate the total losses due to: expenses (office, car, subcontructors and insurenses)
 //	plus the travel expenses and the losses on assets.
 		var losses = frm.doc.office + frm.doc.insurance + frm.doc.subconturctors + frm.doc.travel + frm.doc.transport + frm.doc.car + frm.doc.asset_loss;
