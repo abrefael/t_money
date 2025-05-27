@@ -150,3 +150,34 @@ def Create_Travel_Report(objective, lst_of_dest, expenses, trip_name):
 	return total
 
 
+@frappe.whitelist()
+def add_travel_expenss(fisc_year, total):
+#	If there is no Income loss report already for the specific year, create it.
+	if not frappe.db.exists("Income Loss Report", fisc_year):
+		doc = frappe.new_doc({"doctype":"Income Loss Report"})
+		doc.title = fisc_year
+		doc.insert(
+			ignore_permissions=True,
+			ignore_links=True, # ignore Link validation in the document
+			ignore_if_duplicate=True, # dont insert if DuplicateEntryError is thrown
+			ignore_mandatory=True # insert even if mandatory fields are not set
+		)
+		doc.db_set("year", int(fisc_year), commit=True)
+	doc = frappe.get_doc('Income Loss Report', fisc_year)
+	curr_val = frappe.db.get_value('Income Loss Report', fisc_year, 'travel')
+#	Add the relative price payed to the relevant expense type
+	doc.db_set('travel', curr_val + total, commit=True))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
