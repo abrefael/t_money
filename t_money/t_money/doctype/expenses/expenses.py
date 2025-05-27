@@ -16,13 +16,13 @@ def add_expenss(fisc_year, actual_sum, sum_var, ex_type):
 #	If there is no Income loss report already for the specific year, create it.
 	if not frappe.db.exists("Income Loss Report", fisc_year):
 		doc = frappe.new_doc("Income Loss Report")
-		doc.title = fisc_year
 		doc.insert(
 			ignore_permissions=True,
 			ignore_links=True, # ignore Link validation in the document
 			ignore_if_duplicate=True, # dont insert if DuplicateEntryError is thrown
 			ignore_mandatory=True # insert even if mandatory fields are not set
 		)
+		doc.db_set("name":fisc_year)
 		doc.db_set("year", int(fisc_year), commit=True)
 	doc = frappe.get_doc('Income Loss Report', fisc_year)
 	ex_type = type_dic[ex_type]
