@@ -5,7 +5,7 @@
 
 
 frappe.ui.form.on('Income Loss Report', {
-	calc(frm) {
+	calc: (frm) {
 		var total_income = 0;
 		var incoms = frm.doc.items;
 //	Calculate the total incom from receipts.
