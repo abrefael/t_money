@@ -11,10 +11,11 @@ var old_sum = 0;
 var old_type = '';
 var old_when = '';
 var old_actual_sum = 0;
+var flag = false;
 
 frappe.ui.form.on('Expenses', {
 	before_save(frm) {
-		if (frm.is_new()) {
+		if ((frm.is_new())||(flag)) {
 	//Every expense has a precentage aknowladged by the IRS as deductable, thus the impact on the losses calculated.
 			var sum_var = frm.doc.sum;
 			var actual_sum = sum_var * frm.doc.impact;
@@ -47,6 +48,7 @@ frappe.ui.form.on('Expenses', {
 			).then(r => {
 				old_sum = r.message.sum;
 				old_actual_sum = r.message.actual_sum;
+				flag = true;
 			 })
 		}
 	}
@@ -61,6 +63,7 @@ frappe.ui.form.on('Expenses', {
 				let when = r.message.when.split('-')[0];
 				if (frm.doc.when != when){
 					old_when = when;
+					flag = true;
 				}
 			 })
 		}
@@ -75,6 +78,7 @@ frappe.ui.form.on('Expenses', {
 			frappe.db.get_doc('Expenses', frm.doc.name, 'type'
 			).then(r => {
 				old_type = r.message.type;
+				flag = true;
 			 })
 		}
 	}
