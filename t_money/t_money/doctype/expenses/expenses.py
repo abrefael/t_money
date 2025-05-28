@@ -13,7 +13,7 @@ class Expenses(Document):
 @frappe.whitelist()
 def add_expenss(fisc_year, actual_sum, sum_var, ex_type):
 	type_dic = {'משרדיות ואחזקה':'office','הוצאות רכב':'car','ביטוח מקצועי והשתלמויות':'insurance','קבלני משנה':'subconturctors','נסיעות (תחב"ץ)':'transport'}
-	sum_var = flt(sum_var)
+	sum_var = float(sum_var)
 #	If there is no Income loss report already for the specific year, create it.
 	if not frappe.db.exists("Income Loss Report", fisc_year):
 		doc = frappe.new_doc("Income Loss Report")
