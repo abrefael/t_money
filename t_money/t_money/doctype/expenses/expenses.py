@@ -34,5 +34,5 @@ def add_expenss(fisc_year, actual_sum, sum_var, ex_type):
 	if ex_type == 'car':
 #	adds the payments for car expenses to the "non-deductable car expenses"
 		curr_val = frappe.db.get_value('Income Loss Report', fisc_year, 'car_non')
-		doc.db_set('car_non', curr_val + sum_var - actual_sum, commit=True)
+		doc.db_set('car_non', sum_var + curr_val - actual_sum, commit=True)
 
