@@ -17,14 +17,14 @@ frappe.ui.form.on('Expenses', {
 		frm.set_value('actual_sum', actual_sum);
 		var when = frm.doc.when;
 		when = when.split('-')[0];
-//		frappe.call({
-//			method: 't_money.t_money.doctype.expenses.expenses.add_expenss',
-//			args: {
-//				"fisc_year": when,
-//				"actual_sum": actual_sum,
-//				"sum_var": sum_var,
-//				"ex_type": frm.doc.type
-//			}
-//		})
+		frappe.call({
+			method: 't_money.t_money.doctype.expenses.expenses.add_expenss',
+			args: {
+				"fisc_year": when,
+				"actual_sum": actual_sum,
+				"sum_var": sum_var,
+				"ex_type": frm.doc.type
+			}
+		})
 	}
 })
