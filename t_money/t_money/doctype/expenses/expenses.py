@@ -16,6 +16,7 @@ def add_expenss(fisc_year, actual_sum, sum_var, ex_type, old_sum, old_actual_sum
 	sum_var = float(sum_var)
 	actual_sum = float(actual_sum)
 	old_sum = float(old_sum)
+	old_actual_sum = float(old_actual_sum)
 	ex_type = type_dic[ex_type]
 #	If there is no Income loss report already for the specific year, create it.
 	def create_doc(fisc_year):
@@ -37,12 +38,12 @@ def add_expenss(fisc_year, actual_sum, sum_var, ex_type, old_sum, old_actual_sum
 			curr_val = 0.0
 		else:
 			doc = frappe.get_doc('Income Loss Report', fisc_year)
-			curr_val = frappe.db.get_value('Income Loss Report', fisc_year, ex_type)
+			curr_val = float(frappe.db.get_value('Income Loss Report', fisc_year, ex_type))
 #	Add the relative price payed to the relevant expense type
 		doc.db_set(ex_type, actual_sum + curr_val, commit=True)
 		if ex_type == 'car':
 #	adds the payments for car expenses to the "non-deductable car expenses"
-			curr_val = frappe.db.get_value('Income Loss Report', fisc_year, 'car_non')
+			curr_val = float(frappe.db.get_value('Income Loss Report', fisc_year, 'car_non'))
 			doc.db_set('car_non', sum_var + curr_val - actual_sum, commit=True)
 	if not old_type == '':
 		old_type = type_dic[old_type]
