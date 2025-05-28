@@ -11,7 +11,7 @@ frappe.ui.form.on('Expenses', {
 	before_save(frm) {
 //Every expense has a precentage aknowladged by the IRS as deductable, thus the impact on the losses calculated.
 		var sum_var = flt(frm.doc.sum);
-		console.log(sum_var);
+		console.log(typeof(sum_var));
 		var actual_sum = sum_var * frm.doc.impact;
 //We need to update the Income Loss Report...
 		frm.set_value('actual_sum', actual_sum);
