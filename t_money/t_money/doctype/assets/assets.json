@@ -8,7 +8,11 @@
  "engine": "InnoDB",
  "field_order": [
   "calculate",
+  "column_break_rcmz",
+  "u_in_lo_rep",
+  "column_break_rcm",
   "fiscal_year",
+  "sec_i",
   "asset_name",
   "asset_type",
   "purchase_date",
@@ -32,9 +36,26 @@
    "label": "\u05e9\u05e0\u05ea \u05d4\u05de\u05e1 \u05dc\u05d7\u05d9\u05e9\u05d5\u05d1"
   },
   {
+   "fieldname": "sec_i",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_rcm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_rcmz",
+   "fieldtype": "Column Break"
+  },
+  {
    "fieldname": "re_calc",
    "fieldtype": "Button",
    "label": "\u05d7\u05e9\u05d1 \u05de\u05d7\u05d3\u05e9"
+  },
+  {
+   "fieldname": "u_in_lo_rep",
+   "fieldtype": "Button",
+   "label": "\u05e2\u05d3\u05db\u05d5\u05df \u05d3\u05d5\u05d7 \u05e8\u05d5\u05d5\u05d7 \u05d5\u05d4\u05e4\u05e1\u05d3"
   },
   {
    "fieldname": "asset_name",
