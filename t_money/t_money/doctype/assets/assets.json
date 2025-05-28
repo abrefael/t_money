@@ -27,9 +27,16 @@
   "total_loss",
   "current_value",
   "re_calc",
-  "notes"
+  "notes",
+  "flag"
  ],
  "fields": [
+  {
+  "fieldname": "flag",
+  "default": "0",
+  "fieldtype": "Check",
+  "hidden": 1
+  }
   {
    "fieldname": "fiscal_year",
    "fieldtype": "Int",
