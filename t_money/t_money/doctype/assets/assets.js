@@ -26,8 +26,43 @@ frappe.ui.form.on('Assets', {
 frappe.ui.form.on('Assets', {
 	re_calc(frm) {
 		var prev_total_loss = frm.doc.prev_total_loss;
-		perform_calc(frm, prev_total_loss)
+		perform_calc(frm, prev_total_loss);
 		frm.save();
+	}
+});
+
+frappe.ui.form.on('Assets', {
+	u_in_lo_rep(frm) {
+		if (frm.doc.flag == 0){
+			frm.set_value('flag',1);
+			//We need to update the Income Loss Report...
+			frappe.db.get_value(
+				'Income Loss Report',
+				String(frm.doc.fiscal_year),
+				'asset_loss').then(r => {
+					asset_loss = r.message.asset_loss;
+					frappe.db.set_value(
+						'Income Loss Report',
+						String(frm.doc.fiscal_year),
+						'asset_loss',
+						frm.doc.loss_requested + asset_loss)
+				)};
+			frm.save();
+		}
+		else {
+			frappe.msgprint({
+				title: __('לא ניתן לעדכן שנית'),
+				message: __('<p style="direction: rtl; text-align: right">דוח רווח והפסד עודכן כבר,</p> \
+				<p style="direction: rtl; text-align: right">אם נדרש לתקן יש למחוק את החישוב הנוכחי וליצור מחדש</p>')
+				primary_action: {
+					'label': 'מחיקת חישוב',
+					'server_action': 't_money.t_money.doctype.assets.assets.del_frm',
+				}
+				'args': {
+				'frm_name': frm.doc.name
+				}
+			});
+		}
 	}
 });
 
@@ -48,18 +83,9 @@ function perform_calc(frm, prev_total_loss){
 //Otherwise, we calculate the loss as a precentage of the current value (after losses)
 		frm.set_value ('loss_requested', frm.doc.total * frm.doc.rate_loss  / 100);
 	}
-//We need to update the Income Loss Report...
-	frappe.db.set_value(
-		'Income Loss Report',
-		String(frm.doc.fiscal_year),
-		'asset_loss',
-		frm.doc.loss_requested + frappe.db.get_value(
-			'Income Loss Report',
-			String(frm.doc.fiscal_year),
-			'asset_loss')
-		)
 	frm.set_value('total_loss', frm.doc.loss_requested + prev_total_loss);
 	frm.set_value('current_value', frm.doc.total - frm.doc.total_loss);
 }
+
 
 
