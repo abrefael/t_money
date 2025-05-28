@@ -36,7 +36,7 @@
   "default": "0",
   "fieldtype": "Check",
   "hidden": 1
-  }
+  },
   {
    "fieldname": "fiscal_year",
    "fieldtype": "Int",
