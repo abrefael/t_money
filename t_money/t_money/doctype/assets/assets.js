@@ -53,13 +53,13 @@ frappe.ui.form.on('Assets', {
 			frappe.msgprint({
 				title: __('לא ניתן לעדכן שנית'),
 				message: __('<p style="direction: rtl; text-align: right">דוח רווח והפסד עודכן כבר,</p> \
-				<p style="direction: rtl; text-align: right">אם נדרש לתקן יש למחוק את החישוב הנוכחי וליצור מחדש</p>')
+				<p style="direction: rtl; text-align: right">אם נדרש לתקן יש למחוק את החישוב הנוכחי וליצור מחדש</p>'),
 				primary_action: {
 					'label': 'מחיקת חישוב',
 					'server_action': 't_money.t_money.doctype.assets.assets.del_frm',
-				}
-				'args': {
-				'frm_name': frm.doc.name
+					'args': {
+					'frm_name': frm.doc.name
+					}
 				}
 			});
 		}
