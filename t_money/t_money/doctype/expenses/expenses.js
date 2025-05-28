@@ -19,8 +19,8 @@ frappe.ui.form.on('Expenses', {
 			method: 't_money.t_money.doctype.expenses.expenses.add_expenss',
 			args: {
 				"fisc_year": when,
-				"actual_sum": actual_sum,
-				"sum_var": frm.doc.sum,
+				"actual_sum": flt(actual_sum),
+				"sum_var": flt(frm.doc.sum),
 				"ex_type": frm.doc.type
 			}
 		})
