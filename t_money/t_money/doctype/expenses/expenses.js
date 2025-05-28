@@ -44,7 +44,7 @@ frappe.ui.form.on('Expenses', {
 frappe.ui.form.on('Expenses', {
 	sum(frm) {
 		if (!frm.is_new()) {
-			frappe.db.get_doc('Expenses', frm.doc.name, ['sum','actual_sum']
+			frappe.db.get_value('Expenses', frm.doc.name, ['sum','actual_sum']
 			).then(r => {
 				old_sum = r.message.sum;
 				old_actual_sum = r.message.actual_sum;
@@ -58,7 +58,7 @@ frappe.ui.form.on('Expenses', {
 frappe.ui.form.on('Expenses', {
 	when(frm) {
 		if (!frm.is_new()) {
-			frappe.db.get_doc('Expenses', frm.doc.name, 'when'
+			frappe.db.get_value('Expenses', frm.doc.name, 'when'
 			).then(r => {
 				let when = r.message.when.split('-')[0];
 				if (frm.doc.when != when){
@@ -75,7 +75,7 @@ frappe.ui.form.on('Expenses', {
 frappe.ui.form.on('Expenses', {
 	type(frm) {
 		if (!frm.is_new()) {
-			frappe.db.get_doc('Expenses', frm.doc.name, 'type'
+			frappe.db.get_value('Expenses', frm.doc.name, 'type'
 			).then(r => {
 				old_type = r.message.type;
 				flag = true;
