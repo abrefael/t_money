@@ -153,6 +153,7 @@ def Create_Travel_Report(objective, lst_of_dest, expenses, trip_name):
 @frappe.whitelist()
 def add_travel_expenss(fisc_year, total):
 #	If there is no Income loss report already for the specific year, create it.
+	total = frappe.utils.flt(total)
 	if not frappe.db.exists("Income Loss Report", fisc_year):
 		doc = frappe.new_doc({"doctype":"Income Loss Report"})
 		doc.title = fisc_year
@@ -164,7 +165,7 @@ def add_travel_expenss(fisc_year, total):
 		)
 		doc.db_set("year", int(fisc_year), commit=True)
 	doc = frappe.get_doc('Income Loss Report', fisc_year)
-	curr_val = frappe.db.get_value('Income Loss Report', fisc_year, 'travel')
+	curr_val = frappe.utils.flt(frappe.db.get_value('Income Loss Report', fisc_year, 'travel'))
 #	Add the relative price payed to the relevant expense type
 	doc.db_set('travel', curr_val + total, commit=True)
 
