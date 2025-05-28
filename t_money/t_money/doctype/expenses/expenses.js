@@ -7,9 +7,13 @@
 // 	},
 // });
 
+var old_sum = 0;
+var old_type = '';
+var old_when = '';
+
 frappe.ui.form.on('Expenses', {
 	before_save(frm) {
-		if (!frm.is_new()) {
+		if (frm.is_dirty()) {
 	//Every expense has a precentage aknowladged by the IRS as deductable, thus the impact on the losses calculated.
 			var sum_var = frm.doc.sum;
 			var actual_sum = sum_var * frm.doc.impact;
@@ -23,9 +27,52 @@ frappe.ui.form.on('Expenses', {
 					"fisc_year": when,
 					"actual_sum": actual_sum,
 					"sum_var": sum_var,
-					"ex_type": frm.doc.type
+					"ex_type": frm.doc.type,
+					"old_sum": old_sum,
+					"old_type":old_type,
+					"old_when":old_when
 				}
 			})
 		}
 	}
 })
+
+
+frappe.ui.form.on('Expenses', {
+	sum(frm) {
+		if (!frm.is_new()) {
+			frappe.db.get_doc('Expenses', frm.doc.name, 'sum'
+			).then(r => {
+				old_sum = r.message.sum;
+			 })
+		}
+	}
+});
+
+
+frappe.ui.form.on('Expenses', {
+	when(frm) {
+		if (!frm.is_new()) {
+			frappe.db.get_doc('Expenses', frm.doc.name, 'when'
+			).then(r => {
+				let when = r.message.when.split('-')[0];
+				if (frm.doc.when != when){
+					old_when = when;
+				}
+			 })
+		}
+	}
+});
+
+
+
+frappe.ui.form.on('Expenses', {
+	type(frm) {
+		if (!frm.is_new()) {
+			frappe.db.get_doc('Expenses', frm.doc.name, 'type'
+			).then(r => {
+				old_type = r.message.type;
+			 })
+		}
+	}
+});
