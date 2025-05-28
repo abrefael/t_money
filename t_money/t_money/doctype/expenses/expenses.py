@@ -28,9 +28,7 @@ def add_expenss(fisc_year, actual_sum, sum_var, ex_type):
 		doc.db_set("year", int(fisc_year), commit=True)
 	doc = frappe.get_doc('Income Loss Report', fisc_year)
 	ex_type = type_dic[ex_type]
-	actual_sum = float(actual_sum)
-	curr_val = float(frappe.db.get_value('Income Loss Report', fisc_year, ex_type))
-	sum_var = float(sum_var)
+	curr_val = frappe.db.get_value('Income Loss Report', fisc_year, ex_type)
 #	Add the relative price payed to the relevant expense type
 	doc.db_set(ex_type, actual_sum, commit=True)
 	if ex_type == 'car':
