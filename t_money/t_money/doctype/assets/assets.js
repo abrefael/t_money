@@ -46,7 +46,7 @@ frappe.ui.form.on('Assets', {
 						String(frm.doc.fiscal_year),
 						'asset_loss',
 						frm.doc.loss_requested + asset_loss)
-				)};
+				});
 			frm.save();
 		}
 		else {
