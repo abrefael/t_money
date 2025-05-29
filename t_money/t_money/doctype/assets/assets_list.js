@@ -1,5 +1,4 @@
 frappe.listview_settings['Assets'] = {
-
 	onload: function (listview) {
 		listview.page.add_inner_button(__("מחיקת חישוב פחת"), function () {
 			$.each(listview.get_checked_items(), function(key, value) {
