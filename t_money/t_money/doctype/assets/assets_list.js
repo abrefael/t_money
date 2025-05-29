@@ -12,7 +12,7 @@ function test( listview )
         listview.page.add_inner_button("Button Name", function() {
             ButtonFunction(listview);
         });;
-    },
+    }
 //	let names=[];
 //	$.each(listview.get_checked_items(), function(key, value) {
 //		names.push(value.name);
