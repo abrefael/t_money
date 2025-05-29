@@ -60,7 +60,6 @@ frappe.ui.form.on('Assets', {
 					'args': {
 						'frm_name': frm.doc.name
 					},
-					'hide_on_success': True,
 					'client_action': 'location.href(window.location.origin + "/app/assets")'
 				}
 			});
