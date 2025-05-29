@@ -11,8 +11,6 @@ frappe.listview_settings['Assets'] = {
 					}
 				});
 			});
-//        .addClass("btn-warning").css({'color':'darkred','font-weight': 'normal'});
-        // The .addClass above is optional.  It just adds styles to the button.
-    });
-}
+		});
+	}
 }
