@@ -6,13 +6,10 @@ frappe.listview_settings['Assets'].onload = function(listview) {
     }
  };
 
-function test( listview )
-{
-    refresh: function(listview) {
-        listview.page.add_inner_button("Button Name", function() {
-            ButtonFunction(listview);
-        });;
-    }
+function ButtonFunction(listview) {
+     console.log("ButtonFunction");
+     frappe.msgprint("ButtonFunction");
+}
 //	let names=[];
 //	$.each(listview.get_checked_items(), function(key, value) {
 //		names.push(value.name);
@@ -22,4 +19,4 @@ function test( listview )
 //	}
 //			
 //	frappe.msgprint( names );
-}
+//}
