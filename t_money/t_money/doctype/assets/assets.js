@@ -55,12 +55,14 @@ frappe.ui.form.on('Assets', {
 				message: __('<p style="direction: rtl; text-align: right">דוח רווח והפסד עודכן כבר,</p> \
 				<p style="direction: rtl; text-align: right">אם נדרש לתקן יש למחוק את החישוב הנוכחי וליצור מחדש</p>'),
 				primary_action: {
-					'label': 'מחיקת חישוב',
-					'server_action': 't_money.t_money.doctype.assets.assets.del_frm',
-					'args': {
-						'frm_name': frm.doc.name
+					label: 'מחיקת חישוב',
+					server_action: 't_money.t_money.doctype.assets.assets.del_frm',
+					args: {
+						frm_name: frm.doc.name
 					},
-					'client_action': 'location.href = window.location.origin + "/app/assets";'
+					client_action: () => {
+						window.location.href = window.location.origin + "/app/assets";
+					}
 				}
 			});
 		}
