@@ -58,9 +58,10 @@ frappe.ui.form.on('Assets', {
 					'label': 'מחיקת חישוב',
 					'server_action': 't_money.t_money.doctype.assets.assets.del_frm',
 					'args': {
-					'frm_name': frm.doc.name,
+						'frm_name': frm.doc.name
+					},
+					'hide_on_success': True,
 					'client_action': 'location.href(window.location.origin + "/app/assets")'
-					}
 				}
 			});
 		}
