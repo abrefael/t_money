@@ -11,11 +11,11 @@ frappe.listview_settings['Assets'] = {
 								method:'t_money.t_money.doctype.assets.assets.del_frm',
 								args: {
 									frm_name: frm_name
-								}
+								},
 								callback: function() {
 									listview.refresh();
 								}
-							})
+							});
 						}
 						else {
 							frappe.db.delete_doc('Assets', frm_name);
