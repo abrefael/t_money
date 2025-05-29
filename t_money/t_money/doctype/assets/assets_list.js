@@ -18,7 +18,9 @@ frappe.listview_settings['Assets'] = {
 						}
 						else {
 							frappe.db.delete_doc('Assets', frm_name);
-							listview.refresh();
+							setTimeout(() => {
+								listview.refresh();
+							}, 1000);
 						}
 					});
 			});
