@@ -7,7 +7,7 @@ frappe.listview_settings['Assets'] = {
 				frappe.call({
 					method:'t_money.t_money.doctype.assets.assets.del_frm',
 					args: {
-						frm_name: frm.doc.name
+						frm_name: value.name
 					}
 				});
 			});
