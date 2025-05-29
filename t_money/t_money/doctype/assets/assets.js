@@ -60,20 +60,21 @@ frappe.ui.form.on('Assets', {
 //					args: {
 //						frm_name: frm.doc.name
 //					},
-					client_action: () => {
-						frappe.call({method:'t_money.t_money.doctype.assets.assets.del_frm',
-						args: {
-							frm_name: frm.doc.name
-						}
-					}).then(r => {
-						window.location.href = window.location.origin + "/app/assets";
-					});
+					action: () => {
+						frappe.call({
+							method:'t_money.t_money.doctype.assets.assets.del_frm',
+							args: {
+								frm_name: frm.doc.name
+							},
+							callback: function() {
+								window.location.href = window.location.origin + "/app/assets";
+							}
+						});
 					}
-						
 				}
 			});
 		}
-	}
+	}	
 });
 
 
