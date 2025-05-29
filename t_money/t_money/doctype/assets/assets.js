@@ -59,8 +59,8 @@ frappe.ui.form.on('Assets', {
 					'server_action': 't_money.t_money.doctype.assets.assets.del_frm',
 					'args': {
 						'frm_name': frm.doc.name
-					},
-					'client_action': 'location.href(window.location.origin + "/app/assets")'
+					}//,
+					//'client_action': 'location.href(window.location.origin + "/app/assets")'
 				}
 			});
 		}
