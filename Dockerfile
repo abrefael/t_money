@@ -5,7 +5,7 @@ FROM frappe/build:${FRAPPE_BRANCH} AS builder
 
 USER root
 RUN apt update && \
-    apt install libreoffice-writer-nogui -y &&\
+    apt install libreoffice-writer-nogui file -y &&\
     rm -rf /var/lib/apt/lists/*
 
 USER frappe
