@@ -234,7 +234,7 @@ function build_the_receipt(frm,origin,q_num){
 				notes = frm.doc.notes;
 			}
 			var discount = frm.doc.discount;
-			var when = frm.doc.when;
+			var when = frm.doc.receipt_date;
 			when = when.split('-')[0];
 			frappe.call({method:'t_money.t_money.doctype.receipt.receipt.Create_Receipt',
 			args: {
