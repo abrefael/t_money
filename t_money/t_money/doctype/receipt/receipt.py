@@ -104,8 +104,8 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 		price = itm.price
 		quant = itm.quant
 		cost = price * quant
-		if cost > high_impact:
-			high_impact = cost
+		if cost > high_price:
+			high_price = cost
 			most_impact = prod
 		row_number = populate_items(prod, desc, f"{price:,.2f} ₪", str(quant), f"{cost:,.2f} ₪", row_number)
 		total = total + cost
