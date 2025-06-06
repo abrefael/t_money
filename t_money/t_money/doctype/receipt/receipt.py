@@ -20,6 +20,7 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 			ignore_if_duplicate=True, # dont insert if DuplicateEntryError is thrown
 			ignore_mandatory=True # insert even if mandatory fields are not set
 		)
+		doc.db_set("name", fisc_year, commit=True)
 		doc.db_set("year", int(fisc_year), commit=True)
 	import odfdo, json, os
 	from datetime import datetime
