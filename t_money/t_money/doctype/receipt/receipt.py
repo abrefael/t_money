@@ -12,7 +12,7 @@ class Receipt(Document):
 @frappe.whitelist()
 def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 	if not frappe.db.exists("Income Loss Report", fisc_year):
-		doc = frappe.new_doc({"doctype":"Income Loss Report"})
+		doc = frappe.new_doc("Income Loss Report")
 		doc.title = fisc_year
 		doc.insert(
 			ignore_permissions=True,
