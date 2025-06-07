@@ -310,7 +310,7 @@ frappe.ui.form.on('Receipt', {
 
 frappe.ui.form.on('Receipt', {
 	cancel_r(frm) {
-		var when = frm.doc.when;
+		var when = frm.doc.receipt_date;
 		when = when.split('-')[0];
 		frappe.call({method:'t_money.t_money.doctype.receipt.receipt.cancel_receipt',
 		args: {
