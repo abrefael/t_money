@@ -237,7 +237,7 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 def cancel_receipt(q_num, fisc_year):
 	frappe.db.set_value('Receipt', q_num, 'caceled', 1)
 	frappe.db.commit()
-	most_impact, total = frappe.db.get_value('Receipt', q_num, 'most_impact','total')
+	most_impact, total = frappe.db.get_value('Receipt', q_num, ['most_impact','total'])
 	total = frappe.utils.flt(total)
 	total = frappe.utils.flt(frappe.db.get_value("Income Child Table", {'parent':fisc_year,'item':most_impact},'sum')) - total
 	frappe.db.set_value("Income Child Table", {'parent':fisc_year,'item':most_impact},'sum', total)
