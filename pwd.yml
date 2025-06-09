@@ -150,7 +150,7 @@ services:
         source: ./assets
         target: /home/frappe/assets
     ports:
-      - port_num
+      - $port_num:8080
 
   queue-long:
     image: tmoney/accounting
