@@ -76,6 +76,8 @@ echo "port_num=$port_num" > .env
 
 if [ $1=='-r' ]; then
  echo "db_backup=$(get_backup_files)" >> .env;
+else
+ echo db_backup="NO" >> .env;
 fi
 
 create_site=$(docker ps -a | grep "${PWD##*/}")
