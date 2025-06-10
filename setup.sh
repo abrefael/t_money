@@ -7,7 +7,7 @@ get_backup_files() {
 for entry in backups/*; do
   entry=$(basename "$entry")
   file_name="backups/$entry";
-  if [ "$entry"==".files" ] || [[ "$entry"==*"site_config"*]]; then
+  if [ "$entry"==".files" ] || [[ "$entry"==*"site_config"* ]]; then
    echo "$entry found. Doing nothing";
   elif [[ "$entry"==*"database"* ]]; then
    read -rp "$entry found. Is it a database backup file? [Y\n]" ans;
