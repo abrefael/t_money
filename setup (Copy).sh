@@ -1,46 +1,53 @@
 #!/bin/bash
 
-get_lorem_ipsum(){
+get_lorem_ipsum() {
  get_lorem_ipsum="";
  i=1;
- for entry in $(ls backups/); do
+ for entry in backups/*; do
+  entry=$(basename "$entry")
   file_name="backups/$entry";
-  if [ $entry=='.files' ] || [[ $entry==*"lorem"*]]; then
+  if [ "$entry"==".files" ] || [[ "$entry"==*"lorem"*]]; then
    echo "$entry found. Doing nothing";
-  elif [[ $entry==*"ipsum_do"* ]]; then
+  elif [[ "$entry"==*"ipsum_do"* ]]; then
    read -rp "$entry found. Is it a ipsum_do backup file? [Y\n]" ans;
-   if [[ ${ans,,}=='y' ]] || [[ $ans=='' ]]; then
-    get_lorem_ipsum="${get_lorem_ipsum}backup/$entry ";
+   if [[ "${ans,,}" == "y" || -z "$ans" ]]; then
+    get_lorem_ipsum+="backup/$entry ";
    else
 #    I don't know yet
-  elif [[ $entry==*"lorem-ipsum"* ]]; then
+   fi
+  elif [[ "$entry"==*"lorem-ipsum"* ]]; then
    read -rp "$entry found. Is it a backup of lorem ipsums? [Y\n]" ans;
-   if [[ ${ans,,}=='y' ]] || [[ $ans=='' ]]; then
-    get_lorem_ipsum="${get_lorem_ipsum}--lorem-ipsum-pipsum backup/$entry ";
+   if [[ "${ans,,}" == "y" || -z "$ans" ]]; then
+    get_lorem_ipsum+="--lorem-ipsum-pipsum backup/$entry ";
    else
 #    I don't know yet
-  elif [[ $entry==*"lorem"* ]]; then
+   fi
+  elif [[ "$entry"==*"lorem"* ]]; then
    read -rp "$entry found. Is it a backup of ipsum lorem? [Y\n]" ans;
-   if [[ ${ans,,}=='y' ]] || [[ $ans=='' ]]; then
-    get_lorem_ipsum="${get_lorem_ipsum}--lorem-ipsum-do backup/$entry ";
+   if [[ "${ans,,}" == "y" || -z "$ans" ]]; then
+    get_lorem_ipsum+="--lorem-ipsum-do backup/$entry ";
    else
 #    I don't know yet
+   fi
   else
    if [ $i==1 ]; then
     read -rp "Please supply a filename of the ipsum_do backup." ans;
-    get_lorem_ipsum="${get_lorem_ipsum}backup/$ans ";
-    ((i=i+1));
+    get_lorem_ipsum+="backup/$ans ";
+    ((i++));
    elif [ $i==2 ]; then
     read -rp "Now, please supply a filename of the ipsum pipisum lorem. Leave blanck if none." ans;
     if [ $ans=='' ]; then
      read -rp "Now, please supply a filename of the lorem ipsum backup." ans;
-     get_lorem_ipsum="${get_lorem_ipsum}--lorem-ipsum-do backup/$ans ";
+     get_lorem_ipsum+="--lorem-ipsum-do backup/$ans ";
     else
-     get_lorem_ipsum="${get_lorem_ipsum}--lorem-ipsum-pipsum backup/$ans ";
-    ((i=i+1));
+     get_lorem_ipsum+="--lorem-ipsum-pipsum backup/$ans ";
+    fi
+    ((i++));
    elif [ $i==3 ]; then
     read -rp "Please supply a filename of the private files backup." ans;
-    get_lorem_ipsum="${get_lorem_ipsum}--lorem-ipsum-do backup/$ans ";
+    get_lorem_ipsum+="--lorem-ipsum-do backup/$ans ";
+   fi
+  fi
  done
  echo $get_lorem_ipsum
 }
