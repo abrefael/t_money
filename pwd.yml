@@ -98,7 +98,7 @@ services:
          if [ "$db_backup" == "NO" ]; then
           echo "No databse to restore";
          else
-          bench restore --force --db-root-username=root --db-root-password=admin --admin-password=admin$db_backup;
+          bench restore --force --db-root-username=root --db-root-password=admin --admin-password=admin $db_backup;
          fi
         fi;
         bench migrate;
