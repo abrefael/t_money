@@ -1,48 +1,56 @@
 #!/bin/bash
 
-get_backup_files(){
- get_backup_files="";
+get_backup_files() {
+ get_backup_files=" ";
  i=1;
- for entry in $(ls backups/); do
+ 
+for entry in backups/*; do
+  entry=$(basename "$entry")
   file_name="backups/$entry";
-  if [ $entry=='.files' ] || [[ $entry==*"site_config"*]]; then
+  if [ "$entry"==".files" ] || [[ "$entry"==*"site_config"*]]; then
    echo "$entry found. Doing nothing";
-  elif [[ $entry==*"database"* ]]; then
+  elif [[ "$entry"==*"database"* ]]; then
    read -rp "$entry found. Is it a database backup file? [Y\n]" ans;
-   if [[ ${ans,,}=='y' ]] || [[ $ans=='' ]]; then
-    get_backup_files="${get_backup_files}backup/$entry ";
+   if [[ "${ans,,}" == "y" || -z "$ans" ]]; then
+    get_backup_files+="backup/$entry ";
    else
 #    I don't know yet
-  elif [[ $entry==*"private-files"* ]]; then
+   fi
+  elif [[ "$entry"==*"private-files"* ]]; then
    read -rp "$entry found. Is it a backup of private files? [Y\n]" ans;
-   if [[ ${ans,,}=='y' ]] || [[ $ans=='' ]]; then
-    get_backup_files="${get_backup_files}--with-private-files backup/$entry ";
+   if [[ "${ans,,}" == "y" || -z "$ans" ]]; then
+    get_backup_files+="--with-private-files backup/$entry ";
    else
 #    I don't know yet
-  elif [[ $entry==*"files"* ]]; then
+   fi
+  elif [[ "$entry"==*"files"* ]]; then
    read -rp "$entry found. Is it a backup of public files? [Y\n]" ans;
-   if [[ ${ans,,}=='y' ]] || [[ $ans=='' ]]; then
-    get_backup_files="${get_backup_files}--with-public-files backup/$entry ";
+   if [[ "${ans,,}" == "y" || -z "$ans" ]]; then
+    get_backup_files+="--with-public-files backup/$entry ";
    else
 #    I don't know yet
+   fi
   else
    if [ $i==1 ]; then
     echo "No backup files could be recognized automaticaly. You will nedd to supply the filenames."
     read -rp "Please supply a filename of the database backup." ans;
-    get_backup_files="${get_backup_files}backup/$ans ";
-    ((i=i+1));
+    get_backup_files+="backup/$ans ";
+    ((i++));
    elif [ $i==2 ]; then
     echo "We need to know if you have public files backup? [Y\n]"
     read -rp "Now, please supply a filename of the public files backup. Leave blanck if none." ans;
     if [ $ans=='' ]; then
      read -rp "Now, please supply a filename of the private files backup." ans;
-     get_backup_files="${get_backup_files}--with-private-files backup/$ans ";
+     get_backup_files+="--with-private-files backup/$ans ";
     else
-     get_backup_files="${get_backup_files}--with-public-files backup/$ans ";
-    ((i=i+1));
+     get_backup_files+="--with-public-files backup/$ans ";
+    fi
+    ((i++));
    elif [ $i==3 ]; then
     read -rp "Please supply a filename of the private files backup." ans;
-    get_backup_files="${get_backup_files}--with-private-files backup/$ans ";
+    get_backup_files+="--with-private-files backup/$ans ";
+   fi
+  fi
  done
  echo $get_backup_files
 }
@@ -67,7 +75,7 @@ fi
 echo "port_num=$port_num" > .env
 
 if [ $1=='-r' ]; then
- get_backup_files() >> .env;
+ echo "db_backup=$(get_backup_files)" >> .env;
 fi
 
 create_site=$(docker ps -a | grep "${PWD##*/}")
