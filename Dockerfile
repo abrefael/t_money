@@ -3,11 +3,6 @@ ARG FRAPPE_PATH=https://github.com/frappe/frappe
 
 FROM frappe/build:${FRAPPE_BRANCH} AS builder
 
-USER root
-RUN apt update && \
-    apt install libreoffice-writer-nogui file -y &&\
-    rm -rf /var/lib/apt/lists/*
-
 USER frappe
 
 RUN bench init \
@@ -27,14 +22,26 @@ USER frappe
 
 COPY --from=builder --chown=frappe:frappe /home/frappe/frappe-bench /home/frappe/frappe-bench
 
+
+COPY --chown=frappe:frappe backups /home/frappe/frappe-bench/backups
+
+
+USER root
+
+RUN apt-get update && apt-get install --no-install-recommends file libreoffice-writer -y && \
+    rm -rf /var/lib/apt/lists 
+
+
+USER frappe
 ARG CACHEBUST=1
 
 RUN echo "$CACHEBUST" && \
     cd /home/frappe/frappe-bench && \
     bench get-app --resolve-deps https://github.com/abrefael/t_money.git
-	
+
+
 WORKDIR /home/frappe/frappe-bench
-	
+
 VOLUME [ \
   "/home/frappe/frappe-bench/sites", \
   "/home/frappe/frappe-bench/sites/assets", \
