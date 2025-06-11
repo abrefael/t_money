@@ -69,28 +69,31 @@ EOF
  exit
 fi
 
+create_site=$(docker ps -a | grep "${PWD##*/}")
 
-read -p "Please enter port number [8080]: " port_num
-if [ -z "$port_num" ] ; then
- port_num=8080;
+if [ -z "$create_site" ] ; then
+ mkdir -p output;
+ mkdir -p assets;
+ read -p "Please enter port number [8080]: " port_num;
+ if [ -z "$port_num" ] ; then
+  port_num=8080;
+ fi
+ echo "port_num=$port_num" > .env;
+ echo "create_site=\"\"" >> .env;
+ else
+  echo "create_site=\"don't\"" >> .env;
 fi
-
-echo "port_num=$port_num" > .env
 
 if [ "$1" == "-r" ]; then
  echo "db_backup=\"$(get_backup_files)\"" >> .env;
-else
- echo db_backup="NO" >> .env;
 fi
 
-create_site=$(docker ps -a | grep "${PWD##*/}")
-echo "create_site=$create_site" >> .env
-
-mkdir -p output
-mkdir -p assets
 if [ -f Dockerfile ]; then 
-  docker build --build-arg CACHEBUST=$(date +%s) --tag=tmoney/accounting .;
+ docker build --build-arg CACHEBUST=$(date +%s) --tag=tmoney/accounting .;
 fi
-
 
 docker compose -f pwd.yml up --force-recreate -d
+sleep 2;
+
+sed -i '/^create_site/d' .env
+sed -i '/^db_backup/d' .env
