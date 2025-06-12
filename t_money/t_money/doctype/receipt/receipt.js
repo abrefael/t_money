@@ -246,7 +246,7 @@ function build_the_receipt(frm,origin,q_num){
 			}
 			}).then(r => {
 				location.reload();
-				window.open(`${window.location.origin}/files/accounting/${q_num}(${origin}).pdf`, '_blank').focus();
+				window.open(`${window.location.origin}/files/${q_num}(${origin}).pdf`, '_blank').focus();
 			});
 		}
 
@@ -267,7 +267,7 @@ frappe.ui.form.on('Receipt', {
 				return;
 			}, () => {
 				origin = 'מקור';
-				window.open(`${window.location.origin}/files/accounting/${q_num}(${origin}).pdf`, '_blank').focus();
+				window.open(`${window.location.origin}/files/${q_num}(${origin}).pdf`, '_blank').focus();
 				return;
 			});
 
@@ -319,7 +319,7 @@ frappe.ui.form.on('Receipt', {
 		}
 		}).then(r => {
 			location.reload();
-			window.open(`${window.location.origin}/files/accounting/${q_num}`, '_blank').focus();
+			window.open(`${window.location.origin}/files/${q_num}`, '_blank').focus();
 		});
 	}
 });
