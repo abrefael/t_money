@@ -1,4 +1,3 @@
-# Copyright (c) 2024, Alon Ben Refael and contributors
 # For license information, please see license.txt
 import frappe
 from frappe.model.document import Document
@@ -24,7 +23,7 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 		doc.db_set("year", int(fisc_year), commit=True)
 	import odfdo, json, os
 	from datetime import datetime
-	OUTPUT_DIR = cstr(frappe.local.site) + '/public/files/accounting/'
+	OUTPUT_DIR = cstr(frappe.local.site) + '/public/files/'
 	from odfdo import (
 		Cell,
 		Frame,
@@ -65,7 +64,7 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 	TARGET = q_num + "(" + origin + ").odt"
 	f_uri = frappe.db.get_single_value("Signature", "reupload")
 	if f_uri == '' or f_uri is None:
-		f_uri = "frontend/public/templates/template.odt"
+		f_uri = "assets/template.odt"
 	else:
 		if f_uri.split('/')[1] == 'files':
 			f_uri = cstr(frappe.local.site) + '/public/' + f_uri
@@ -217,7 +216,7 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 	save_new(document,TARGET)
 	if origin == 'מקור':
 		doc.db_set('created', 1, commit=True)
-		doc.db_set('attached_file', '/files/accounting/' + q_num + "(" + origin + ").pdf", commit=True)
+		doc.db_set('attached_file', '/files/' + q_num + "(" + origin + ").pdf", commit=True)
 		incoms = frappe.db.get_all("Income Child Table", {'parent':fisc_year},['item','sum'])
 		for inc in incoms:
 			if inc['item'] == most_impact:
@@ -247,7 +246,7 @@ def cancel_receipt(q_num, fisc_year):
 	import os
 	try:
 		OUTPUT_DIR = os.getcwd() + '/' + cstr(frappe.local.site) + '/public/files/'
-		src_file = OUTPUT_DIR + "accounting/" + q_num + '(מקור).pdf'
+		src_file = OUTPUT_DIR + q_num + '(מקור).pdf'
 		cancel_file = "assets/t_money/canceled.pdf"
 		stamp = PdfReader(cancel_file).pages[0]
 		writer = PdfWriter(clone_from=src_file)
