@@ -46,7 +46,7 @@ frappe.ui.form.on('Receipt', {
 						default: ''
 					}
 				],
-				size: 'small', // small, large, extra-large 
+				size: 'large', // small, large, extra-large 
 				primary_action_label: 'שלח',
 				primary_action(values) {
 					values.q_num = q_num;
