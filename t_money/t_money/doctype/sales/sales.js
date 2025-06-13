@@ -43,7 +43,7 @@ frappe.ui.form.on('Sales', {
 					{
 						label: 'תוכן',
 						fieldname: 'mail_text',
-						fieldtype: 'Text',
+						fieldtype: 'Text Editor',
 						default: ''
 					}
 				],
