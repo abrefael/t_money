@@ -268,7 +268,7 @@ def cancel_receipt(q_num, fisc_year):
 		writer.write(src_file)
 	except:
 		pass
-		
+
 @frappe.whitelist()
 def send_mail(recipient, subject, mail_text, q_num):
 	import os
