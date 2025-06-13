@@ -29,7 +29,7 @@ def Create_Invoice(q_num, objective, notes):
 	def save_new(document: Document, name: str, q_num):
 		new_path = '/tmp/' + name
 		document.save(new_path, pretty=True)
-		os.makedirs(OUTPUT_DIR), exist_ok=True))
+		os.makedirs((OUTPUT_DIR), exist_ok=True)
 		os.system(f"/usr/bin/soffice --headless --convert-to pdf:writer_pdf_Export --outdir {OUTPUT_DIR} '{new_path}'")
 		f_name = name.split('.')[0] + '.pdf'
 		f_path = OUTPUT_DIR + '/' + f_name
