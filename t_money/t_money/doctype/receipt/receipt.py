@@ -77,7 +77,7 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 	TARGET = q_num + "(" + origin + ").odt"
 	f_uri = frappe.db.get_single_value("Signature", "reupload")
 	if f_uri == '' or f_uri is None:
-		f_uri = "assets/template.odt"
+		f_uri = "assets/t_money/template.odt"
 	else:
 		if f_uri.split('/')[1] == 'files':
 			f_uri = cstr(frappe.local.site) + '/public/' + f_uri
