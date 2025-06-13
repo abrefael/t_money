@@ -12,7 +12,7 @@ class Sales(Document):
 @frappe.whitelist()
 def Create_Quotation(q_num, objective, notes):
 	import odfdo, json, os
-	OUTPUT_DIR = os.getcwd() + '/' + cstr(frappe.local.site) + '/public/files/accounting/'
+	OUTPUT_DIR = os.getcwd() + '/' + cstr(frappe.local.site) + '/public/files/temp'
 	from odfdo import (
 		Cell,
 		Frame,
@@ -69,10 +69,11 @@ def Create_Quotation(q_num, objective, notes):
 	TARGET = q_num + ".odt"
 	f_uri = frappe.db.get_single_value("Signature", "reupload")
 	if f_uri == '' or f_uri is None:
-		document = Document("frontend/public/templates/template.odt")
+		f_uri = "assets/template.odt"
 	else:
 		if f_uri.split('/')[1] == 'files':
-			document = cstr(frappe.local.site) + '/public/' + f_uri
+			f_uri = cstr(frappe.local.site) + '/public/' + f_uri
+	document = Document(f_uri)
 	body = document.body
 	doc = frappe.get_doc('Sales', q_num)
 	paragraph = Paragraph(doc.creation.strftime('%d/%m/%Y'), style="head_of_file")
@@ -168,7 +169,7 @@ def Create_Quotation(q_num, objective, notes):
 	paragraph.append(image_frame)
 	body.append(paragraph)
 	save_new(document,TARGET)
-	frappe.db.set_value('Sales', q_num,'attached_file', '/files/accounting/' + q_num + '.pdf')
+	frappe.db.set_value('Sales', q_num,'attached_file', '/files/' + q_num + '.pdf')
 	frappe.db.commit()
 
 @frappe.whitelist()
@@ -182,7 +183,7 @@ def send_mail(recipient, subject, mail_text, q_num):
 	doc.file_url = file_url
 	doc.insert()
 	name = frappe.db.get_value("File", {"file_name":f_name},'name')
-	frappe.db.set_value("File", name,'file_url','/files/accounting/' + f_name)
+	frappe.db.set_value("File", name,'file_url','/files/' + f_name)
 	frappe.db.set_value('Sales', q_num,'attached_file', file_url)
 	frappe.db.commit()
 	os.remove(f_url.replace("/accounting",""))
