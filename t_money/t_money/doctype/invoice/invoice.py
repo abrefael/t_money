@@ -66,10 +66,10 @@ def Create_Invoice(q_num, objective, notes):
 	TARGET = q_num + ".odt"
 	f_uri = frappe.db.get_single_value("Signature", "reupload")
 	if f_uri == '' or f_uri is None:
-		document = Document("frontend/public/templates/template.odt")
+		f_uri = "assets/t_money/template.odt"
 	else:
 		if f_uri.split('/')[1] == 'files':
-			document = cstr(frappe.local.site) + '/public/' + f_uri
+			f_uri = cstr(frappe.local.site) + '/public/' + f_uri
 	body = document.body
 	doc = frappe.get_doc('Invoice', q_num)
 	paragraph = Paragraph(doc.creation.strftime('%d/%m/%Y'), style="head_of_file")
