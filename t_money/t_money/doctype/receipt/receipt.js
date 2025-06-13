@@ -42,7 +42,7 @@ frappe.ui.form.on('Receipt', {
 					{
 						label: 'תוכן',
 						fieldname: 'mail_text',
-						fieldtype: 'Text',
+						fieldtype: 'Text Editor',
 						default: ''
 					}
 				],
