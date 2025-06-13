@@ -23,7 +23,7 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 		doc.db_set("year", int(fisc_year), commit=True)
 	import odfdo, json, os
 	from datetime import datetime
-	OUTPUT_DIR = cstr(frappe.local.site) + '/public/files/'
+	OUTPUT_DIR = cstr(frappe.local.site) + '/public/files/temp'
 	from odfdo import (
 		Cell,
 		Frame,
@@ -36,10 +36,21 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 		create_table_cell_style,
 	)
 	def save_new(document: Document, name: str):
-		new_path = OUTPUT_DIR + name
+		new_path = '/tmp/' + name
 		document.save(new_path, pretty=True)
+		os.makedirs(OUTPUT_DIR), exist_ok=True))
 		os.system(f"/usr/bin/soffice --headless --convert-to pdf:writer_pdf_Export --outdir {OUTPUT_DIR} '{new_path}'")
-		
+		f_name = name.split('.')[0] + '.pdf'
+		f_path = OUTPUT_DIR + '/' + f_name
+		f_url = '/files/temp/' + f_name
+		doc = frappe.new_doc('File')
+		doc.file_url = f_url
+		doc.file_name = f_name
+		doc.is_private = 0
+		doc.insert()
+		frappe.db.commit()
+		os.remove(f_path)
+
 	def populate_items(prod, desc, val, quant, cost, row_number):
 		row = Row()
 		row.set_value("A", prod)
