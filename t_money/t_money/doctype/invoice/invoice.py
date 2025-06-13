@@ -14,7 +14,7 @@ class Invoice(Document):
 @frappe.whitelist()
 def Create_Invoice(q_num, objective, notes):
 	import odfdo, json, os
-	OUTPUT_DIR = os.getcwd() + '/' + cstr(frappe.local.site) + '/public/files/accounting/'
+	OUTPUT_DIR = os.getcwd() + '/' + cstr(frappe.local.site) + '/public/files/temp/'
 	from odfdo import (
 		Cell,
 		Frame,
@@ -26,10 +26,22 @@ def Create_Invoice(q_num, objective, notes):
 		Style,
 		create_table_cell_style,
 	)
-	def save_new(document: Document, name: str):
-		new_path = OUTPUT_DIR + name
+	def save_new(document: Document, name: str, q_num):
+		new_path = '/tmp/' + name
 		document.save(new_path, pretty=True)
+		os.makedirs(OUTPUT_DIR), exist_ok=True))
 		os.system(f"/usr/bin/soffice --headless --convert-to pdf:writer_pdf_Export --outdir {OUTPUT_DIR} '{new_path}'")
+		f_name = name.split('.')[0] + '.pdf'
+		f_path = OUTPUT_DIR + '/' + f_name
+		f_url = '/files/temp/' + f_name
+		doc = frappe.new_doc('File')
+		doc.file_url = f_url
+		doc.file_name = f_name
+		doc.is_private = 0
+		doc.insert()
+		frappe.db.set_value('Receipt', q_num,'attached_file', '/files/' + f_name)
+		frappe.db.commit()
+		os.remove(f_path)
 	def populate_items(prod, desc, val, quant, cost, row_number):
 		row = Row()
 		row.set_value("A", prod)
@@ -159,24 +171,14 @@ def Create_Invoice(q_num, objective, notes):
 @frappe.whitelist()
 def send_mail(recipient, subject, mail_text, q_num):
 	import os
-	f_url = 'frontend/public/files/accounting/' + q_num + '.pdf'
-	doc = frappe.new_doc('File')
-	f_name = f_url.split("/")[-1]
-	doc.file_name = f_name
-	file_url = "/files/accounting/" + f_name
-	doc.file_url = file_url
-	doc.insert()
-	name = frappe.db.get_value("File", {"file_name":f_name},'name')
-	frappe.db.set_value("File", name,'file_url','/files/accounting/' + f_name)
-	frappe.db.set_value('Sales', q_num,'attached_file', file_url)
-	frappe.db.commit()
-	os.remove(f_url.replace("/accounting",""))
+	f_url = frappe.db.get_value('Invoice', q_num,'attached_file')
+	sender, sender_mail = frappe.db.get_list("Email Account", ['email_id','name'], filters = [["email_id", "NOT LIKE", "%example.com"]],as_list=True)[0]
 	frappe.sendmail(
 		recipients=[recipient],
-		sender="Yaft Ben Refael <yfatfrechter@gmail.com>",
+		sender=sender + '<' + sender_mail + '>',
 		subject=subject,
 		message=mail_text,
-		attachments=[{"file_url": "/files/accounting/" + q_num + ".pdf"}],
-		as_markdown=False,
+		attachments=[{"file_url": f_url}],
+		as_markdown=True,
 		delayed=False
 		)
