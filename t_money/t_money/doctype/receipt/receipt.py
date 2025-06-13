@@ -10,6 +10,7 @@ class Receipt(Document):
 
 @frappe.whitelist()
 def Create_Receipt(q_num, origin, objective, fisc_year, notes):
+	import os
 	if not frappe.db.exists("Income Loss Report", fisc_year):
 		doc = frappe.new_doc("Income Loss Report")
 		doc.title = fisc_year
@@ -35,7 +36,7 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 		Style,
 		create_table_cell_style,
 	)
-	def save_new(document: Document, name: str):
+	def save_new(document: Document, name: str, q_num):
 		new_path = '/tmp/' + name
 		document.save(new_path, pretty=True)
 		os.makedirs(OUTPUT_DIR), exist_ok=True))
@@ -48,6 +49,7 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 		doc.file_name = f_name
 		doc.is_private = 0
 		doc.insert()
+		frappe.db.set_value('Receipt', q_num,'attached_file', '/files/' + f_name)
 		frappe.db.commit()
 		os.remove(f_path)
 
@@ -224,7 +226,7 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 	paragraph = Paragraph("", style="ltr")
 	paragraph.append(image_frame)
 	body.append(paragraph)
-	save_new(document,TARGET)
+	save_new(document,TARGET,q_num)
 	if origin == 'מקור':
 		doc.db_set('created', 1, commit=True)
 		doc.db_set('attached_file', '/files/' + q_num + "(" + origin + ").pdf", commit=True)
@@ -266,3 +268,18 @@ def cancel_receipt(q_num, fisc_year):
 		writer.write(src_file)
 	except:
 		pass
+		
+@frappe.whitelist()
+def send_mail(recipient, subject, mail_text, q_num):
+	import os
+	f_url = frappe.db.get_value('Receipt', q_num,'attached_file')
+	sender, sender_mail = frappe.db.get_list("Email Account", ['email_id','name'], filters = [["email_id", "NOT LIKE", "%example.com"]],as_list=True)[0]
+	frappe.sendmail(
+		recipients=[recipient],
+		sender=sender + '<' + sender_mail + '>',
+		subject=subject,
+		message=mail_text,
+		attachments=[{"file_url": f_url}],
+		as_markdown=True,
+		delayed=False
+		)
