@@ -66,13 +66,17 @@ usage: ./setup.sh [-r][-h|--help]
 -r		activate site restore process, where you are prompted for
 		the files that contains the different backup files.
 		In order for you to perform a restore process, you will need:
+		
 		1. A database backup file. It's name should be
 		{something}database{something else}.sql or .sql.gz.
+		
 		2. Optional: A Public Files backup file. It's name should be
 		{something}files{something else}.tar or .tar.gz.";
 		It must *NOT* contain the string "private-files"!
+		
 		3. Optional: A Private Files backup file. It's name should be
 		{something}private-files{something else}.tar or .tar.gz.
+		
 		
 -h		Also --help, shows this prompt.
 
