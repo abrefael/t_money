@@ -166,7 +166,7 @@ frappe.ui.form.on('Receipt', {
 					addChild.quant = src_lst[i].quant;
 					frm.refresh_field('item_list');
 				}
-				frm.save();
+//				frm.save();
 			});
 		}
 	}
