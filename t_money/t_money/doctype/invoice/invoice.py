@@ -165,7 +165,7 @@ def Create_Invoice(q_num, objective, notes):
 	paragraph = Paragraph("", style="ltr")
 	paragraph.append(image_frame)
 	body.append(paragraph)
-	save_new(document,TARGET)
+	save_new(document,TARGET,q_num)
 	frappe.db.set_value('Invoice', q_num,'attached_file', '/files/accounting/' + q_num + '.pdf')
 	frappe.db.commit()
 
