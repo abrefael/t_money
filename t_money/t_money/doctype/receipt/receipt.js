@@ -127,6 +127,7 @@ frappe.ui.form.on('Receipt', {
 				.then(r => {
 					let sum = r.message.sum;
 					let discount = r.message.discount;
+					console.log(discount);
 					if (N == 1){
 						frm.set_value('discount', discount);
 						frm.refresh_field('discount');
