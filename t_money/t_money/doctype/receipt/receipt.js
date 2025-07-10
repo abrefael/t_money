@@ -123,7 +123,7 @@ frappe.ui.form.on('Receipt', {
 			else{
 				dtype = 'Invoice';
 			}
-			frappe.db.get_value(dtype, itm, ['discount'])
+			frappe.db.get_value(dtype, itm, ['discount','sum'])
 				.then(r => {
 					let sum = r.message.sum;
 					let discount = r.message.discount;
