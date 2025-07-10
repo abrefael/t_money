@@ -223,6 +223,14 @@ frappe.ui.form.on('Receipt', {
 frappe.ui.form.on('Receipt', {
 	create_draft(frm) {
 		frm.save();
+		var pay_method = frm.doc.pay_method;
+		if ((pay_method != "מזומן")||(pay_method.includes("אפליקציה להעברת כסף"))){
+			frappe.msgprint({
+				title: __('שימו לב'),
+				indicator: 'green',
+				message: __('האם יש לרשום מספר אסמכתא?')
+			});
+		}
 		build_the_receipt(frm,'טיוטה',frm.doc.name);
 	}
 });
@@ -260,6 +268,15 @@ frappe.ui.form.on('Receipt', {
 	creat_receipt(frm) {
 		if (frm.doc.caceled){
 			frappe.throw(__('<p style="direction: rtl; text-align: right">זו קבלה מבוטלת! אין להפיקה מחדש! נא לשכפל את הקבלה מתפריט "..." ולהפיק קבלה חדשה.'));
+			return;
+		}
+		var pay_method = frm.doc.pay_method;
+		if (((pay_method != "מזומן")||(pay_method.includes("אפליקציה להעברת כסף")))&&(frm.doc.reference == "000")){
+			frappe.msgprint({
+				title: __('שימו לב'),
+				indicator: 'red',
+				message: __('יש לרשום מספר אסמכתא!')
+			});
 			return;
 		}
 		var origin;
