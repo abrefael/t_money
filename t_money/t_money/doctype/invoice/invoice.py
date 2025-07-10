@@ -70,6 +70,7 @@ def Create_Invoice(q_num, objective, notes):
 	else:
 		if f_uri.split('/')[1] == 'files':
 			f_uri = cstr(frappe.local.site) + '/public/' + f_uri
+	document = Document(f_uri)
 	body = document.body
 	doc = frappe.get_doc('Invoice', q_num)
 	paragraph = Paragraph(doc.creation.strftime('%d/%m/%Y'), style="head_of_file")
