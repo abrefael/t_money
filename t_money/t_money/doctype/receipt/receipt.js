@@ -165,6 +165,7 @@ frappe.ui.form.on('Receipt', {
 					var addChild = frm.add_child("item_list");
 					addChild.item = src_lst[i].item;
 					addChild.quant = src_lst[i].quant;
+					addChild.price = src_lst[i].price;
 					frm.refresh_field('item_list');
 				}
 			});
@@ -228,31 +229,31 @@ frappe.ui.form.on('Receipt', {
 
 
 function build_the_receipt(frm,origin,q_num){
-			var items = frm.doc.item_list;
-			var notes;
-			var highest_sum = 0;
-			if (!frm.doc.notes){
-				notes='';
-			}
-			else{
-				notes = frm.doc.notes;
-			}
-			var discount = frm.doc.discount;
-			var when = frm.doc.receipt_date;
-			when = when.split('-')[0];
-			frappe.call({method:'t_money.t_money.doctype.receipt.receipt.Create_Receipt',
-			args: {
-			'q_num': q_num,
-			'origin': origin,
-			'objective':"קבלה מס'",
-			"fisc_year": when,
-			'notes': notes
-			}
-			}).then(r => {
-				location.reload();
-				window.open(`${window.location.origin}/files/${q_num}(${origin}).pdf`, '_blank').focus();
-			});
-		}
+	var items = frm.doc.item_list;
+	var notes;
+	var highest_sum = 0;
+	if (!frm.doc.notes){
+		notes='';
+	}
+	else{
+		notes = frm.doc.notes;
+	}
+	var discount = frm.doc.discount;
+	var when = frm.doc.receipt_date;
+	when = when.split('-')[0];
+	frappe.call({method:'t_money.t_money.doctype.receipt.receipt.Create_Receipt',
+	args: {
+	'q_num': q_num,
+	'origin': origin,
+	'objective':"קבלה מס'",
+	"fisc_year": when,
+	'notes': notes
+	}
+	}).then(r => {
+		location.reload();
+		window.open(`${window.location.origin}/files/${q_num}(${origin}).pdf`, '_blank').focus();
+	});
+}
 
 
 frappe.ui.form.on('Receipt', {
