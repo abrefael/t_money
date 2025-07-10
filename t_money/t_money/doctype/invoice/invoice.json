@@ -13,6 +13,7 @@
   "client",
   "section_break_I",
   "item_list",
+  "itm_sec",
   "calc_sum",
   "discount",
   "column_break_I",
@@ -61,6 +62,10 @@
   },
   {
    "fieldname": "section_break_I",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "itm_sec",
    "fieldtype": "Section Break"
   },
   {
