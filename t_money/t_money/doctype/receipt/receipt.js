@@ -90,7 +90,7 @@ frappe.ui.form.on('Receipt', {
 	}
 });
 
-
+var sum_discount = 0;
 
 
 frappe.ui.form.on('Receipt', {
@@ -131,6 +131,7 @@ frappe.ui.form.on('Receipt', {
 					if (N == 1){
 						frm.set_value('discount', discount);
 						frm.refresh_field('discount');
+						sum_discount = discount;
 					}
 					else{
 					let q_v;
@@ -166,7 +167,6 @@ frappe.ui.form.on('Receipt', {
 					addChild.quant = src_lst[i].quant;
 					frm.refresh_field('item_list');
 				}
-//				frm.save();
 			});
 		}
 	}
@@ -179,6 +179,9 @@ function calculate_sum(frm){
 	var highest_sum = 0;
 	var discounted_sum = 0;
 	var discount = frm.doc.discount;
+	if (discount == 0){
+		discount = sum_discount;
+	}
 	for (let i = 0; i < items.length; i++){
 		let row = items[i];
 		let quant = row.quant;
