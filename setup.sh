@@ -101,7 +101,7 @@ fi
 
 if [ "$1" == "-r" ]; then
  get_backup_files=$(get_backup_files)
- if [ $get_backup_files == 1]; then
+ if [ $get_backup_files == 1 ]; then
   echo "Please make sure you have up to three files for your backup:";
   echo "1. A database backup file. It's name should be {something}database{something else}.sql or .sql.gz.";
   echo "This is a mandatory file.";
