@@ -87,7 +87,7 @@
    "fieldname": "brench",
    "fieldtype": "Int",
    "label": "\u05e1\u05e0\u05d9\u05e3 (\u05de\u05e1\u05e4\u05e8)",
-   "default": 00
+   "default": 0
   },
   {
    "fieldname": "account_num",
