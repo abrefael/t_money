@@ -231,12 +231,27 @@ frappe.ui.form.on('Receipt', {
 				message: __('האם יש לרשום מספר אסמכתא?')
 			});
 		}
-		build_the_receipt(frm,'טיוטה',frm.doc.name);
+		build_the_receipt(frm,'טיוטה',frm.doc.name,pay_method);
 	}
 });
 
 
-function build_the_receipt(frm,origin,q_num){
+function build_the_receipt(frm,origin,q_num,pay_method){
+console.log(pay_method);
+	function call_Create_Receipt(){
+		frappe.call({method:'t_money.t_money.doctype.receipt.receipt.Create_Receipt',
+			args: {
+				'q_num': q_num,
+				'origin': origin,
+				'objective':"קבלה מס'",
+				"fisc_year": when,
+				'notes': notes
+			}
+		}).then(r => {
+			location.reload();
+			window.open(`${window.location.origin}/files/${q_num}(${origin}).pdf`, '_blank').focus();
+		});
+	}
 	var items = frm.doc.item_list;
 	var notes;
 	var highest_sum = 0;
@@ -249,19 +264,48 @@ function build_the_receipt(frm,origin,q_num){
 	var discount = frm.doc.discount;
 	var when = frm.doc.receipt_date;
 	when = when.split('-')[0];
-	frappe.call({method:'t_money.t_money.doctype.receipt.receipt.Create_Receipt',
-	args: {
-	'q_num': q_num,
-	'origin': origin,
-	'objective':"קבלה מס'",
-	"fisc_year": when,
-	'notes': notes
+	if ((pay_method == "העברה בנקאית") ||(pay_method == "המחאה")){
+		frappe.db.get_value(
+			'Clients',
+			frm.doc.client,
+			['bank','brench','account_num']
+		).then(r => {
+			let res = r.message;
+			if (res.bank = ''){
+				frappe.msgprint({
+					title: __('שימו לב'),
+					indicator: 'red',
+					message: __('לא נבחר בנק, נא להכנס לפרטי לקוח לעדכן!')
+				});
+				return;
+			}
+			else if (res.brench = 0){
+				frappe.msgprint({
+					title: __('שימו לב'),
+					indicator: 'red',
+					message: __('לא צויין מספר סניף בנק, נא להכנס לפרטי לקוח לעדכן!')
+				});
+				return;
+			}
+			else if (res.account_num = ''){
+				frappe.msgprint({
+					title: __('שימו לב'),
+					indicator: 'red',
+					message: __('לא צויין מספר חשבון בנק, נא להכנס לפרטי לקוח לעדכן!')
+				});
+				return;
+			}
+			else {
+				call_Create_Receipt();
+			}
+		});
 	}
-	}).then(r => {
-		location.reload();
-		window.open(`${window.location.origin}/files/${q_num}(${origin}).pdf`, '_blank').focus();
-	});
+	else {
+		call_Create_Receipt();
+	}
 }
+
+
 
 
 frappe.ui.form.on('Receipt', {
@@ -285,14 +329,13 @@ frappe.ui.form.on('Receipt', {
 			origin = 'העתק נאמן למקור';
 			frappe.confirm('<p style="direction: rtl; text-align: right">קבלת מקור הופקה, האם להפיק עותק?<p style="direction: rtl; text-align: right">(בחירה ב-No תציג את הקבלה המקורית)',
 			() => {
-				build_the_receipt(frm,origin,q_num);
+				build_the_receipt(frm,origin,q_num,pay_method);
 				return;
 			}, () => {
 				origin = 'מקור';
 				window.open(`${window.location.origin}/files/${q_num}(${origin}).pdf`, '_blank').focus();
 				return;
 			});
-
 		}
 		else{
 			origin = 'מקור';
@@ -301,14 +344,14 @@ frappe.ui.form.on('Receipt', {
 				flag = false;
 				frappe.confirm(total_discounts + 'בטוחים שרוצים להמשיך?',
 				() => {
-					build_the_receipt(frm,origin,q_num);
+					build_the_receipt(frm,origin,q_num,pay_method);
 					return;
 				}, () => {
 					return;
 				});
 			}
 			else{
-				build_the_receipt(frm,origin,q_num);
+				build_the_receipt(frm,origin,q_num,pay_method);
 			}
 		}
 	}
