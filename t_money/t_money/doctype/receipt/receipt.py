@@ -78,23 +78,22 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 	f_uri = frappe.db.get_single_value("Signature", "reupload")
 	if f_uri == '' or f_uri is None:
 		f_uri = "assets/t_money/template.odt"
-		document = Document(f_uri)
-		body = document.body
-		doc = frappe.get_doc('Receipt', q_num)
-		paragraph = Paragraph(doc.creation.strftime('%d/%m/%Y'), style="head_of_file")
-		body.append(paragraph)
-		title1 = Header(1, f"{objective}: {q_num}")
-		body.append(title1)
-		paragraph = Paragraph(origin, style="head_of_file")
-		body.append(paragraph)
-		title1 = Header(2, f"עבור: {doc.client}")
-		body.append(title1)
-		title1 = Header(2, f"ע.מ/ת.ז/ע\"ר: {doc.h_p}")
-		body.append(title1)
 	else:
 		if f_uri.split('/')[1] == 'files':
 			f_uri = cstr(frappe.local.site) + '/public/' + f_uri
-		document = Document(f_uri)
+	document = Document(f_uri)
+	body = document.body
+	doc = frappe.get_doc('Receipt', q_num)
+	paragraph = Paragraph(doc.creation.strftime('%d/%m/%Y'), style="head_of_file")
+	body.append(paragraph)
+	title1 = Header(1, f"{objective}: {q_num}")
+	body.append(title1)
+	paragraph = Paragraph(origin, style="head_of_file")
+	body.append(paragraph)
+	title1 = Header(2, f"עבור: {doc.client}")
+	body.append(title1)
+	title1 = Header(2, f"ע.מ/ת.ז/ע\"ר: {doc.h_p}")
+	body.append(title1)
 	body.append(Paragraph(""))
 	body.append(Paragraph(""))
 	itms = frappe.db.sql(f"SELECT * FROM `tabItem Child List` WHERE parent='{q_num}'",as_dict=1)
