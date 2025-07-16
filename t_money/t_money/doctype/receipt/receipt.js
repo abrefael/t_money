@@ -237,7 +237,6 @@ frappe.ui.form.on('Receipt', {
 
 
 function build_the_receipt(frm,origin,q_num,pay_method){
-console.log(pay_method);
 	function call_Create_Receipt(){
 		frappe.call({method:'t_money.t_money.doctype.receipt.receipt.Create_Receipt',
 			args: {
@@ -264,7 +263,8 @@ console.log(pay_method);
 	var discount = frm.doc.discount;
 	var when = frm.doc.receipt_date;
 	when = when.split('-')[0];
-	if ((pay_method == "העברה בנקאית") ||(pay_method == "המחאה")){
+	if ((pay_method == "העברה בנקאית") || (pay_method == "המחאה")){
+		console.log(pay_method);
 		frappe.db.get_value(
 			'Clients',
 			frm.doc.client,
