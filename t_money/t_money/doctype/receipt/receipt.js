@@ -263,8 +263,7 @@ function build_the_receipt(frm,origin,q_num,pay_method){
 	var discount = frm.doc.discount;
 	var when = frm.doc.receipt_date;
 	when = when.split('-')[0];
-	if ((pay_method == "העברה בנקאית") || (pay_method == "המחאה")){
-		console.log(pay_method);
+	if ((pay_method == "העברה בנקאית") || (pay_method == "המחאה") || (pay_method == "כרטיס דביט")){
 		frappe.db.get_value(
 			'Clients',
 			frm.doc.client,
