@@ -271,6 +271,7 @@ function build_the_receipt(frm,origin,q_num,pay_method){
 			['bank','brench','account_num']
 		).then(r => {
 			let res = r.message;
+			console.log(res);
 			if (res.bank = ''){
 				frappe.msgprint({
 					title: __('שימו לב'),
