@@ -229,13 +229,9 @@ frappe.ui.form.on('Receipt', {
 				title: __('שימו לב'),
 				indicator: 'green',
 				message: __('האם יש לרשום מספר אסמכתא?')
-			}).then(r => {
-			build_the_receipt(frm,'טיוטה',frm.doc.name,pay_method);
-			)};
+			});
 		}
-		else{ 
-			build_the_receipt(frm,'טיוטה',frm.doc.name,pay_method);
-		}
+		build_the_receipt(frm,'טיוטה',frm.doc.name,pay_method);
 	}
 });
 
@@ -276,26 +272,29 @@ function build_the_receipt(frm,origin,q_num,pay_method){
 		).then(r => {
 			let res = r.message;
 			console.log(res);
-			if (res.bank = ''){
+			if (res.bank == ''){
 				frappe.msgprint({
 					title: __('שימו לב'),
 					indicator: 'red',
 					message: __('לא נבחר בנק, נא להכנס לפרטי לקוח לעדכן!')
-				}).then(r => {return;})
+				});
+				return;
 			}
-			else if (res.brench = 0){
+			else if (res.brench == 0){
 				frappe.msgprint({
 					title: __('שימו לב'),
 					indicator: 'red',
 					message: __('לא צויין מספר סניף בנק, נא להכנס לפרטי לקוח לעדכן!')
-				}).then(r => {return;})
+				});
+				return;
 			}
-			else if (res.account_num = ''){
+			else if (res.account_num == '00'){
 				frappe.msgprint({
 					title: __('שימו לב'),
 					indicator: 'red',
 					message: __('לא צויין מספר חשבון בנק, נא להכנס לפרטי לקוח לעדכן!')
-				}).then(r => {return;})
+				});
+				return;
 			}
 			else {
 				call_Create_Receipt();
