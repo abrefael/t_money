@@ -23,7 +23,7 @@ USER frappe
 COPY --from=builder --chown=frappe:frappe /home/frappe/frappe-bench /home/frappe/frappe-bench
 
 
-COPY --chown=frappe:frappe backups /home/frappe/frappe-bench/backups
+#COPY --chown=frappe:frappe backups /home/frappe/frappe-bench/backups
 
 
 USER root
