@@ -228,7 +228,7 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 	save_new(document,TARGET,q_num)
 	if origin == 'מקור':
 		doc.db_set('created', 1, commit=True)
-		doc.db_set('attached_file', '/files/' + q_num + "(" + origin + ").pdf", commit=True)
+#		doc.db_set('attached_file', '/files/' + q_num + "(" + origin + ").pdf", commit=True)
 		incoms = frappe.db.get_all("Income Child Table", {'parent':fisc_year},['item','sum'])
 		for inc in incoms:
 			if inc['item'] == most_impact:
