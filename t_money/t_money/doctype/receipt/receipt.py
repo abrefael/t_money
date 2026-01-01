@@ -250,7 +250,7 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 def cancel_receipt(q_num, fisc_year):
 	frappe.db.set_value('Receipt', q_num, 'caceled', 1)
 	frappe.db.commit()
-	most_impact, total = frappe.db.get_value('Receipt', q_num, ['most_impact','total'])
+	most_impact, total, r_name = frappe.db.get_value('Receipt', q_num, ['most_impact','total','attached_file'])
 	total = frappe.utils.flt(total)
 	total = frappe.utils.flt(frappe.db.get_value("Income Child Table", {'parent':fisc_year,'item':most_impact},'sum')) - total
 	frappe.db.set_value("Income Child Table", {'parent':fisc_year,'item':most_impact},'sum', total)
@@ -259,8 +259,7 @@ def cancel_receipt(q_num, fisc_year):
 	from pypdf import PdfWriter, PdfReader
 	import os
 	try:
-		OUTPUT_DIR = os.getcwd() + '/' + cstr(frappe.local.site) + '/public/files/'
-		src_file = OUTPUT_DIR + q_num + '(מקור).pdf'
+		src_file = os.getcwd() + '/' + cstr(frappe.local.site) + '/' r_name
 		cancel_file = "assets/t_money/canceled.pdf"
 		stamp = PdfReader(cancel_file).pages[0]
 		writer = PdfWriter(clone_from=src_file)
