@@ -41,6 +41,7 @@ def build_template():
 		Style
 	)
 	import os
+	from frappe import cstr
 	f_uri = frappe.db.get_single_value("Signature", "reupload")
 	if f_uri == '' or f_uri is None:
 		f_uri = "frontend/public/templates/template.odt"
