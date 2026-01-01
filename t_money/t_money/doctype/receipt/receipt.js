@@ -237,7 +237,7 @@ frappe.ui.form.on('Receipt', {
 
 
 function build_the_receipt(frm,origin,q_num,pay_method){
-	function call_Create_Receipt(){
+	function call_Create_Receipt(frm){
 		frappe.call({method:'t_money.t_money.doctype.receipt.receipt.Create_Receipt',
 			args: {
 				'q_num': q_num,
@@ -248,7 +248,7 @@ function build_the_receipt(frm,origin,q_num,pay_method){
 			}
 		}).then(r => {
 			location.reload();
-			window.open(`${window.location.origin}/files/${q_num}(${origin}).pdf`, '_blank').focus();
+			window.open(`${window.location.origin}/${frm.doc.attached_file}`, '_blank').focus();
 		});
 	}
 	var items = frm.doc.item_list;
@@ -296,12 +296,12 @@ function build_the_receipt(frm,origin,q_num,pay_method){
 				return;
 			}
 			else {
-				call_Create_Receipt();
+				call_Create_Receipt(frm);
 			}
 		});
 	}
 	else {
-		call_Create_Receipt();
+		call_Create_Receipt(frm);
 	}
 }
 
