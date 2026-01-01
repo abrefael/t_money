@@ -49,7 +49,7 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 		doc.file_name = f_name
 		doc.is_private = 0
 		doc.insert()
-		frappe.db.set_value('Receipt', q_num,'attached_file', doc.name)
+		frappe.db.set_value('Receipt', q_num,'attached_file', doc.file_url)
 		frappe.db.commit()
 		os.remove(f_path)
 
