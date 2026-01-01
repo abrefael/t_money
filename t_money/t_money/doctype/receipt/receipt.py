@@ -52,6 +52,7 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 		frappe.db.set_value('Receipt', q_num,'attached_file', doc.file_url)
 		frappe.db.commit()
 		os.remove(f_path)
+		return doc.file_url
 
 	def populate_items(prod, desc, val, quant, cost, row_number):
 		row = Row()
@@ -225,7 +226,7 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 	paragraph = Paragraph("", style="ltr")
 	paragraph.append(image_frame)
 	body.append(paragraph)
-	save_new(document,TARGET,q_num)
+	f_url = save_new(document,TARGET,q_num)
 	if origin == 'מקור':
 		doc.db_set('created', 1, commit=True)
 #		doc.db_set('attached_file', '/files/' + q_num + "(" + origin + ").pdf", commit=True)
@@ -242,6 +243,7 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 		})
 		doc.save()
 		frappe.db.commit()
+	return f_url
 
 
 @frappe.whitelist()
