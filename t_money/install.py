@@ -18,15 +18,8 @@ def after_install():
 		html='<iframe src="/app/project-calendar/view/calendar" style="width:100%;height: 850px;"></iframe>',
 		script='',
 		style='';
-		UPDATE
-			tabSingles
-		SET
-			value="T-Money"
-		WHERE
-			doctype="Website Settings"
-		AND
-			field="app_name";
-		""")
+	""")
+	frappe.db.set_value("Website Settings", None, "app_name", "T-Money")
 	frappe.db.commit()
 	file = open(csv_file, 'r')
 	reader = csv.reader(file, delimiter=',')
