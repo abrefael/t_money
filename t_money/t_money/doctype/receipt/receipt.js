@@ -248,7 +248,7 @@ function build_the_receipt(frm,origin,q_num,pay_method){
 			}
 		}).then(r => {
 			location.reload();
-			window.open(`${window.location.origin}/${frm.doc.attached_file}`, '_blank').focus();
+			window.open(`${window.location.origin}/${r.message}`, '_blank').focus();
 		});
 	}
 	var items = frm.doc.item_list;
