@@ -8,6 +8,18 @@
   "build",
   "reupload",
   "sign_img",
+  "sig_img_size_in",
+  "keep_ratio",
+  "ratio_kept_col",
+  "ratio_html_yes",
+  "ratio_html_no",
+  "sig_img_size_col",
+  "width",
+  "height",
+  "units_col",
+  "u_width",
+  "u_height",
+  "sig_img_size_out",
   "op_num",
   "phone_num",
   "email_add",
@@ -15,6 +27,65 @@
   "initials"
  ],
  "fields": [
+  {
+   "fieldname": "ratio_html_yes",
+   "fieldtype": "HTML",
+   "description":"<div>\u0001f512</div>"
+  },
+  {
+   "fieldname": "ratio_html_no",
+   "fieldtype": "HTML",
+   "description":"<div>\u0001f513</div>"
+  },
+  {
+   "default": "1",
+   "fieldname": "keep_ratio",
+   "fieldtype": "Check",
+   "label":"\u05e9\u05de\u05e8 \u05d9\u05d7\u05e1?"
+  },
+  {
+   "fieldname": "u_width",
+   "fieldtype": "Select",
+   "options": "cm\nmm\npx\nin"
+  },
+  {
+   "fieldname": "u_height",
+   "fieldtype": "Select",
+   "options": "cm\nmm\npx\nin"
+  },
+  {
+   "default": "4.40",
+   "fieldname": "width",
+   "fieldtype": "Float",
+   "label": "\u05e8\u05d5\u05d7\u05d1",
+   "precision": "2"
+  },
+  {
+   "default": "2.40",
+   "fieldname": "height",
+   "fieldtype": "Float",
+   "label": "\u05d2\u05d5\u05d1\u05d4",
+   "precision": "2"
+  },
+  {
+   "fieldname": "sig_img_size_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "ratio_kept_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "units_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sig_img_size_in",
+   "fieldtype": "Section Break"
+  },{
+   "fieldname": "sig_img_size_out",
+   "fieldtype": "Section Break"
+  },
   {
    "fieldname": "initials",
    "fieldtype": "Data",
