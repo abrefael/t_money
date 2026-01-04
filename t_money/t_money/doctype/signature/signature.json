@@ -30,12 +30,14 @@
   {
    "fieldname": "ratio_html_yes",
    "fieldtype": "HTML",
-   "options":"<div>🔒</div>"
+   "options":"<div>🔒</div>",
+   "depends_on":"eval:doc.keep_ratio"
   },
   {
    "fieldname": "ratio_html_no",
    "fieldtype": "HTML",
-   "options":"<div>🔓</div>"
+   "options":"<div>🔓</div>",
+   "depends_on":"eval:!doc.keep_ratio"
   },
   {
    "default": "1",
