@@ -30,12 +30,12 @@
   {
    "fieldname": "ratio_html_yes",
    "fieldtype": "HTML",
-   "description":"<div>\u0001f512</div>"
+   "options":"<div>🔒</div>"
   },
   {
    "fieldname": "ratio_html_no",
    "fieldtype": "HTML",
-   "description":"<div>\u0001f513</div>"
+   "options":"<div>🔓</div>"
   },
   {
    "default": "1",
@@ -45,12 +45,14 @@
   },
   {
    "fieldname": "u_width",
+   "default":"cm",
    "fieldtype": "Select",
    "options": "cm\nmm\npx\nin"
   },
   {
    "fieldname": "u_height",
    "fieldtype": "Select",
+   "default":"cm",
    "options": "cm\nmm\npx\nin"
   },
   {
