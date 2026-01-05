@@ -30,20 +30,20 @@
   {
    "fieldname": "ratio_html_yes",
    "fieldtype": "HTML",
-   "options":"<div>🔒</div>",
+   "options":"<div style=\"text-align:center;\"><p style=\"font-size: xx-large\">🔒</p>יחס נשמר</div>",
    "depends_on":"eval:doc.keep_ratio"
   },
   {
    "fieldname": "ratio_html_no",
    "fieldtype": "HTML",
-   "options":"<div>🔓</div>",
+   "options":"<div style=\"text-align:center;\"><p style=\"font-size: xx-large\">🔓</p>יחס לא נשמר</div>",
    "depends_on":"eval:!doc.keep_ratio"
   },
   {
-   "default": "1",
+   "default": 1,
    "fieldname": "keep_ratio",
    "fieldtype": "Check",
-   "label":"\u05e9\u05de\u05e8 \u05d9\u05d7\u05e1?"
+   "label":"שמר יחס?"
   },
   {
    "fieldname": "u_width",
