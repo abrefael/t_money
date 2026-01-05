@@ -9,7 +9,29 @@ frappe.ui.form.on("Signature", {
 		});
 	}
 });
+var ratio = frm.doc.width/frm.doc.height;
 
+frappe.ui.form.on("Signature", {
+	width(frm) {
+		if (frm.doc.keep_ratio){
+			frm.set_value("height",frm.doc.width*ratio);
+		}
+		else{
+			ratio = frm.doc.width/frm.doc.height;
+		}
+	}
+});
+
+frappe.ui.form.on("Signature", {
+	height(frm) {
+		if (frm.doc.keep_ratio){
+			frm.set_value("width",frm.doc.height/ratio)
+		}
+		else{
+			ratio = frm.doc.width/frm.doc.height;
+		}
+	}
+});
 
 frappe.ui.form.on("Signature", {
 	validate(frm) {
