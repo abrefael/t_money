@@ -6,6 +6,8 @@
  "engine": "InnoDB",
  "field_order": [
   "build",
+  "col_i",
+  "initials",
   "reupload",
   "sign_img",
   "sig_img_size_in",
@@ -20,13 +22,21 @@
   "u_width",
   "u_height",
   "sig_img_size_out",
+  "signature",
+  "col_ii",
   "op_num",
   "phone_num",
-  "email_add",
-  "signature",
-  "initials"
+  "email_add"
  ],
  "fields": [
+  {
+   "fieldname": "col_i",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "col_ii",
+   "fieldtype": "Column Break"
+  },
   {
    "fieldname": "ratio_html_yes",
    "fieldtype": "HTML",
