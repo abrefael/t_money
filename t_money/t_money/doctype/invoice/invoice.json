@@ -2,7 +2,7 @@
  "actions": [],
  "allow_rename": 1,
  "allow_import": 1,
- "autoname": "format:I{#####}",
+ "autoname": "format:{r_name}",
  "creation": "2024-05-16 11:12:17.116431",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -22,9 +22,15 @@
   "section_break_II",
   "attached_file",
   "h_p",
-  "notes"
+  "notes",
+  "r_name"
  ],
  "fields": [
+  {
+   "fieldname": "r_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+  },
   {
    "default": "0.00",
    "fieldname": "sum",
