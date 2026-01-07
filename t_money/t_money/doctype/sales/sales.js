@@ -14,7 +14,6 @@ frappe.ui.form.on('Sales', {
 			.then(count => {
 					var name = 'Q' + String(count+6).padStart(5, '0');
 					frm.set_value('r_name', name);
-				});
 			});
 		}
 	}
