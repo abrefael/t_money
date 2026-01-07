@@ -65,24 +65,24 @@ frappe.ui.form.on('Sales', {
 
 frappe.ui.form.on('Sales', {
 	quotation(frm) {
-	    var notes;
-	    if (!frm.doc.notes){
-	        notes='';
-	    }
-	    else{
-	        notes = frm.doc.notes;
-	    }
-	    var q_num = frm.doc.name;
-        frappe.call({method:'t_money.t_money.doctype.sales.sales.Create_Quotation',
-        args: {
-        'q_num': q_num,
-        'objective':"הצעת מחיר מס'",
-        'notes': notes
-        }
-        }).then(r => {
-			location.reload();
-            window.open(`${window.location.origin}/files/accounting/${q_num}.pdf`, '_blank').focus();
-        });
+		var notes;
+		if (!frm.doc.notes){
+			notes='';
+		}
+		else{
+				notes = frm.doc.notes;
+		}
+		var q_num = frm.doc.name;
+		frappe.call({method:'t_money.t_money.doctype.sales.sales.Create_Quotation',
+			args: {
+			'q_num': q_num,
+			'objective':"הצעת מחיר מס'",
+			'notes': notes
+			}
+			}).then(r => {
+				location.reload();
+				window.open(`${window.location.origin}/${r.message}`, '_blank').focus();
+			});
 	}
 });
 
