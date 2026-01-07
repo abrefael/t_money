@@ -9,7 +9,8 @@ frappe.ui.form.on("Signature", {
 		});
 	}
 });
-var ratio = frm.doc.width/frm.doc.height;
+var ratio = cur_frm.doc.width/cur_frm.doc.height;
+console.log([cur_frm.doc.width , cur_frm.doc.height]);
 
 frappe.ui.form.on("Signature", {
 	width(frm) {
