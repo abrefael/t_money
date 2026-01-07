@@ -259,7 +259,7 @@ def cancel_receipt(q_num, fisc_year):
 	from pypdf import PdfWriter, PdfReader
 	import os
 	try:
-		src_file = os.getcwd() + '/' + cstr(frappe.local.site) + '/' r_name
+		src_file = os.getcwd() + '/' + cstr(frappe.local.site) + '/' + r_name
 		cancel_file = "assets/t_money/canceled.pdf"
 		stamp = PdfReader(cancel_file).pages[0]
 		writer = PdfWriter(clone_from=src_file)
