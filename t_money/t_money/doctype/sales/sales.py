@@ -12,7 +12,6 @@ class Sales(Document):
 @frappe.whitelist()
 def Create_Quotation(q_num, objective, notes):
 	import odfdo, json, os
-	from datetime import datetime
 	OUTPUT_DIR = cstr(frappe.local.site) + '/public/files/temp'
 	from odfdo import (
 		Cell,
