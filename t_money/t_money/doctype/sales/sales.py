@@ -83,8 +83,6 @@ def Create_Quotation(q_num, objective, notes):
 	body.append(paragraph)
 	title1 = Header(1, f"{objective}: {q_num}")
 	body.append(title1)
-	paragraph = Paragraph(origin, style="head_of_file")
-	body.append(paragraph)
 	title1 = Header(2, f"עבור: {doc.client}")
 	body.append(title1)
 	title1 = Header(2, f"ע.מ/ת.ז/ע\"ר: {doc.h_p}")
@@ -158,18 +156,18 @@ def Create_Quotation(q_num, objective, notes):
 	image_frame = Frame.image_frame(
 		uri,
 		size=(
-			frappe.db.get_single_value(
+			str(frappe.db.get_single_value(
 				'Signature',
 				'width'
-			) +
+			)) +
 			frappe.db.get_single_value(
 				'Signature',
 				'u_width'
 			),
-			frappe.db.get_single_value(
+			str(frappe.db.get_single_value(
 				'Signature',
 				'height'
-			) +
+			)) +
 			frappe.db.get_single_value(
 				'Signature',
 				'u_height'
