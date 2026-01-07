@@ -5,11 +5,11 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "initials",
+  "build",
   "reupload",
   "sign_img",
   "col_i",
-  "build",
+  "initials",
   "sig_img_size_in",
   "keep_ratio",
   "sig_img_size_col",
