@@ -8,6 +8,21 @@
 // });small_business_accounting
 
 frappe.ui.form.on('Invoice', {
+	onload(frm) {
+		if((!frm.doc.r_name)||(frm.doc.name.includes("new-sales"))){
+		frappe.db.count('Invoice')
+			.then(count => {
+					var name = 'I' + String(count+6).padStart(5, '0');
+					frm.set_value('r_name', name);
+				});
+			});
+		}
+	}
+});
+
+
+
+frappe.ui.form.on('Invoice', {
 	send_mail(frm) {
 		frappe.db.get_value(
 			'Clients',
@@ -31,13 +46,14 @@ frappe.ui.form.on('Invoice', {
 						fieldname: 'recipient',
 						fieldtype: 'Data',
 						options: "Email",
-						"reqd": 1
+						reqd: 1
 					},
 					{
 						label: 'נושא',
 						fieldname: 'subject',
 						fieldtype: 'Data',
-						"reqd": 1
+						reqd: 1,
+						default: "חשבונית עסקה " + q_num
 					},
 					{
 						label: 'תוכן',
@@ -46,7 +62,7 @@ frappe.ui.form.on('Invoice', {
 						default: ''
 					}
 				],
-				size: 'small', // small, large, extra-large 
+				size: 'large', // small, large, extra-large 
 				primary_action_label: 'שלח',
 				primary_action(values) {
 					values.q_num = q_num;
@@ -117,7 +133,8 @@ frappe.ui.form.on('Invoice', {
         'notes': notes
         }
         }).then(r => {
-            window.open(`${window.location.origin}/files/accounting/${q_num}.pdf`, '_blank').focus();
+            location.reload();
+            window.open(`${window.location.origin + r.message}`, '_blank').focus();
         });
 	}
 });
