@@ -385,7 +385,7 @@ frappe.ui.form.on('Receipt', {
 		}
 		}).then(r => {
 			location.reload();
-			window.open(`${window.location.origin}/files/${q_num}`, '_blank').focus();
+			window.open(`${window.location.href}(מבוטלת)`, '_blank').focus();
 		});
 	}
 });
