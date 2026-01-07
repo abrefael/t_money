@@ -43,7 +43,7 @@ def Create_Quotation(q_num, objective, notes):
 		os.remove(f_path)
 		return doc.file_url
 
-	def populate_items(prod, desc, val, quant, cost, row_number):
+	def populate_items(prod, val, quant, cost, row_number):
 		row = Row()
 		row.set_value("A", prod)
 		cell = Cell()
