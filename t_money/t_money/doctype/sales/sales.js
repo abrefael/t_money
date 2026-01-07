@@ -62,7 +62,7 @@ frappe.ui.form.on('Sales', {
 						default: ''
 					}
 				],
-				size: 'small', // small, large, extra-large 
+				size: 'large', // small, large, extra-large 
 				primary_action_label: 'שלח',
 				primary_action(values) {
 					values.q_num = q_num;
@@ -96,7 +96,7 @@ frappe.ui.form.on('Sales', {
 			}
 			}).then(r => {
 				location.reload();
-				window.open(`${window.location.origin}/${r.message}`, '_blank').focus();
+				window.open(`${window.location.origin + r.message}`, '_blank').focus();
 			});
 	}
 });
