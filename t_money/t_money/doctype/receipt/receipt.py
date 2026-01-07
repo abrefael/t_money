@@ -210,7 +210,24 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 		uri = document.add_file(os.getcwd() + '/' + cstr(frappe.local.site) + '/public/' + frappe.db.get_single_value('Signature','sign_img'))
 	image_frame = Frame.image_frame(
 		uri,
-		size=("4.4cm", "2.4cm"),
+		size=(
+			frappe.db.get_single_value(
+				'Signature',
+				'width'
+			) +
+			frappe.db.get_single_value(
+				'Signature',
+				'u_width'
+			),
+			frappe.db.get_single_value(
+				'Signature',
+				'height'
+			) +
+			frappe.db.get_single_value(
+				'Signature',
+				'u_height'
+			)
+		),
 		position=("0cm", "0cm"),
 		anchor_type = "as-char",
 	)
