@@ -14,7 +14,7 @@ class Invoice(Document):
 @frappe.whitelist()
 def Create_Invoice(q_num, objective, notes):
 	import odfdo, json, os
-	OUTPUT_DIR = os.getcwd() + '/' + cstr(frappe.local.site) + '/public/files/temp/'
+	OUTPUT_DIR = cstr(frappe.local.site) + '/public/files/temp'
 	from odfdo import (
 		Cell,
 		Frame,
@@ -39,9 +39,11 @@ def Create_Invoice(q_num, objective, notes):
 		doc.file_name = f_name
 		doc.is_private = 0
 		doc.insert()
-		frappe.db.set_value('Receipt', q_num,'attached_file', '/files/' + f_name)
+		frappe.db.set_value('Sales', q_num,'attached_file', doc.file_url)
 		frappe.db.commit()
 		os.remove(f_path)
+		return doc.file_url
+
 	def populate_items(prod, desc, val, quant, cost, row_number):
 		row = Row()
 		row.set_value("A", prod)
@@ -68,8 +70,8 @@ def Create_Invoice(q_num, objective, notes):
 	if f_uri == '' or f_uri is None:
 		f_uri = "assets/t_money/template.odt"
 	else:
-		if f_uri.split('/')[1] == 'files':
-			f_uri = cstr(frappe.local.site) + '/public/' + f_uri
+		if f_uri.split('/')[0] != 'private':
+			f_uri = cstr(frappe.local.site) + '/public' + f_uri
 	document = Document(f_uri)
 	body = document.body
 	doc = frappe.get_doc('Invoice', q_num)
@@ -119,11 +121,11 @@ def Create_Invoice(q_num, objective, notes):
 		row_number = populate_totals('הנחה',f"{discount:,.2f}  ₪", row_number)
 		total = float(total) - discount
 		row_number = populate_totals('סה"כ אחרי הנחה',f"{total:,.2f}  ₪", row_number)
-	row_number = populate_totals('סה"כ פטור ממע"מ',f"{total:,.2f}  ₪", row_number)
+	row_number = populate_totals('סה"כ פטור ממע"מ',f"{total:,.2f} ₪", row_number)
 	row_number = populate_totals('מע"מ', "0.00", row_number)
 	if total*100%100 > 0:
 		row_number = populate_totals('עיגול אגורות',f"{total:,.0f}  ₪", row_number)
-	row_number = populate_totals('סה"כ לתשלום',f"{total:,.0f}  ₪", row_number)
+	row_number = populate_totals('סה"כ',f"{total:,.0f}  ₪", row_number)
 	cell_style = create_table_cell_style(
 		color="black",
 		background_color=(210, 210, 210),
@@ -149,8 +151,25 @@ def Create_Invoice(q_num, objective, notes):
 		uri = document.add_file(os.getcwd() + '/' + cstr(frappe.local.site) + '/public/' + frappe.db.get_single_value('Signature','sign_img'))
 	image_frame = Frame.image_frame(
 		uri,
-		size=("2.2cm", "1cm"),
-		position=("6cm", "10cm"),
+		size=(
+			str(frappe.db.get_single_value(
+				'Signature',
+				'width'
+			)) +
+			frappe.db.get_single_value(
+				'Signature',
+				'u_width'
+			),
+			str(frappe.db.get_single_value(
+				'Signature',
+				'height'
+			)) +
+			frappe.db.get_single_value(
+				'Signature',
+				'u_height'
+			)
+		),
+		position=("0cm", "0cm"),
 		anchor_type = "as-char",
 	)
 	if not notes == "":
@@ -165,9 +184,7 @@ def Create_Invoice(q_num, objective, notes):
 	paragraph = Paragraph("", style="ltr")
 	paragraph.append(image_frame)
 	body.append(paragraph)
-	save_new(document,TARGET,q_num)
-	frappe.db.set_value('Invoice', q_num,'attached_file', '/files/accounting/' + q_num + '.pdf')
-	frappe.db.commit()
+	return save_new(document,TARGET,q_num)
 
 @frappe.whitelist()
 def send_mail(recipient, subject, mail_text, q_num):
