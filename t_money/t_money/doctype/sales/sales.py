@@ -45,15 +45,9 @@ def Create_Quotation(q_num, objective, notes):
 	def populate_items(prod, val, quant, cost, row_number):
 		row = Row()
 		row.set_value("A", prod)
-		cell = Cell()
-		cell.set_value(val)
-		cell.style = style_name
-		row.set_cell("B", cell)
+		row.set_value("B", val)
 		row.set_value("C", quant)
-		cell = Cell()
-		cell.set_value(cost)
-		cell.style = style_name
-		row.set_cell(3, cell)
+		row.set_value("D", cost)
 		row_number += 1
 		table.set_row(row_number, row)
 		return row_number
