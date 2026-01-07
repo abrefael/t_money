@@ -262,7 +262,7 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 
 
 @frappe.whitelist()
-def cancel_receipt(q_num, fisc_year):
+def cancel_receipt(q_num):
 	frappe.db.set_value('Receipt', q_num, 'caceled', 1)
 	frappe.db.commit()
 	receipt_date,most_impact, total, r_name = frappe.db.get_value('Receipt', q_num, ['receipt_date','most_impact','total','attached_file'])
@@ -274,16 +274,17 @@ def cancel_receipt(q_num, fisc_year):
 	frappe.rename_doc('Receipt', q_num, q_num+'(מבוטלת)', merge=False)
 	from pypdf import PdfWriter, PdfReader
 	import os
-	try:
-		src_file = os.getcwd() + '/' + frappe.cstr(frappe.local.site) + r_name
-		cancel_file = "assets/t_money/canceled.pdf"
-		stamp = PdfReader(cancel_file).pages[0]
-		writer = PdfWriter(clone_from=src_file)
-		for page in writer.pages:
-			page.merge_page(stamp, over=False)
-		writer.write(src_file)
-	except:
-		pass
+#	try:
+	src_file = os.getcwd() + '/' + frappe.cstr(frappe.local.site) + r_name
+	cancel_file = "assets/t_money/canceled.pdf"
+	stamp = PdfReader(cancel_file).pages[0]
+	writer = PdfWriter(clone_from=src_file)
+	for page in writer.pages:
+		page.merge_page(stamp, over=False)
+	writer.write(src_file)
+#	except:
+#		pass
+
 
 @frappe.whitelist()
 def send_mail(recipient, subject, mail_text, q_num):
