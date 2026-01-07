@@ -10,7 +10,7 @@ frappe.ui.form.on("Signature", {
 	}
 });
 var ratio = cur_frm.doc.width/cur_frm.doc.height;
-console.log([cur_frm.doc.width , cur_frm.doc.height]);
+console.log([cur_frm.doc.height , cur_frm.doc.width]);
 
 frappe.ui.form.on("Signature", {
 	width(frm) {
