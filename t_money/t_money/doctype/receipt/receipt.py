@@ -274,17 +274,16 @@ def cancel_receipt(q_num):
 	frappe.rename_doc('Receipt', q_num, q_num+'(מבוטלת)', merge=False)
 	from pypdf import PdfWriter, PdfReader
 	import os
-	try:
-		src_file = os.getcwd() + '/' + frappe.cstr(frappe.local.site) + "public" + r_name
-		cancel_file = "assets/t_money/canceled.pdf"
-		stamp = PdfReader(cancel_file).pages[0]
-		writer = PdfWriter(clone_from=src_file)
-		for page in writer.pages:
-			page.merge_page(stamp, over=False)
-		writer.write(src_file)
-	except:
-		pass
-
+#	try:
+	src_file = os.getcwd() + '/' + frappe.cstr(frappe.local.site) + "public" + r_name
+	cancel_file = "assets/t_money/canceled.pdf"
+	stamp = PdfReader(cancel_file).pages[0]
+	writer = PdfWriter(clone_from=src_file)
+	for page in writer.pages:
+		page.merge_page(stamp, over=False)
+	writer.write(src_file)
+#	except:
+#		pass
 
 @frappe.whitelist()
 def send_mail(recipient, subject, mail_text, q_num):
