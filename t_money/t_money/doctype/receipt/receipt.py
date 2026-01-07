@@ -211,7 +211,7 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 	image_frame = Frame.image_frame(
 		uri,
 		size=("4.4cm", "2.4cm"),
-		position=("6cm", "10cm"),
+		position=("0cm", "0cm"),
 		anchor_type = "as-char",
 	)
 	if not notes == "":
