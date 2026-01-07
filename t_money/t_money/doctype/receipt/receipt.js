@@ -31,13 +31,14 @@ frappe.ui.form.on('Receipt', {
 						fieldname: 'recipient',
 						fieldtype: 'Data',
 						options: "Email",
-						"reqd": 1
+						reqd: 1
 					},
 					{
 						label: 'נושא',
 						fieldname: 'subject',
 						fieldtype: 'Data',
-						"reqd": 1
+						reqd: 1,
+						default: "קבלה " + q_num
 					},
 					{
 						label: 'תוכן',
