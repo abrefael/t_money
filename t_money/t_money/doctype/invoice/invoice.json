@@ -29,7 +29,7 @@
   {
    "fieldname": "r_name",
    "fieldtype": "Data",
-   "hidden": 1,
+   "hidden": 1
   },
   {
    "default": "0.00",
