@@ -32,13 +32,14 @@ frappe.ui.form.on('Sales', {
 						fieldname: 'recipient',
 						fieldtype: 'Data',
 						options: "Email",
-						"reqd": 1
+						reqd: 1
 					},
 					{
 						label: 'נושא',
 						fieldname: 'subject',
 						fieldtype: 'Data',
-						"reqd": 1
+						reqd: 1,
+						default:"הצעת מחיר " + q_num
 					},
 					{
 						label: 'תוכן',
