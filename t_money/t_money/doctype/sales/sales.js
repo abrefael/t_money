@@ -7,6 +7,20 @@
 // 	},
 // });
 
+frappe.ui.form.on('Sales', {
+	onload(frm) {
+		if((!frm.doc.r_name)||(frm.doc.name.includes("new-sales"))){
+		frappe.db.count('Sales')
+			.then(count => {
+					var name = 'Q' + String(count+6).padStart(5, '0');
+					frm.set_value('r_name', name);
+				});
+			});
+		}
+	}
+});
+
+
 
 frappe.ui.form.on('Sales', {
 	send_mail(frm) {
