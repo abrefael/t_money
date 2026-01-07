@@ -80,7 +80,7 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 	if f_uri == '' or f_uri is None:
 		f_uri = "assets/t_money/template.odt"
 	else:
-		if f_uri.split('/')[1] == 'files':
+		if f_uri.split('/')[0] != 'private':
 			f_uri = cstr(frappe.local.site) + '/public' + f_uri
 	document = Document(f_uri)
 	body = document.body
