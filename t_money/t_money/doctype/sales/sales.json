@@ -2,7 +2,7 @@
  "actions": [],
  "allow_rename": 1,
  "allow_import": 1,
- "autoname": "format:Q{#####}",
+ "autoname": "format:{r_name}",
  "creation": "2024-05-11 21:24:06.516883",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -24,7 +24,8 @@
   "section_break_III",
   "attached_file",
   "notes",
-  "h_p"
+  "h_p",
+  "r_name"
  ],
  "fields": [
   {
@@ -33,6 +34,11 @@
    "fieldtype": "Float",
    "label": "\u05e1\u05db\u05d5\u05dd (\u05dc\u05dc\u05d0 \u05d4\u05e0\u05d7\u05d4)",
    "precision": "2"
+  },
+  {
+   "fieldname": "r_name",
+   "fieldtype": "Data",
+   "hidden": 1,
   },
   {
    "fieldname": "attached_file",
