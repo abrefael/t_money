@@ -211,18 +211,18 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 	image_frame = Frame.image_frame(
 		uri,
 		size=(
-			frappe.db.get_single_value(
+			str(frappe.db.get_single_value(
 				'Signature',
 				'width'
-			) +
+			)) +
 			frappe.db.get_single_value(
 				'Signature',
 				'u_width'
 			),
-			frappe.db.get_single_value(
+			str(frappe.db.get_single_value(
 				'Signature',
 				'height'
-			) +
+			)) +
 			frappe.db.get_single_value(
 				'Signature',
 				'u_height'
