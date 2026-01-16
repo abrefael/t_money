@@ -1,5 +1,8 @@
 #!/bin/bash
 
+
+set -euo pipefail
+shopt -s nullglob
 get_backup_files() {
  get_backup_files="";
  i=1;
@@ -58,7 +61,17 @@ for entry in backups/*; do
 }
 
 
-if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+
+append_env() {
+    local key=$1
+    local val=$2
+    local esc_val
+    esc_val=$(printf '%s' "$val" | sed 's/"/\\"/g')
+    printf '%s="%s"\n' "$key" "$esc_val" >> .env
+}
+
+
+if [[ "${1:-}" == "-h" ]] || [[ "${1:-}" == "--help" ]]; then
  cat << EOF
 
 usage: ./setup.sh [-r][-h|--help]
@@ -81,46 +94,61 @@ usage: ./setup.sh [-r][-h|--help]
 -h		Also --help, shows this prompt.
 
 EOF
- exit
+ exit 0
+fi
+if [[ -n "${1:-}" && "${1}" != "-r" ]]; then
+  echo "Usage: ./setup.sh [-r] [-h|--help]"
+  exit 1
 fi
 
-create_site=$(docker ps -a | grep "${PWD##*/}")
+container_name="${PWD##*/}"
+if docker ps -a --format '{{.Names}}' | grep -Fxq "$container_name"; then
+    create_site="no"
+else
+    create_site="yes"
+fi
+append_env "create_site" "$create_site"
 
-if [ -z "$create_site" ] ; then
- mkdir -p output;
- mkdir -p assets;
- read -p "Please enter port number [8080]: " port_num;
- if [ -z "$port_num" ] ; then
-  port_num=8080;
+if [[ "$create_site" == "yes" ]]; then
+    read -r -p "Please enter port number [8080]: " port_num
+    port_num=${port_num:-8080}
+    if ! [[ "$port_num" =~ ^[0-9]+$ ]]; then
+        echo "Invalid port number – must be digits only." >&2
+        sed -i '/^create_site=/d' .env
+        sed -i '/^db_backup=/d' .env
+        sed -i '/^port_num=/d' .env
+        exit 1
+    fi
+    append_env "port_num" "$port_num"
+fi
+
+if [[ "${1:-}" == "-r" ]]; then
+ sed -i 's/#COPY/COPY/g' Containerfile
+ db_backup=$(get_backup_files)
+ if [[ "$db_backup" == "1" ]]; then
+  echo "Backup selection aborted – you need up to three files." >&2
+  sed -i '/^create_site=/d' .env
+  sed -i '/^db_backup=/d' .env
+  sed -i '/^port_num=/d' .env
+  exit 1
  fi
- echo "port_num=$port_num" > .env;
- echo "create_site=\"\"" >> .env;
- else
-  echo "create_site=\"don't\"" >> .env;
+ append_env "db_backup" "$db_backup"
 fi
 
-if [ "$1" == "-r" ]; then
- sed -i 's/#COPY/COPY/g' Dockerfile;
- get_backup_files=$(get_backup_files);
- if [ $get_backup_files == 1 ]; then
-  echo "Please make sure you have up to three files for your backup:";
-  echo "1. A database backup file. It's name should be {something}database{something else}.sql or .sql.gz.";
-  echo "This is a mandatory file.";
-  echo "2. Optional: A Public Files backup file. It's name should be {something}files{something else}.tar or .tar.gz.";
-  echo "   It must *NOT* contain the string \"private-files\"!";
-  echo "3. Optional: A Private Files backup file. It's name should be {something}private-files{something else}.tar or .tar.gz.";
-  echo "Make sure you have the database file with a correct naming scheme at least, and restart the setup-restore process.";
-  exit
- fi
- echo "db_backup=\"$get_backup_files\"" >> .env;
+if [[ -f Containerfile ]]; then
+    docker build \
+        --build-arg CACHEBUST="$(date +%s)" \
+        -t tmoney/accounting \
+        -f Containerfile .
 fi
-
-if [ -f Dockerfile ]; then 
- docker build --build-arg CACHEBUST=$(date +%s) --tag=tmoney/accounting .;
-fi
-
 docker compose -f pwd.yml up --force-recreate -d
-sleep 2;
-
-sed -i '/^create_site/d' .env
-sed -i '/^db_backup/d' .env
+service_name="${PWD##*/}-create-site-1"
+until docker ps --format '{{.Names}} {{.Status}}' \
+  | awk '{print $1,$2}' \
+  | grep -E "^${service_name} (Up|Running)"; do
+  echo "Waiting for ${service_name} to start..."
+  sleep 1
+done
+sed -i '/^create_site=/d' .env
+sed -i '/^db_backup=/d' .env
+docker logs -f "$service_name"

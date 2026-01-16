@@ -93,7 +93,7 @@ services:
           fi
         done;
         echo "sites/common_site_config.json found";
-        if [ "$create_site" == "" ]; then
+        if [[ "$create_site" == "yes" ]]; then
          bench new-site --mariadb-user-host-login-scope='%' --admin-password=admin --db-root-username=root --db-root-password=admin --install-app t_money --set-default frontend;
         fi;
         if [ -z "$db_backup" ]; then
@@ -102,7 +102,6 @@ services:
          bench restore --force --db-root-username=root --db-root-password=admin --admin-password=admin $db_backup;
         fi;
         bench migrate;
-        cp /home/frappe/frappe-bench/apps/t_money/t_money/public/template.odt /home/frappe/assets/;
 
 
   db:
