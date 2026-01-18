@@ -69,6 +69,7 @@ RUN apt-get update \
     tk-dev \
     liblzma-dev \
     file \
+    nginx \
     # For MIME type detection
     media-types \
     && rm -rf /var/lib/apt/lists/*
