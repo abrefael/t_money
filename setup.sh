@@ -102,7 +102,7 @@ if [[ -n "${1:-}" && "${1}" != "-r" ]]; then
 fi
 
 container_name="${PWD##*/}"
-if docker ps -a --format '{{.Names}}' | grep -Fxq "$container_name"; then
+if docker ps -a --format '{{.Names}}' | grep -Fq "$container_name"; then
     create_site="no"
 else
     create_site="yes"
