@@ -174,7 +174,7 @@ COPY --from=builder --chown=frappe:frappe /home/frappe/frappe-bench /home/frappe
 #COPY --chown=frappe:frappe backups /home/frappe/frappe-bench/backups
 USER root
 
-RUN apt-get update && apt-get install --no-install-recommends file libreoffice-writer -y && \
+RUN apt-get update && apt-get install --no-install-recommends file libreoffice-writer jq -y && \
     rm -rf /var/lib/apt/lists 
 
 
