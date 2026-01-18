@@ -1,83 +1,40 @@
-ARG PYTHON_VERSION=3.11.6
-ARG DEBIAN_BASE=bookworm
-FROM python:${PYTHON_VERSION}-slim-${DEBIAN_BASE} AS base
+FROM debian:bookworm-slim AS bench
 
-ARG WKHTMLTOPDF_VERSION=0.12.6.1-3
-ARG WKHTMLTOPDF_DISTRO=bookworm
-ARG NODE_VERSION=20.19.2
-ENV NVM_DIR=/home/frappe/.nvm
-ENV PATH=${NVM_DIR}/versions/node/v${NODE_VERSION}/bin/:${PATH}
+ARG GIT_REPO=https://github.com/frappe/bench.git
+ARG GIT_BRANCH=v5.x
 
-RUN useradd -ms /bin/bash frappe \
-    && apt-get update \
-    && apt-get install --no-install-recommends -y \
-    curl \
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
+    # For frappe framework
     git \
-    vim \
-    nginx \
+    mariadb-client \
+    postgresql-client \
     gettext-base \
-    file \
+    wget \
+    # for PDF
+    libssl-dev \
+    fonts-cantarell \
+    xfonts-75dpi \
+    xfonts-base \
     # weasyprint dependencies
     libpango-1.0-0 \
     libharfbuzz0b \
     libpangoft2-1.0-0 \
     libpangocairo-1.0-0 \
-    # For backups
-    restic \
-    gpg \
-    # MariaDB
-    mariadb-client \
+    # to work inside the container
+    locales \
+    build-essential \
+    cron \
+    curl \
+    vim \
+    sudo \
+    iputils-ping \
+    watch \
+    tree \
+    nano \
     less \
-    # Postgres
-    libpq-dev \
-    postgresql-client \
-    # For healthcheck
-    wait-for-it \
-    jq \
-    # For MIME type detection
-    media-types \
-    # NodeJS
-    && mkdir -p ${NVM_DIR} \
-    && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash \
-    && . ${NVM_DIR}/nvm.sh \
-    && nvm install ${NODE_VERSION} \
-    && nvm use v${NODE_VERSION} \
-    && npm install -g yarn \
-    && nvm alias default v${NODE_VERSION} \
-    && rm -rf ${NVM_DIR}/.cache \
-    && echo 'export NVM_DIR="/home/frappe/.nvm"' >>/home/frappe/.bashrc \
-    && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm' >>/home/frappe/.bashrc \
-    && echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion' >>/home/frappe/.bashrc \
-    # Install wkhtmltopdf with patched qt
-    && if [ "$(uname -m)" = "aarch64" ]; then export ARCH=arm64; fi \
-    && if [ "$(uname -m)" = "x86_64" ]; then export ARCH=amd64; fi \
-    && downloaded_file=wkhtmltox_${WKHTMLTOPDF_VERSION}.${WKHTMLTOPDF_DISTRO}_${ARCH}.deb \
-    && curl -sLO https://github.com/wkhtmltopdf/packaging/releases/download/$WKHTMLTOPDF_VERSION/$downloaded_file \
-    && apt-get install -y ./$downloaded_file \
-    && rm $downloaded_file \
-    # Clean up
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -fr /etc/nginx/sites-enabled/default \
-    && pip3 install frappe-bench \
-    # Fixes for non-root nginx and logs to stdout
-    && sed -i '/user www-data/d' /etc/nginx/nginx.conf \
-    && ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log \
-    && touch /run/nginx.pid \
-    && chown -R frappe:frappe /etc/nginx/conf.d \
-    && chown -R frappe:frappe /etc/nginx/nginx.conf \
-    && chown -R frappe:frappe /var/log/nginx \
-    && chown -R frappe:frappe /var/lib/nginx \
-    && chown -R frappe:frappe /run/nginx.pid
-
-COPY resources/nginx-template.conf /templates/nginx/frappe.conf.template
-COPY resources/nginx-entrypoint.sh /usr/local/bin/nginx-entrypoint.sh
-
-FROM base AS build
-
-RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
-    # For frappe framework
-    wget \
+    software-properties-common \
+    bash-completion \
     # For psycopg2
     libpq-dev \
     # Other
@@ -92,18 +49,105 @@ RUN apt-get update \
     redis-tools \
     rlwrap \
     tk8.6-dev \
-    cron \
+    ssh-client \
+    # VSCode container requirements
+    net-tools \
+    # For pyenv build dependencies
+    # https://github.com/frappe/frappe_docker/issues/840#issuecomment-1185206895
+    make \
     # For pandas
-    gcc \
-    build-essential \
     libbz2-dev \
+    # For bench execute
+    libsqlite3-dev \
+    # For other dependencies
+    zlib1g-dev \
+    libreadline-dev \
+    llvm \
+    libncurses5-dev \
+    libncursesw5-dev \
+    xz-utils \
+    tk-dev \
+    liblzma-dev \
+    file \
+    # For MIME type detection
+    media-types \
     && rm -rf /var/lib/apt/lists/*
+
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
+    && dpkg-reconfigure --frontend=noninteractive locales
+
+# Detect arch and install wkhtmltopdf
+ARG WKHTMLTOPDF_VERSION=0.12.6.1-3
+ARG WKHTMLTOPDF_DISTRO=bookworm
+RUN if [ "$(uname -m)" = "aarch64" ]; then export ARCH=arm64; fi \
+    && if [ "$(uname -m)" = "x86_64" ]; then export ARCH=amd64; fi \
+    && downloaded_file=wkhtmltox_${WKHTMLTOPDF_VERSION}.${WKHTMLTOPDF_DISTRO}_${ARCH}.deb \
+    && wget -q https://github.com/wkhtmltopdf/packaging/releases/download/$WKHTMLTOPDF_VERSION/$downloaded_file \
+    && dpkg -i $downloaded_file \
+    && rm $downloaded_file
+
+# Create new user with home directory, improve docker compatibility with UID/GID 1000,
+# add user to sudo group, allow passwordless sudo, switch to that user
+# and change directory to user home directory
+RUN groupadd -g 1000 frappe \
+    && useradd --no-log-init -r -m -u 1000 -g 1000 -G sudo frappe \
+    && echo "frappe ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+USER frappe
+WORKDIR /home/frappe
+
+# Install Python via pyenv
+ENV PYTHON_VERSION_V14=3.10.13
+ENV PYTHON_VERSION=3.14.2
+ENV PYENV_ROOT=/home/frappe/.pyenv
+ENV PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
+
+# From https://github.com/pyenv/pyenv#basic-github-checkout
+RUN git clone --depth 1 https://github.com/pyenv/pyenv.git .pyenv \
+    && pyenv install $PYTHON_VERSION_V14 \
+    && pyenv install $PYTHON_VERSION \
+    && PYENV_VERSION=$PYTHON_VERSION_V14 pip install --no-cache-dir virtualenv \
+    && PYENV_VERSION=$PYTHON_VERSION pip install --no-cache-dir virtualenv \
+    && pyenv global $PYTHON_VERSION $PYTHON_VERSION_v14 \
+    && sed -Ei -e '/^([^#]|$)/ {a export PYENV_ROOT="/home/frappe/.pyenv" a export PATH="$PYENV_ROOT/bin:$PATH" a ' -e ':a' -e '$!{n;ba};}' ~/.profile \
+    && echo 'eval "$(pyenv init --path)"' >>~/.profile \
+    && echo 'eval "$(pyenv init -)"' >>~/.bashrc
+
+# Clone and install bench in the local user home directory
+# For development, bench source is located in ~/.bench
+ENV PATH=/home/frappe/.local/bin:$PATH
+# Skip editable-bench warning
+# https://github.com/frappe/bench/commit/20560c97c4246b2480d7358c722bc9ad13606138
+RUN git clone ${GIT_REPO} --depth 1 -b ${GIT_BRANCH} .bench \
+    && pip install --no-cache-dir --user -e .bench \
+    && echo "export PATH=/home/frappe/.local/bin:\$PATH" >>/home/frappe/.bashrc \
+    && echo "export BENCH_DEVELOPER=1" >>/home/frappe/.bashrc
+
+# Install Node via nvm
+ENV NODE_VERSION_14=16.20.2
+ENV NODE_VERSION=24.12.0
+ENV NVM_DIR=/home/frappe/.nvm
+ENV PATH=${NVM_DIR}/versions/node/v${NODE_VERSION}/bin/:${PATH}
+
+RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash \
+    && . ${NVM_DIR}/nvm.sh \
+    && nvm install ${NODE_VERSION_14} \
+    && nvm use v${NODE_VERSION_14} \
+    && npm install -g yarn \
+    && nvm install ${NODE_VERSION} \
+    && nvm use v${NODE_VERSION} \
+    && npm install -g yarn \
+    && nvm alias default v${NODE_VERSION} \
+    && rm -rf ${NVM_DIR}/.cache \
+    && echo 'export NVM_DIR="/home/frappe/.nvm"' >>~/.bashrc \
+    && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc \
+    && echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion' >> ~/.bashrc
 
 USER frappe
 
-FROM build AS builder
+FROM bench AS builder
 
-ARG FRAPPE_BRANCH=version-15
+ARG FRAPPE_BRANCH=version-16
 ARG FRAPPE_PATH=https://github.com/frappe/frappe
 RUN bench init \
   --frappe-branch=${FRAPPE_BRANCH} \
@@ -136,7 +180,7 @@ ARG CACHEBUST=1
 
 RUN echo "$CACHEBUST" && \
     cd /home/frappe/frappe-bench && \
-    bench get-app --resolve-deps https://github.com/abrefael/t_money.git
+    bench get-app --resolve-deps --branch V1.16 https://github.com/abrefael/t_money.git
 
 WORKDIR /home/frappe/frappe-bench
 
