@@ -161,7 +161,7 @@ RUN bench init \
   echo "{}" > sites/common_site_config.json && \
   find apps -mindepth 1 -path "*/.git" | xargs rm -fr
 
-FROM base AS backend
+FROM bench AS backend
 
 USER frappe
 
