@@ -110,8 +110,9 @@ services:
     networks:
       - frappe_network
     healthcheck:
-      test: mysqladmin ping -h localhost --password=admin
-      interval: 1s
+      test: mysqladmin ping -h 127.0.0.1 -u root -p$MYSQL_ROOT_PASSWORD --protocol=tcp || exit 1
+      interval: 5s
+      timeout: 3s
       retries: 20
     deploy:
       restart_policy:
@@ -120,7 +121,7 @@ services:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
       - --skip-character-set-client-handshake
-      - --skip-innodb-read-only-compressed # Temporary fix for MariaDB 10.6
+      - --skip-innodb-read-only-compressed
     environment:
       MYSQL_ROOT_PASSWORD: admin
       MARIADB_ROOT_PASSWORD: admin
