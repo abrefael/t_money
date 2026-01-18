@@ -101,12 +101,12 @@ services:
         else
          bench restore --force --db-root-username=root --db-root-password=admin --admin-password=admin $db_backup;
         fi;
-        bench use-site frontend;
+        bench use frontend;
         bench migrate;
 
 
   db:
-    image: mariadb:10.6
+    image: mariadb:11.8
     networks:
       - frappe_network
     healthcheck:
@@ -204,7 +204,7 @@ services:
         target: /home/frappe/assets
 
   redis-queue:
-    image: redis:6.2-alpine
+    image: redis:8.4-alpine
     networks:
       - frappe_network
     deploy:
