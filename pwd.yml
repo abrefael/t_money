@@ -110,10 +110,11 @@ services:
     networks:
       - frappe_network
     healthcheck:
-      test: mysqladmin ping -h 127.0.0.1 -u root -p$MYSQL_ROOT_PASSWORD --protocol=tcp || exit 1
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$MYSQL_ROOT_PASSWORD --protocol=tcp || exit 1"]
       interval: 5s
       timeout: 3s
       retries: 20
+      start_period: 20s
     deploy:
       restart_policy:
         condition: always
