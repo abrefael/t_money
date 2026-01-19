@@ -1,85 +1,28 @@
-ARG PYTHON_VERSION=3.11.6
-ARG DEBIAN_BASE=bookworm
-FROM python:${PYTHON_VERSION}-slim-${DEBIAN_BASE} AS base
+FROM debian:bookworm-slim AS bench
 
-ARG WKHTMLTOPDF_VERSION=0.12.6.1-3
-ARG WKHTMLTOPDF_DISTRO=bookworm
-ARG NODE_VERSION=20.19.2
-ENV NVM_DIR=/home/frappe/.nvm
-ENV PATH=${NVM_DIR}/versions/node/v${NODE_VERSION}/bin/:${PATH}
-
-RUN useradd -ms /bin/bash frappe \
-    && apt-get update \
-    && apt-get install --no-install-recommends -y \
-    curl \
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
+    # For frappe framework
     git \
-    vim \
-    nginx \
+    mariadb-client \
     gettext-base \
-    file \
+    wget \
+    # for PDF
+    libssl-dev \
+    fonts-cantarell \
+    xfonts-75dpi \
+    xfonts-base \
     # weasyprint dependencies
     libpango-1.0-0 \
     libharfbuzz0b \
     libpangoft2-1.0-0 \
     libpangocairo-1.0-0 \
-    # For backups
-    restic \
-    gpg \
-    # MariaDB
-    mariadb-client \
+    # to work inside the container
+    locales \
+    build-essential \
+    cron \
+    curl \
     less \
-    # Postgres
-    libpq-dev \
-    postgresql-client \
-    # For healthcheck
-    wait-for-it \
-    jq \
-    # For MIME type detection
-    media-types \
-    # NodeJS
-    && mkdir -p ${NVM_DIR} \
-    && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash \
-    && . ${NVM_DIR}/nvm.sh \
-    && nvm install ${NODE_VERSION} \
-    && nvm use v${NODE_VERSION} \
-    && npm install -g yarn \
-    && nvm alias default v${NODE_VERSION} \
-    && rm -rf ${NVM_DIR}/.cache \
-    && echo 'export NVM_DIR="/home/frappe/.nvm"' >>/home/frappe/.bashrc \
-    && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm' >>/home/frappe/.bashrc \
-    && echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion' >>/home/frappe/.bashrc \
-    # Install wkhtmltopdf with patched qt
-    && if [ "$(uname -m)" = "aarch64" ]; then export ARCH=arm64; fi \
-    && if [ "$(uname -m)" = "x86_64" ]; then export ARCH=amd64; fi \
-    && downloaded_file=wkhtmltox_${WKHTMLTOPDF_VERSION}.${WKHTMLTOPDF_DISTRO}_${ARCH}.deb \
-    && curl -sLO https://github.com/wkhtmltopdf/packaging/releases/download/$WKHTMLTOPDF_VERSION/$downloaded_file \
-    && apt-get install -y ./$downloaded_file \
-    && rm $downloaded_file \
-    # Clean up
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -fr /etc/nginx/sites-enabled/default \
-    && pip3 install frappe-bench \
-    # Fixes for non-root nginx and logs to stdout
-    && sed -i '/user www-data/d' /etc/nginx/nginx.conf \
-    && ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log \
-    && touch /run/nginx.pid \
-    && chown -R frappe:frappe /etc/nginx/conf.d \
-    && chown -R frappe:frappe /etc/nginx/nginx.conf \
-    && chown -R frappe:frappe /var/log/nginx \
-    && chown -R frappe:frappe /var/lib/nginx \
-    && chown -R frappe:frappe /run/nginx.pid
-
-COPY resources/nginx-template.conf /templates/nginx/frappe.conf.template
-COPY resources/nginx-entrypoint.sh /usr/local/bin/nginx-entrypoint.sh
-
-FROM base AS build
-
-RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
-    # For frappe framework
-    wget \
-    # For psycopg2
-    libpq-dev \
     # Other
     libffi-dev \
     liblcms2-dev \
@@ -92,18 +35,97 @@ RUN apt-get update \
     redis-tools \
     rlwrap \
     tk8.6-dev \
-    cron \
+    ssh-client \
     # For pandas
-    gcc \
-    build-essential \
     libbz2-dev \
+    # For bench execute
+    libsqlite3-dev \
+    # For other dependencies
+    zlib1g-dev \
+    libreadline-dev \
+    llvm \
+    libncurses5-dev \
+    libncursesw5-dev \
+    xz-utils \
+    tk-dev \
+    liblzma-dev \
+    file \
+    nginx \
+    jq \
+    wait-for-it \
+    # For MIME type detection
+    media-types \
+    shared-mime-info \
+    libcairo2 \
+    libgdk-pixbuf-2.0-0 \
+    nodejs \
     && rm -rf /var/lib/apt/lists/*
+
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
+    && dpkg-reconfigure --frontend=noninteractive locales
+
+# Detect arch and install wkhtmltopdf
+ARG WKHTMLTOPDF_VERSION=0.12.6.1-3
+ARG WKHTMLTOPDF_DISTRO=bookworm
+RUN if [ "$(uname -m)" = "aarch64" ]; then export ARCH=arm64; fi \
+    && if [ "$(uname -m)" = "x86_64" ]; then export ARCH=amd64; fi \
+    && downloaded_file=wkhtmltox_${WKHTMLTOPDF_VERSION}.${WKHTMLTOPDF_DISTRO}_${ARCH}.deb \
+    && wget -q https://github.com/wkhtmltopdf/packaging/releases/download/$WKHTMLTOPDF_VERSION/$downloaded_file \
+    && dpkg -i $downloaded_file \
+    && rm $downloaded_file
+
+# Create new user with home directory, improve docker compatibility with UID/GID 1000,
+# add user to sudo group, allow passwordless sudo, switch to that user
+# and change directory to user home directory
+RUN groupadd -g 1000 frappe \
+    && useradd --no-log-init -r -m -u 1000 -g 1000 -G sudo frappe \
+    && echo "frappe ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+RUN sed -i '/user www-data/d' /etc/nginx/nginx.conf \
+    && ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log \
+    && touch /run/nginx.pid \
+    && chown -R frappe:frappe /etc/nginx/conf.d \
+    && chown -R frappe:frappe /etc/nginx/nginx.conf \
+    && chown -R frappe:frappe /var/log/nginx \
+    && chown -R frappe:frappe /var/lib/nginx \
+    && chown -R frappe:frappe /run/nginx.pid \
+    && chown -R frappe:frappe /etc/nginx/conf.d \
+    && chown -R frappe:frappe /etc/nginx/nginx.conf \
+    && chown -R frappe:frappe /var/log/nginx \
+    && chown -R frappe:frappe /var/lib/nginx \
+    && chown -R frappe:frappe /run/nginx.pid
+
+USER frappe
+WORKDIR /home/frappe
+
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
+
+USER root
+WORKDIR /home/frappe
+
+RUN npm install -g yarn
+
+USER frappe
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
+    source /home/frappe/.local/bin/env && \
+    uv python install 3.14 --default && \
+    source /home/frappe/.bashrc && \
+    .local/share/uv/tools/frappe-bench/bin/python -m ensurepip && \
+    uv tool install frappe-bench && \
+    source /home/frappe/.bashrc && \
+    bench init frappe-bench --frappe-branch version-16 --python python3.14 && \
+    .local/share/uv/tools/frappe-bench/bin/python -m ensurepip && \
+    chmod -R o+rx .
+
+
+COPY resources/nginx-template.conf /templates/nginx/frappe.conf.template
+COPY resources/nginx-entrypoint.sh /usr/local/bin/nginx-entrypoint.sh
 
 USER frappe
 
-FROM build AS builder
+FROM bench AS builder
 
-ARG FRAPPE_BRANCH=version-15
+ARG FRAPPE_BRANCH=version-16
 ARG FRAPPE_PATH=https://github.com/frappe/frappe
 RUN bench init \
   --frappe-branch=${FRAPPE_BRANCH} \
@@ -117,7 +139,7 @@ RUN bench init \
   echo "{}" > sites/common_site_config.json && \
   find apps -mindepth 1 -path "*/.git" | xargs rm -fr
 
-FROM base AS backend
+FROM bench AS backend
 
 USER frappe
 
@@ -136,7 +158,7 @@ ARG CACHEBUST=1
 
 RUN echo "$CACHEBUST" && \
     cd /home/frappe/frappe-bench && \
-    bench get-app --resolve-deps https://github.com/abrefael/t_money.git
+    bench get-app --resolve-deps --branch V1.16 https://github.com/abrefael/t_money.git
 
 WORKDIR /home/frappe/frappe-bench
 
