@@ -109,11 +109,10 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
     . /home/frappe/.local/bin/env && \
     uv python install 3.14 --default && \
     . /home/frappe/.bashrc && \
-    .local/share/uv/tools/frappe-bench/bin/python -m ensurepip && \
     uv tool install frappe-bench && \
     . /home/frappe/.bashrc && \
     bench init frappe-bench --frappe-branch version-16 --python python3.14 && \
-    .local/share/uv/tools/frappe-bench/bin/python -m ensurepip && \
+    /home/frappe/.local/share/uv/tools/frappe-bench/bin/python -m ensurepip && \
     chmod -R o+rx .
 
 
