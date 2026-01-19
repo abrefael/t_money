@@ -110,7 +110,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | b
     . "$HOME/.bashrc" && \
     uv tool install frappe-bench
 
-RUN cp -r "$HOME/.local" /home/frappe/
+RUN cp -r "$HOME/.local" /home/frappe/ && \
     chown -R frappe:frappe /home/frappe
 
 COPY resources/nginx-template.conf /templates/nginx/frappe.conf.template
