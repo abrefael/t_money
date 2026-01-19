@@ -96,20 +96,19 @@ RUN sed -i '/user www-data/d' /etc/nginx/nginx.conf \
     && chown -R frappe:frappe /var/lib/nginx \
     && chown -R frappe:frappe /run/nginx.pid
 
+
+USER frappe
 WORKDIR /home/frappe
 
+
+ARG FRAPPE_BRANCH=version-16
+ARG FRAPPE_PATH=https://github.com/frappe/frappe
 
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
     \. "$HOME/.nvm/nvm.sh" && \
     nvm install 24 && \
     npm install -g yarn
-
-USER frappe
-
-ARG FRAPPE_BRANCH=version-16
-ARG FRAPPE_PATH=https://github.com/frappe/frappe
-
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
+    curl -LsSf https://astral.sh/uv/install.sh | sh && \
     . /home/frappe/.local/bin/env && \
     uv python install 3.14 --default && \
     . /home/frappe/.bashrc && \
