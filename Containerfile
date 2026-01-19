@@ -98,18 +98,18 @@ RUN sed -i '/user www-data/d' /etc/nginx/nginx.conf \
 
 
 
-WORKDIR /home/frappe
+
 
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
     \. "$HOME/.nvm/nvm.sh" && \
     nvm install 24 && \
     npm install -g yarn && \
     curl -LsSf https://astral.sh/uv/install.sh | sh && \
-    . /home/frappe/.local/bin/env && \
+    . "$HOME/.local/bin/env" && \
     uv python install 3.14 --default && \
-    . /home/frappe/.bashrc && \
+    . "$HOME/.bashrc" && \
     uv tool install frappe-bench && \
-    . /home/frappe/.bashrc
+    . "$HOME/.bashrc"
 
 
 COPY resources/nginx-template.conf /templates/nginx/frappe.conf.template
@@ -118,6 +118,7 @@ COPY resources/nginx-entrypoint.sh /usr/local/bin/nginx-entrypoint.sh
 
 FROM bench AS builder
 USER frappe
+WORKDIR /home/frappe
 
 ARG FRAPPE_BRANCH=version-16
 ARG FRAPPE_PATH=https://github.com/frappe/frappe
@@ -133,7 +134,7 @@ RUN bench init \
   echo "{}" > sites/common_site_config.json && \
   find apps -mindepth 1 -path "*/.git" | xargs rm -fr
 
-FROM bench AS backend
+FROM builder AS backend
 
 USER frappe
 
