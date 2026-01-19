@@ -105,15 +105,28 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | b
     npm install -g yarn
 
 USER frappe
+
+ARG FRAPPE_BRANCH=version-15
+ARG FRAPPE_PATH=https://github.com/frappe/frappe
+
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
     . /home/frappe/.local/bin/env && \
     uv python install 3.14 --default && \
     . /home/frappe/.bashrc && \
     uv tool install frappe-bench && \
     . /home/frappe/.bashrc && \
-    bench init frappe-bench --frappe-branch version-16 --python python3.14 && \
-    /home/frappe/.local/share/uv/tools/frappe-bench/bin/python -m ensurepip && \
-    chmod -R o+rx .
+    bench init \
+    --frappe-branch=${FRAPPE_BRANCH} \
+    --frappe-path=${FRAPPE_PATH} \
+    --no-procfile \
+    --no-backups \
+    --skip-redis-config-generation \
+    --verbose \
+    /home/frappe/frappe-bench && \
+    cd /home/frappe/frappe-bench && \
+    echo "{}" > sites/common_site_config.json && \
+    find apps -mindepth 1 -path "*/.git" | xargs rm -fr
+
 
 
 COPY resources/nginx-template.conf /templates/nginx/frappe.conf.template
