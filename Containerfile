@@ -178,6 +178,11 @@ USER root
 RUN apt-get update && apt-get install --no-install-recommends file libreoffice-writer jq wait-for-it -y && \
     rm -rf /var/lib/apt/lists 
 
+RUN chown -R frappe:frappe /etc/nginx/conf.d \
+    && chown -R frappe:frappe /etc/nginx/nginx.conf \
+    && chown -R frappe:frappe /var/log/nginx \
+    && chown -R frappe:frappe /var/lib/nginx \
+    && chown -R frappe:frappe /run/nginx.pid
 
 USER frappe
 ARG CACHEBUST=1
