@@ -100,26 +100,21 @@ RUN sed -i '/user www-data/d' /etc/nginx/nginx.conf \
 
 
 
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
-    \. "$HOME/.nvm/nvm.sh" && \
-    nvm install 24 && \
-    npm install -g yarn && \
-    curl -LsSf https://astral.sh/uv/install.sh | sh && \
-    . "$HOME/.local/bin/env" && \
-    uv python install 3.14 --default && \
-    . "$HOME/.bashrc"
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g yarn
 
-RUN cp -r "$HOME/.local" /home/frappe/ && \
-    chown -R frappe:frappe /home/frappe
+# uv system tools
+ENV UV_TOOL_DIR=/usr/local/bin
+RUN uv tool install frappe-bench
+
 
 COPY resources/nginx-template.conf /templates/nginx/frappe.conf.template
 COPY resources/nginx-entrypoint.sh /usr/local/bin/nginx-entrypoint.sh
 
-
 FROM bench AS builder
 USER frappe
-ENV HOME=/home/frappe
-ENV PATH="/home/frappe/.local/bin:$PATH"
+ENV PATH="/usr/local/bin:$PATH"
 
 RUN uv tool install frappe-bench && \
     bench --version
