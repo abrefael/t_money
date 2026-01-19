@@ -7,6 +7,7 @@ RUN apt-get update \
     mariadb-client \
     gettext-base \
     wget \
+    ca-certificates \
     # for PDF
     libssl-dev \
     fonts-cantarell \
@@ -70,9 +71,9 @@ ARG WKHTMLTOPDF_DISTRO=bookworm
 RUN if [ "$(uname -m)" = "aarch64" ]; then export ARCH=arm64; fi \
     && if [ "$(uname -m)" = "x86_64" ]; then export ARCH=amd64; fi \
     && downloaded_file=wkhtmltox_${WKHTMLTOPDF_VERSION}.${WKHTMLTOPDF_DISTRO}_${ARCH}.deb \
-    && curl -sLO https://github.com/wkhtmltopdf/packaging/releases/download/$WKHTMLTOPDF_VERSION/$downloaded_file \
-    && apt-get install -y ./$downloaded_file \
-    && rm $downloaded_file \
+    && wget -q https://github.com/wkhtmltopdf/packaging/releases/download/$WKHTMLTOPDF_VERSION/$downloaded_file \
+    && dpkg -i $downloaded_file \
+    && rm $downloaded_file
 
 # Create new user with home directory, improve docker compatibility with UID/GID 1000,
 # add user to sudo group, allow passwordless sudo, switch to that user
