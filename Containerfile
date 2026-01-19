@@ -102,6 +102,7 @@ RUN sed -i '/user www-data/d' /etc/nginx/nginx.conf \
 
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && \
     apt-get install -y nodejs && \
+    curl -LsSf https://astral.sh/uv/install.sh | sh && \
     npm install -g yarn && \
     uv python install 3.14 --default
 
