@@ -7,7 +7,6 @@ RUN apt-get update \
     mariadb-client \
     gettext-base \
     wget \
-    ca-certificate \
     # for PDF
     libssl-dev \
     fonts-cantarell \
