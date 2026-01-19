@@ -96,14 +96,9 @@ RUN sed -i '/user www-data/d' /etc/nginx/nginx.conf \
     && chown -R frappe:frappe /var/lib/nginx \
     && chown -R frappe:frappe /run/nginx.pid
 
-USER frappe
 WORKDIR /home/frappe
 
-RUN curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
-
-USER root
-WORKDIR /home/frappe
-
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash -
 RUN npm install -g yarn
 
 USER frappe
