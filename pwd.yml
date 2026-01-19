@@ -1,6 +1,6 @@
 services:
   backend:
-    image: tmoney/accounting
+    image: tmoney/accounting:1.16.1
     networks:
       - frappe_network
     deploy:
@@ -22,7 +22,7 @@ services:
       MARIADB_ROOT_PASSWORD: admin
 
   configurator:
-    image: tmoney/accounting
+    image: tmoney/accounting:1.16.1
     networks:
       - frappe_network
     deploy:
@@ -57,7 +57,7 @@ services:
         target: /home/frappe/assets
 
   create-site:
-    image: tmoney/accounting
+    image: tmoney/accounting:1.16.1
     networks:
       - frappe_network
     deploy:
@@ -127,7 +127,7 @@ services:
       - db-data:/var/lib/mysql
 
   frontend:
-    image: tmoney/accounting
+    image: tmoney/accounting:1.16.1
     networks:
       - frappe_network
     depends_on:
@@ -159,7 +159,7 @@ services:
       - $port_num:8080
 
   queue-long:
-    image: tmoney/accounting
+    image: tmoney/accounting:1.16.1
     networks:
       - frappe_network
     deploy:
@@ -181,7 +181,7 @@ services:
         target: /home/frappe/assets
 
   queue-short:
-    image: tmoney/accounting
+    image: tmoney/accounting:1.16.1
     networks:
       - frappe_network
     deploy:
@@ -223,7 +223,7 @@ services:
       - redis-cache-data:/data
 
   scheduler:
-    image: tmoney/accounting
+    image: tmoney/accounting:1.16.1
     networks:
       - frappe_network
     deploy:
@@ -243,7 +243,7 @@ services:
         target: /home/frappe/assets
 
   websocket:
-    image: tmoney/accounting
+    image: tmoney/accounting:1.16.1
     networks:
       - frappe_network
     deploy:
