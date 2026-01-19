@@ -110,7 +110,8 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | b
     . "$HOME/.bashrc" && \
     uv tool install frappe-bench && \
     . "$HOME/.bashrc"
-
+RUN cp "$HOME/.bashrc" /home/frappe/ && \
+    cp -r "$HOME/.local" /home/frappe/
 
 COPY resources/nginx-template.conf /templates/nginx/frappe.conf.template
 COPY resources/nginx-entrypoint.sh /usr/local/bin/nginx-entrypoint.sh
@@ -122,17 +123,19 @@ WORKDIR /home/frappe
 
 ARG FRAPPE_BRANCH=version-16
 ARG FRAPPE_PATH=https://github.com/frappe/frappe
-RUN bench init \
-  --frappe-branch=${FRAPPE_BRANCH} \
-  --frappe-path=${FRAPPE_PATH} \
-  --no-procfile \
-  --no-backups \
-  --skip-redis-config-generation \
-  --verbose \
-  /home/frappe/frappe-bench && \
-  cd /home/frappe/frappe-bench && \
-  echo "{}" > sites/common_site_config.json && \
-  find apps -mindepth 1 -path "*/.git" | xargs rm -fr
+RUN . "$HOME/.local/bin/env" && \
+    . "$HOME/.bashrc" && \
+    bench init \
+    --frappe-branch=${FRAPPE_BRANCH} \
+    --frappe-path=${FRAPPE_PATH} \
+    --no-procfile \
+    --no-backups \
+    --skip-redis-config-generation \
+    --verbose \
+    /home/frappe/frappe-bench && \
+    cd /home/frappe/frappe-bench && \
+    echo "{}" > sites/common_site_config.json && \
+    find apps -mindepth 1 -path "*/.git" | xargs rm -fr
 
 FROM builder AS backend
 
