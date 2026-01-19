@@ -108,7 +108,8 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | b
     . "$HOME/.local/bin/env" && \
     uv python install 3.14 --default && \
     . "$HOME/.bashrc" && \
-    uv tool install frappe-bench
+    uv tool install frappe-bench && \
+    echo $(which bench)
 
 RUN cp -r "$HOME/.local" /home/frappe/ && \
     chown -R frappe:frappe /home/frappe
