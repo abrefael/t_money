@@ -106,12 +106,12 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | b
 
 USER frappe
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
-    source /home/frappe/.local/bin/env && \
+    . /home/frappe/.local/bin/env && \
     uv python install 3.14 --default && \
-    source /home/frappe/.bashrc && \
+    . /home/frappe/.bashrc && \
     .local/share/uv/tools/frappe-bench/bin/python -m ensurepip && \
     uv tool install frappe-bench && \
-    source /home/frappe/.bashrc && \
+    . /home/frappe/.bashrc && \
     bench init frappe-bench --frappe-branch version-16 --python python3.14 && \
     .local/share/uv/tools/frappe-bench/bin/python -m ensurepip && \
     chmod -R o+rx .
