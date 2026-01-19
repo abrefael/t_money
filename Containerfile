@@ -98,17 +98,20 @@ RUN sed -i '/user www-data/d' /etc/nginx/nginx.conf \
 
 
 
+USER frappe
+ENV HOME=/home/frappe
+ENV PATH="/home/frappe/.local/bin:$PATH"
 
+# install uv AS frappe
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
-RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && \
-    apt-get install -y nodejs && \
-    curl -LsSf https://astral.sh/uv/install.sh | sh && \
+# node / yarn
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
+    . "$HOME/.nvm/nvm.sh" && \
+    nvm install 24 && \
     npm install -g yarn && \
-    . "$HOME/.bashrc" && uv python install 3.14 --default
-
-# uv system tools
-ENV UV_TOOL_DIR=/usr/local/bin
-RUN . "$HOME/.bashrc" && uv tool install frappe-bench
+    . "$HOME/.bashrc" && uv python install 3.14 --default && \
+    uv tool install frappe-bench
 
 
 COPY resources/nginx-template.conf /templates/nginx/frappe.conf.template
@@ -116,12 +119,6 @@ COPY resources/nginx-entrypoint.sh /usr/local/bin/nginx-entrypoint.sh
 
 FROM bench AS builder
 USER frappe
-ENV PATH="/usr/local/bin:$PATH"
-ENV PATH="/root/.local/bin:$PATH"
-
-RUN uv tool install frappe-bench && \
-    bench --version
-
 WORKDIR /home/frappe
 
 ARG FRAPPE_BRANCH=version-16
