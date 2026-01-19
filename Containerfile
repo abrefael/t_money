@@ -97,12 +97,8 @@ RUN sed -i '/user www-data/d' /etc/nginx/nginx.conf \
     && chown -R frappe:frappe /run/nginx.pid
 
 
-USER frappe
+
 WORKDIR /home/frappe
-
-
-ARG FRAPPE_BRANCH=version-16
-ARG FRAPPE_PATH=https://github.com/frappe/frappe
 
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
     \. "$HOME/.nvm/nvm.sh" && \
@@ -113,27 +109,15 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | b
     uv python install 3.14 --default && \
     . /home/frappe/.bashrc && \
     uv tool install frappe-bench && \
-    . /home/frappe/.bashrc && \
-    bench init \
-    --frappe-branch=${FRAPPE_BRANCH} \
-    --frappe-path=${FRAPPE_PATH} \
-    --no-procfile \
-    --no-backups \
-    --skip-redis-config-generation \
-    --verbose \
-    /home/frappe/frappe-bench && \
-    cd /home/frappe/frappe-bench && \
-    echo "{}" > sites/common_site_config.json && \
-    find apps -mindepth 1 -path "*/.git" | xargs rm -fr
-
+    . /home/frappe/.bashrc
 
 
 COPY resources/nginx-template.conf /templates/nginx/frappe.conf.template
 COPY resources/nginx-entrypoint.sh /usr/local/bin/nginx-entrypoint.sh
 
-USER frappe
 
 FROM bench AS builder
+USER frappe
 
 ARG FRAPPE_BRANCH=version-16
 ARG FRAPPE_PATH=https://github.com/frappe/frappe
