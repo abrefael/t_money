@@ -133,7 +133,7 @@ RUN /home/frappe/.local/bin/bench init \
     --verbose \
     --python /home/frappe/python3.14 \
     /home/frappe/frappe-bench && \
-    /home/frappe/.local/share/uv/tools/frappe-bench/bin/python -m ensurepip
+    /home/frappe/.local/share/uv/tools/frappe-bench/bin/python -m ensurepip && \
     cd /home/frappe/frappe-bench && \
     echo "{}" > sites/common_site_config.json && \
     find apps -mindepth 1 -path "*/.git" | xargs rm -fr
