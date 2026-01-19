@@ -117,6 +117,7 @@ COPY resources/nginx-entrypoint.sh /usr/local/bin/nginx-entrypoint.sh
 FROM bench AS builder
 USER frappe
 ENV PATH="/usr/local/bin:$PATH"
+ENV PATH="/root/.local/bin:$PATH"
 
 RUN uv tool install frappe-bench && \
     bench --version
