@@ -98,7 +98,11 @@ RUN sed -i '/user www-data/d' /etc/nginx/nginx.conf \
 
 WORKDIR /home/frappe
 
-RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash -
+
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
+    \. "$HOME/.nvm/nvm.sh" && \
+    nvm install 24
+
 RUN npm install -g yarn
 
 USER frappe
