@@ -106,10 +106,8 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | b
     npm install -g yarn && \
     curl -LsSf https://astral.sh/uv/install.sh | sh && \
     . "$HOME/.local/bin/env" && \
-    uv python install 3.14 --default && \
-    . "$HOME/.bashrc" && \
-    uv tool install frappe-bench && \
-    . "$HOME/.bashrc"
+    uv python install 3.14 --default
+
 RUN cp "$HOME/.bashrc" /home/frappe/ && \
     cp -r "$HOME/.local" /home/frappe/
 
@@ -125,6 +123,7 @@ ARG FRAPPE_BRANCH=version-16
 ARG FRAPPE_PATH=https://github.com/frappe/frappe
 RUN . "$HOME/.local/bin/env" && \
     . "$HOME/.bashrc" && \
+    uv tool install frappe-bench && \
     bench init \
     --frappe-branch=${FRAPPE_BRANCH} \
     --frappe-path=${FRAPPE_PATH} \
