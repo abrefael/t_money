@@ -135,7 +135,6 @@ RUN /home/frappe/.local/bin/bench init \
     --no-backups \
     --skip-redis-config-generation \
     --verbose \
-    --python /home/frappe/python3.14 \
     /home/frappe/frappe-bench && \
     /home/frappe/.local/share/uv/tools/frappe-bench/bin/python -m ensurepip && \
     cd /home/frappe/frappe-bench && \
