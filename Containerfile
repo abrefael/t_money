@@ -124,14 +124,16 @@ WORKDIR /home/frappe
 
 ARG FRAPPE_BRANCH=version-16
 ARG FRAPPE_PATH=https://github.com/frappe/frappe
-RUN bench init \
+RUN /home/frappe/.local/bin/bench init \
     --frappe-branch=${FRAPPE_BRANCH} \
     --frappe-path=${FRAPPE_PATH} \
     --no-procfile \
     --no-backups \
     --skip-redis-config-generation \
     --verbose \
+    --python /home/frappe/python3.14 \
     /home/frappe/frappe-bench && \
+    /home/frappe/.local/share/uv/tools/frappe-bench/bin/python -m ensurepip
     cd /home/frappe/frappe-bench && \
     echo "{}" > sites/common_site_config.json && \
     find apps -mindepth 1 -path "*/.git" | xargs rm -fr
