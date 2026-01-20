@@ -155,7 +155,8 @@ RUN apt-get update && apt-get install --no-install-recommends file libreoffice-w
 USER frappe
 ARG CACHEBUST=1
 
-RUN echo 'export NVM_DIR="/home/frappe/.nvm"' >>/home/frappe/.bashrc \
+RUN export NVM_DIR="$HOME/.nvm" && \
+    echo 'export NVM_DIR="/home/frappe/.nvm"' >>/home/frappe/.bashrc \
     && echo '[ -s "$NVM_DIR/nvm.sh" ] && \.' >>/home/frappe/.bashrc \
     && echo '[ -s "$NVM_DIR/bash_completion" ] && \.' >>/home/frappe/.bashrc \
     && rm -rf ${NVM_DIR}/.cache
