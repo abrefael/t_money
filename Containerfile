@@ -161,7 +161,7 @@ ARG CACHEBUST=1
 
 RUN echo "$CACHEBUST" && \
     cd /home/frappe/frappe-bench && \
-     && bench get-app --resolve-deps --branch V1.16 https://github.com/abrefael/t_money.git
+    bench get-app --resolve-deps --branch V1.16 https://github.com/abrefael/t_money.git
 
 WORKDIR /home/frappe/frappe-bench
 
