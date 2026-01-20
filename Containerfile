@@ -117,7 +117,7 @@ ARG FRAPPE_PATH=https://github.com/frappe/frappe
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # node / yarn
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
 RUN echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.profile && \
     echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> ~/.profile
