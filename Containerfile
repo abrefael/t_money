@@ -96,7 +96,8 @@ RUN sed -i '/user www-data/d' /etc/nginx/nginx.conf \
     && chown -R frappe:frappe /var/lib/nginx \
     && chown -R frappe:frappe /run/nginx.pid
 
-RUN mkdir /bin/.cache && chown frappe:frappe /bin/.cache
+RUN mkdir /bin/.cache && chown frappe:frappe /bin/.cache && \
+    mkdir /bin/alias && chown frappe:frappe /bin/alias
 
 
 USER frappe
