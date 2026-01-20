@@ -155,15 +155,12 @@ RUN apt-get update && apt-get install --no-install-recommends file libreoffice-w
 USER frappe
 ARG CACHEBUST=1
 
-RUN export NVM_DIR="$HOME/.nvm" && \
-    echo 'export NVM_DIR="/home/frappe/.nvm"' >>/home/frappe/.bashrc \
-    && echo '[ -s "$NVM_DIR/nvm.sh" ] && \.' >>/home/frappe/.bashrc \
-    && echo '[ -s "$NVM_DIR/bash_completion" ] && \.' >>/home/frappe/.bashrc \
-    && rm -rf ${NVM_DIR}/.cache
 
 RUN echo "$CACHEBUST" && \
     cd /home/frappe/frappe-bench && \
-    . /home/frappe/.bashrc && \
+    export NVM_DIR="$HOME/.nvm" && \
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" && \
     npm install -g yarn && \
     bench get-app --resolve-deps --branch V1.16 https://github.com/abrefael/t_money.git
 
