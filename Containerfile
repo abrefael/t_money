@@ -164,6 +164,7 @@ RUN export NVM_DIR="$HOME/.nvm" && \
 RUN echo "$CACHEBUST" && \
     cd /home/frappe/frappe-bench && \
     . /home/frappe/.bashrc && \
+    npm install -g yarn && \
     bench get-app --resolve-deps --branch V1.16 https://github.com/abrefael/t_money.git
 
 WORKDIR /home/frappe/frappe-bench
