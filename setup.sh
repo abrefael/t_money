@@ -143,12 +143,7 @@ if [[ -f Containerfile ]]; then
 fi
 docker compose -f pwd.yml up --force-recreate -d
 service_name="${PWD##*/}-create-site-1"
-until docker ps --format '{{.Names}} {{.Status}}' \
-  | awk '{print $1,$2}' \
-  | grep -E "^${service_name} (Up|Running)"; do
-  echo "Waiting for ${service_name} to start..."
-  sleep 1
-done
+sleep 3
 sed -i '/^create_site=/d' .env
 sed -i '/^db_backup=/d' .env
 docker logs -f "$service_name"
