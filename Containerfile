@@ -138,6 +138,10 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | b
     echo "{}" > sites/common_site_config.json && \
     find apps -mindepth 1 -path "*/.git" | xargs rm -fr
 
+ENV NVM_DIR=/home/frappe/.nvm
+ENV NODE_VERSION=24
+ENV PATH="$NVM_DIR/versions/node/v${NODE_VERSION}.*/bin:$PATH"
+
 FROM builder AS backend
 
 USER frappe
@@ -157,7 +161,7 @@ ARG CACHEBUST=1
 
 RUN echo "$CACHEBUST" && \
     cd /home/frappe/frappe-bench && \
-    . "$HOME/.bashrc" && bench get-app --resolve-deps --branch V1.16 https://github.com/abrefael/t_money.git
+     && bench get-app --resolve-deps --branch V1.16 https://github.com/abrefael/t_money.git
 
 WORKDIR /home/frappe/frappe-bench
 
