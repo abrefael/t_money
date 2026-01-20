@@ -105,13 +105,15 @@ services:
 
 
   db:
-    image: mariadb:10.6
+    image: mariadb:11.8
     networks:
       - frappe_network
     healthcheck:
-      test: mysqladmin ping -h localhost --password=admin
-      interval: 1s
+      test: ["CMD-SHELL", "mariadb-admin ping -u root -padmin -h 127.0.0.1"]
+      interval: 5s
+      timeout: 3s
       retries: 20
+      start_period: 20s
     deploy:
       restart_policy:
         condition: always
@@ -203,7 +205,7 @@ services:
         target: /home/frappe/assets
 
   redis-queue:
-    image: redis:6.2-alpine
+    image: redis:8.4-alpine
     networks:
       - frappe_network
     deploy:
@@ -213,7 +215,7 @@ services:
       - redis-queue-data:/data
 
   redis-cache:
-    image: redis:6.2-alpine
+    image: redis:8.4-alpine
     networks:
       - frappe_network
     deploy:
