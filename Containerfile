@@ -118,10 +118,13 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # node / yarn
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
-    export NVM_DIR="$HOME/.nvm" && \
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" && \
-    nvm install 24 \
+
+RUN echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.profile && \
+    echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> ~/.profile
+
+SHELL ["/bin/bash", "-lc"]
+
+RUN nvm install 24 \
     && npm install -g yarn && \
     . "$HOME/.bashrc" && uv python install 3.14 --default && \
     uv tool install frappe-bench && \
@@ -158,10 +161,6 @@ ARG CACHEBUST=1
 
 RUN echo "$CACHEBUST" && \
     cd /home/frappe/frappe-bench && \
-    export NVM_DIR="$HOME/.nvm" && \
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" && \
-    npm install -g yarn && \
     bench get-app --resolve-deps --branch V1.16 https://github.com/abrefael/t_money.git
 
 WORKDIR /home/frappe/frappe-bench
