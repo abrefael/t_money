@@ -100,9 +100,18 @@ RUN mkdir /bin/.cache && chown frappe:frappe /bin/.cache && \
     mkdir /bin/alias && chown frappe:frappe /bin/alias
 
 
+COPY resources/nginx-template.conf /templates/nginx/frappe.conf.template
+COPY resources/nginx-entrypoint.sh /usr/local/bin/nginx-entrypoint.sh
+
+FROM bench AS builder
+USER frappe
+WORKDIR /home/frappe
+
 USER frappe
 ENV HOME=/home/frappe
 ENV PATH="/home/frappe/.local/bin:$PATH"
+ARG FRAPPE_BRANCH=version-16
+ARG FRAPPE_PATH=https://github.com/frappe/frappe
 
 # install uv AS frappe
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -115,19 +124,8 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | b
     nvm install 24 \
     && npm install -g yarn && \
     . "$HOME/.bashrc" && uv python install 3.14 --default && \
-    uv tool install frappe-bench
-
-
-COPY resources/nginx-template.conf /templates/nginx/frappe.conf.template
-COPY resources/nginx-entrypoint.sh /usr/local/bin/nginx-entrypoint.sh
-
-FROM bench AS builder
-USER frappe
-WORKDIR /home/frappe
-
-ARG FRAPPE_BRANCH=version-16
-ARG FRAPPE_PATH=https://github.com/frappe/frappe
-RUN /home/frappe/.local/bin/bench init \
+    uv tool install frappe-bench && \
+    /home/frappe/.local/bin/bench init \
     --frappe-branch=${FRAPPE_BRANCH} \
     --frappe-path=${FRAPPE_PATH} \
     --no-procfile \
