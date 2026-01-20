@@ -162,6 +162,7 @@ RUN echo 'export NVM_DIR="/home/frappe/.nvm"' >>/home/frappe/.bashrc \
 
 RUN echo "$CACHEBUST" && \
     cd /home/frappe/frappe-bench && \
+    . /home/frappe/.bashrc && \
     bench get-app --resolve-deps --branch V1.16 https://github.com/abrefael/t_money.git
 
 WORKDIR /home/frappe/frappe-bench
