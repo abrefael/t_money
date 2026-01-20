@@ -4,21 +4,13 @@ import frappe
 import shutil, os, csv
 
 def after_install():
-	frappe.db.sql("""
-	INSERT
-	INTO `tabCustom HTML Block`
-	SET
-		name='Project_Management',
-		creation=NOW(),
-		modified=NOW(),
-		modified_by='Administrator',
-		owner='Administrator',
-		docstatus=0,
-		private=0,
-		html='<iframe src="/app/project-calendar/view/calendar" style="width:100%;height: 850px;"></iframe>',
-		script='',
-		style='';
-	""")
+	doc = frappe.get_doc({
+		"doctype":"Custom HTML Block",
+		"title":"Project_Management",
+		"name":"Project_Management",
+		"html":'<iframe src="/app/project-calendar/view/calendar" style="width:100%;height: 850px;"></iframe>'
+	})
+	doc.insert(ignore_if_duplicate=True)
 	frappe.db.set_value("Website Settings", None, "app_name", "T-Money")
 	frappe.db.commit()
 	file = open(csv_file, 'r')
