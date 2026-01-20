@@ -107,8 +107,9 @@ ENV PATH="/home/frappe/.local/bin:$PATH"
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # node / yarn
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
-    . "$HOME/.nvm/nvm.sh" && \
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
+RUN . "$HOME/.nvm/nvm.sh" && \
     nvm install 24 && \
     npm install -g yarn && \
     . "$HOME/.bashrc" && uv python install 3.14 --default && \
