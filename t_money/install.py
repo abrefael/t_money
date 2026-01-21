@@ -12,9 +12,6 @@ def after_install():
 	})
 	doc.insert(ignore_if_duplicate=True)
 	frappe.db.set_value("Website Settings", None, "app_name", "T-Money")
-	frappe.db.set_value("Website Settings", None, "show_footer_on_login", 1)
-	frappe.db.set_value("Website Settings", None, "copyright", "Created by Alon Ben Refael")
-	frappe.db.set_value("Website Settings", None, "footer_powered", 'Powered By <a href="https://frappeframework.com/homepage">Frappe Framework</a>')
 	frappe.db.commit()
 	file = open(csv_file, 'r')
 	reader = csv.reader(file, delimiter=',')
@@ -24,7 +21,7 @@ def after_install():
 		doc.name = type
 		doc.asset_type = type
 		doc.percent = float(row[1])
-		doc.insert()
+		doc.insert(ignore_if_duplicate=True)
 
 
 
