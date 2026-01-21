@@ -1,6 +1,6 @@
 frappe.ready(() => {
     console.log("working");
-    const FOOTER_ID = "global-desk-footer";
+    const FOOTER_ID = "t-money-desk-footer";
 
     if (document.getElementById(FOOTER_ID)) return;
 
