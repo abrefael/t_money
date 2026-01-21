@@ -31,7 +31,7 @@ function frappe_ready() {
     });
 
     observer.observe(document.body, { childList: true, subtree: true });
-});
+}
 
     
 $(document).on("page-change", () => {
