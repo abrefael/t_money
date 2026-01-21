@@ -4,9 +4,9 @@ frappe.ready(() => {
 
     if (document.getElementById(FOOTER_ID)) return;
 
-    const footer = document.createElement("div");
-    footer.id = FOOTER_ID;
-    footer.innerHTML = `
+    const footer_d = document.createElement("div");
+    footer_d.id = FOOTER_ID;
+    footer_d.innerHTML = `
         <div style="
             width:100%;
             padding:6px 12px;
@@ -26,7 +26,7 @@ frappe.ready(() => {
     const observer = new MutationObserver(() => {
         const footer = document.querySelector("footer");
         if (footer && !document.getElementById(FOOTER_ID)) {
-            footer.appendChild(footer);
+            footer.appendChild(footer_d);
         }
     });
 
