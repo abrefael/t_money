@@ -21,9 +21,9 @@ website_context = {
 app_include_css = "/assets/t_money/css/t_money.css"
 app_include_js = "/assets/t_money/js/t_money.js"
 # required_apps = []
-app_include_html = [
-	"/templates/includes/global_footer.html"
-]
+#app_include_html = [
+#	"/templates/includes/global_footer.html"
+#]
 
 # Includes in <head>
 # ------------------
