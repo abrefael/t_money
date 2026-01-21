@@ -1,4 +1,4 @@
-frappe_ready() {
+function frappe_ready() {
     console.log("working");
     const FOOTER_ID = "t-money-desk-footer";
 
