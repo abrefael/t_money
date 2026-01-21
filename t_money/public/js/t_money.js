@@ -33,3 +33,8 @@ frappe.ready(() => {
     observer.observe(document.body, { childList: true, subtree: true });
 });
     console.log("workdding");
+    
+$(document).on("page-change", () => {
+    console.log("Desk page-change fired!");
+});
+
