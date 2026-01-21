@@ -12,6 +12,7 @@ def after_install():
 	})
 	doc.insert(ignore_if_duplicate=True)
 	frappe.db.set_value("Website Settings", None, "app_name", "T-Money")
+	frappe.db.set_value("Desktop Icon", "T-Money", "logo_url","/assets/t_money/images/T-money-logo.svg")
 	frappe.db.commit()
 	file = open(csv_file, 'r')
 	reader = csv.reader(file, delimiter=',')
