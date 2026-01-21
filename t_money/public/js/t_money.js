@@ -1,7 +1,4 @@
-const FOOTER_ID = "t-money-desk-footer";
-const footer_d = document.createElement("div");
-footer_d.id = FOOTER_ID;
-footer_d.innerHTML = `
+const FOOTER_HTML = `
 <div style="
     width:100%;
     padding:6px 12px;
@@ -23,7 +20,7 @@ function frappe_ready() {
     console.log("trying");
     let footer = document.querySelector("footer");
     if (footer) {
-        footer.appendChild(footer_d);
+        footer.innerHTML = FOOTER_HTML;
     }
 }
 
