@@ -9,6 +9,8 @@ app_logo_url = "/assets/t_money/images/T-money-logo.svg"
 website_context = {
 	"favicon": "/assets/t_money/images/T-money-logo.svg",
 	"splash_image": "/assets/t_money/images/T-money-logo.svg",
+	"footer_powered": 'Powered By <a href="https://frappeframework.com/homepage">Frappe Framework</a>',
+	"copyright": "Created by Alon Ben Refael",
 }
 # required_apps = []
 
@@ -19,10 +21,12 @@ website_context = {
 app_include_css = "/assets/t_money/css/t_money.css"
 app_include_js = "/assets/t_money/js/t_money.js"
 # required_apps = []
+app_include_html = [
+	"/templates/includes/global_footer.html"
+]
 
 # Includes in <head>
 # ------------------
-
 # include js, css files in header of desk.html
 # app_include_css = "/assets/t_money/css/t_money.css"
 # app_include_js = "/assets/t_money/js/t_money.js"
