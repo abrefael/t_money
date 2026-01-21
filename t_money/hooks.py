@@ -19,7 +19,7 @@ website_context = {
 
 # include js, css files in header of desk.html
 app_include_css = "/assets/t_money/css/t_money.css"
-app_include_js = "/assets/js/t_money.js"
+app_include_js = "/assets/t_moneyjs/t_money.js"
 # required_apps = []
 #app_include_html = [
 #	"/templates/includes/global_footer.html"
