@@ -9,8 +9,8 @@ app_logo_url = "/assets/t_money/images/T-money-logo.svg"
 website_context = {
 	"favicon": "/assets/t_money/images/T-money-logo.svg",
 	"splash_image": "/assets/t_money/images/T-money-logo.svg",
-	"footer_powered": 'Powered By <a href="https://frappeframework.com/homepage">Frappe Framework</a>',
-	"copyright": "Created by Alon Ben Refael",
+#	"footer_powered": 'Powered By <a href="https://frappeframework.com/homepage">Frappe Framework</a>',
+#	"copyright": "Created by Alon Ben Refael",
 }
 # required_apps = []
 
