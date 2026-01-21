@@ -1,5 +1,6 @@
+const FOOTER_ID = "footer_div";
 const FOOTER_HTML = `
-<div style="
+<div id="footer_div" style="
     width:100%;
     padding:6px 12px;
     font-size:12px;
