@@ -1,4 +1,5 @@
 frappe.ready(() => {
+    console.log("working");
     const FOOTER_ID = "global-desk-footer";
 
     if (document.getElementById(FOOTER_ID)) return;
@@ -31,4 +32,4 @@ frappe.ready(() => {
 
     observer.observe(document.body, { childList: true, subtree: true });
 });
-console.log("working");
+
