@@ -1,5 +1,4 @@
 function frappe_ready() {
-    console.log("working");
     const FOOTER_ID = "t-money-desk-footer";
 
     if (document.getElementById(FOOTER_ID)) return;
@@ -15,11 +14,11 @@ function frappe_ready() {
             color:#6b7280;
             border-top:1px solid var(--border-color);
             background: var(--bg-color);
-        ">
-            Created by <a href="mailto:alonbr@pm.me">Alon Ben Refael</a> ·
-            
+        "><div style="text-align:left; width: 50%;">
+            Created by <a href="mailto:alonbr@pm.me">Alon Ben Refael</a> <div>
+            <div style="text-align:right; width: 50%;">
                 Powered by <a href="https://frappeframework.com/homepage" target="_blank" rel="noopener">Frappe Framework
-            </a>
+            </a></div>
         </div>
     `;
 
@@ -35,7 +34,6 @@ function frappe_ready() {
 
     
 $(document).on("page-change", () => {
-    console.log("Desk page-change fired!");
     frappe_ready();
 });
 
