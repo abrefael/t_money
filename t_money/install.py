@@ -30,6 +30,12 @@ def after_install():
 
 
 def after_migrate():
+	frappe.db.set_value("Website Settings", None, "app_name", "T-Money")
+	frappe.db.set_value("Website Settings", None, "show_footer_on_login", 1)
+	frappe.db.set_value("Website Settings", None, "copyright", "Created by Alon Ben Refael")
+	frappe.db.set_value("Website Settings", None, "footer_powered", 'Powered By <a href="https://frappeframework.com/homepage">Frappe Framework</a>')
+	frappe.db.set_value("Desktop Icon", "T-Money", "logo_url","/assets/t_money/images/T-money-logo.svg")
+	frappe.db.commit()
 	file = open(csv_file, 'r')
 	reader = csv.reader(file, delimiter=',')
 	for row in reader:
