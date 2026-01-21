@@ -31,4 +31,4 @@ frappe.ready(() => {
 
     observer.observe(document.body, { childList: true, subtree: true });
 });
-
+console.log("working");
