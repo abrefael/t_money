@@ -23,9 +23,9 @@ frappe.ready(() => {
     `;
 
     const observer = new MutationObserver(() => {
-        const desk = document.querySelector(".layout-main");
-        if (desk && !document.getElementById(FOOTER_ID)) {
-            desk.appendChild(footer);
+        const footer = document.querySelector("footer");
+        if (footer && !document.getElementById(FOOTER_ID)) {
+            footer.appendChild(footer);
         }
     });
 
