@@ -4,15 +4,13 @@ Accounting for people with very small business (VAT free businesses) in Israel.
 
 #### Instructions
 
-Create a folder and place three files in it:
+```
+git clone https://github.com/abrefael/t_money.git
+cd t_money
+chmod +x setup.sh
+./setup.sh
+```
 
-`Dockerfile`
-`pwd.yml`
-`setup.sh`
-
-Issue command: `chmod +x setup.sh` to make the file executable.
-
-Now you can use `setup.sh` to set your system.
 You will be prompt to insert a port number, default is 8080.
 When setup script is completed, you can go ahead and create a new folder, place the same three files in it and rerun the script.
 
