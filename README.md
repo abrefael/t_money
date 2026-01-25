@@ -1,4 +1,4 @@
-## T-money, a Small Business Accounting app powered by the [frappe framework](https://frappe.io/framework)
+## T-money, an accounting app for Small Businesses powered by the [frappe framework](https://frappe.io/framework)
 
 Accounting for people with very small business (VAT free businesses) in Israel.
 
