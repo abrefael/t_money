@@ -1,4 +1,16 @@
 csv_file = 'assets/t_money/asset_type_list.csv'
+powered = '''
+Powered by 
+<a href="https://frappeframework.com/homepage" target="_blank" rel="noopener">
+	<img src="/assets/frappe/images/frappe-logo.png" alt="Frappe Framework" style="height: 58px" />
+</a>
+'''
+created = '''
+Created by 
+<a href="mailto:alonbr@bitum.co.il">
+	<img src="/assets/bitum_food/images/a-logo.svg" alt="Alon Ben Refael"/>
+</a>
+'''
 
 import frappe
 import shutil, os, csv
@@ -13,8 +25,8 @@ def after_install():
 	doc.insert(ignore_if_duplicate=True)
 	frappe.db.set_value("Website Settings", None, "app_name", "T-Money")
 	frappe.db.set_value("Website Settings", None, "show_footer_on_login", 1)
-	frappe.db.set_value("Website Settings", None, "copyright", "Created by Alon Ben Refael")
-	frappe.db.set_value("Website Settings", None, "footer_powered", 'Powered By <a href="https://frappeframework.com/homepage">Frappe Framework</a>')
+	frappe.db.set_value("Website Settings", None, "copyright", created)
+	frappe.db.set_value("Website Settings", None, "footer_powered", powered)
 	frappe.db.set_value("Desktop Icon", "T-Money", "logo_url","/assets/t_money/images/T-money-logo.svg")
 	frappe.db.commit()
 	file = open(csv_file, 'r')
@@ -30,10 +42,11 @@ def after_install():
 
 
 def after_migrate():
+
 	frappe.db.set_value("Website Settings", None, "app_name", "T-Money")
 	frappe.db.set_value("Website Settings", None, "show_footer_on_login", 1)
-	frappe.db.set_value("Website Settings", None, "copyright", "Created by Alon Ben Refael")
-	frappe.db.set_value("Website Settings", None, "footer_powered", 'Powered By <a href="https://frappeframework.com/homepage">Frappe Framework</a>')
+	frappe.db.set_value("Website Settings", None, "copyright", created)
+	frappe.db.set_value("Website Settings", None, "footer_powered", powered)
 	frappe.db.set_value("Desktop Icon", "T-Money", "logo_url","/assets/t_money/images/T-money-logo.svg")
 	frappe.db.commit()
 	file = open(csv_file, 'r')
