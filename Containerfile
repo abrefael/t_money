@@ -159,9 +159,12 @@ USER frappe
 ARG CACHEBUST=1
 
 
+RUN cd /home/frappe/frappe-bench && \
+    bench get-app --resolve-deps --branch V1.16.1 https://github.com/abrefael/t_money.git
+
 RUN echo "$CACHEBUST" && \
     cd /home/frappe/frappe-bench && \
-    bench get-app --resolve-deps --branch V1.16.1 https://github.com/abrefael/t_money.git
+    bench update --reset --no-backup --pull
 
 WORKDIR /home/frappe/frappe-bench
 
