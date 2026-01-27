@@ -108,13 +108,23 @@ USER frappe
 WORKDIR /home/frappe
 
 USER frappe
+
+
 ENV HOME=/home/frappe
 ENV PATH="/home/frappe/.local/bin:$PATH"
 ARG FRAPPE_BRANCH=version-16
 ARG FRAPPE_PATH=https://github.com/frappe/frappe
+ENV PYTHON_VERSION=3.14.2
+ENV PYENV_ROOT=/home/frappe/.pyenv
+ENV PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
-# install uv AS frappe
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+RUN git clone --depth 1 https://github.com/pyenv/pyenv.git .pyenv \
+    && pyenv install $PYTHON_VERSION \
+    && PYENV_VERSION=$PYTHON_VERSION pip install --no-cache-dir virtualenv \
+    && pyenv global $PYTHON_VERSION \
+    && sed -Ei -e '/^([^#]|$)/ {a export PYENV_ROOT="/home/frappe/.pyenv" a export PATH="$PYENV_ROOT/bin:$PATH" a ' -e ':a' -e '$!{n;ba};}' ~/.profile \
+    && echo 'eval "$(pyenv init --path)"' >>~/.profile \
+    && echo 'eval "$(pyenv init -)"' >>~/.bashrc
 
 # node / yarn
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
@@ -126,9 +136,13 @@ SHELL ["/bin/bash", "-lc"]
 
 RUN nvm install 24 \
     && npm install -g yarn && \
-    . "$HOME/.bashrc" && uv python install 3.14 --default && \
-    uv tool install frappe-bench && \
-    /home/frappe/.local/bin/bench init \
+    . "$HOME/.bashrc" && \
+    git clone https://github.com/frappe/bench.git --depth 1 .bench
+    pip install --no-cache-dir --user -e .bench && \
+    echo "export PATH=/home/frappe/.local/bin:\$PATH" >>/home/frappe/.bashrc \
+    && echo "export BENCH_DEVELOPER=1" >>/home/frappe/.bashrc && \
+    . .bashrc && \
+    bench init \
     --frappe-branch=${FRAPPE_BRANCH} \
     --frappe-path=${FRAPPE_PATH} \
     --no-procfile \
@@ -136,7 +150,6 @@ RUN nvm install 24 \
     --skip-redis-config-generation \
     --verbose \
     /home/frappe/frappe-bench && \
-    /home/frappe/.local/share/uv/tools/frappe-bench/bin/python -m ensurepip && \
     cd /home/frappe/frappe-bench && \
     echo "{}" > sites/common_site_config.json && \
     find apps -mindepth 1 -path "*/.git" | xargs rm -fr
