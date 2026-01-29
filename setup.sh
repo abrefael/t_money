@@ -107,7 +107,6 @@ if docker ps -a --format '{{.Names}}' | grep -Fq "$container_name"; then
 else
     create_site="yes"
 fi
-append_env "create_site" "$create_site"
 
 if [[ "$create_site" == "yes" ]]; then
     read -r -p "Please enter port number [8080]: " port_num
