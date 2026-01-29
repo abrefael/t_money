@@ -8,7 +8,7 @@ Powered by
 created = '''
 Created by 
 <a href="mailto:alonbr@bitum.co.il">
-	<img src="/assets/bitum_food/images/a-logo.svg" alt="Alon Ben Refael"/>
+	<img src="/assets/t_money/images/a-logo.svg" alt="Alon Ben Refael"/>
 </a>
 '''
 
@@ -42,7 +42,6 @@ def after_install():
 
 
 def after_migrate():
-
 	frappe.db.set_value("Website Settings", None, "app_name", "T-Money")
 	frappe.db.set_value("Website Settings", None, "show_footer_on_login", 1)
 	frappe.db.set_value("Website Settings", None, "copyright", created)
