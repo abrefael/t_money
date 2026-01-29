@@ -9,9 +9,14 @@ const FOOTER_HTML = `
     border-top:1px solid var(--border-color);
     background: var(--bg-color);
 "><div style="text-align:left; width: 50%; float: left;">
-    Created by <a href="mailto:alonbr@pm.me">Alon Ben Refael</a> </div>
+    Powered by 
+<a href="https://frappeframework.com/homepage" target="_blank" rel="noopener">
+	<img src="/assets/frappe/images/frappe-logo.png" alt="Frappe Framework" style="height: 58px" />
+</a> </div>
     <div style="text-align:right; width: 50%; float: right;">
-        Powered by <a href="https://frappeframework.com/homepage" target="_blank" rel="noopener">Frappe Framework
+    Powered by 
+<a href="https://frappeframework.com/homepage" target="_blank" rel="noopener">
+	<img src="/assets/frappe/images/frappe-logo.png" alt="Frappe Framework" style="height: 58px" />
     </a></div>
 </div>
 `;
