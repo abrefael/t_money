@@ -93,9 +93,7 @@ services:
           fi
         done;
         echo "sites/common_site_config.json found";
-        if [[ "$create_site" == "yes" ]]; then
-         bench new-site --mariadb-user-host-login-scope='%' --admin-password=admin --db-root-username=root --db-root-password=admin --install-app t_money --set-default frontend;
-        fi;
+        bench new-site --mariadb-user-host-login-scope='%' --admin-password=admin --db-root-username=root --db-root-password=admin --install-app t_money --set-default frontend;
         if [ -z "$db_backup" ]; then
          echo "No databse to restore";
         else
