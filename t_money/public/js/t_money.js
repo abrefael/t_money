@@ -11,7 +11,7 @@ const FOOTER_HTML = `
 "><div style="text-align:left; width: 50%; float: left;">
 Created by 
 <a href="mailto:alonbr@bitum.co.il">
-	<img src="/assets/bitum_food/images/a-logo.svg" alt="Alon Ben Refael"/>
+	<img src="/assets/t_money/images/a-logo.svg" alt="Alon Ben Refael"/>
 </a> </div>
     <div style="text-align:right; width: 50%; float: right;">
     Powered by 
