@@ -137,7 +137,7 @@ fi
 if [[ -f Containerfile ]]; then
     docker build \
         --build-arg CACHEBUST="$(date +%s)" \
-        -t tmoney/accounting:1.16.1 \
+        -t tmoney/accounting \
         -f Containerfile .
 fi
 docker compose -f pwd.yml up --force-recreate -d
