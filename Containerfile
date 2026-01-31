@@ -60,7 +60,7 @@ RUN apt-get update \
     libcairo2 \
     libgdk-pixbuf-2.0-0 \
     nodejs \
-    libreoffice-writer \
+    libreoffice-writer-nogui \
     && rm -rf /var/lib/apt/lists/*
 
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
@@ -108,27 +108,38 @@ FROM bench AS builder
 USER frappe
 WORKDIR /home/frappe
 
+
+ENV PYTHON_VERSION=3.14.2
+ENV PYENV_ROOT=/home/frappe/.pyenv
+ENV PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
+
 USER frappe
 ENV HOME=/home/frappe
 ENV PATH="/home/frappe/.local/bin:$PATH"
 ARG FRAPPE_BRANCH=version-16
 ARG FRAPPE_PATH=https://github.com/frappe/frappe
-
-# install uv AS frappe
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# node / yarn
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-
+ARG GIT_REPO=https://github.com/frappe/bench.git
+ARG GIT_BRANCH=v5.x
 RUN echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.profile && \
-    echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> ~/.profile
+    echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> ~/.profile && \
+    git clone --depth 1 https://github.com/pyenv/pyenv.git .pyenv \
+    && pyenv install $PYTHON_VERSION \
+    && PYENV_VERSION=$PYTHON_VERSION pip install --no-cache-dir virtualenv \
+    && pyenv global $PYTHON_VERSION \
+    && sed -Ei -e '/^([^#]|$)/ {a export PYENV_ROOT="/home/frappe/.pyenv" a export PATH="$PYENV_ROOT/bin:$PATH" a ' -e ':a' -e '$!{n;ba};}' ~/.profile \
+    && echo 'eval "$(pyenv init --path)"' >>~/.profile \
+    && echo 'eval "$(pyenv init -)"' >>~/.bashrc && \
+    git clone ${GIT_REPO} --depth 1 -b ${GIT_BRANCH} .bench \
+    && pip install --no-cache-dir --user -e .bench \
+    && echo "export PATH=/home/frappe/.local/bin:\$PATH" >>/home/frappe/.bashrc \
+    && echo "export BENCH_DEVELOPER=1" >>/home/frappe/.bashrc
 
 SHELL ["/bin/bash", "-lc"]
 
 RUN nvm install 24 \
     && npm install -g yarn && \
-    . "$HOME/.bashrc" && uv python install 3.14 --default && \
-    uv tool install frappe-bench && \
+    . "$HOME/.bashrc" && \
     /home/frappe/.local/bin/bench init \
     --frappe-branch=${FRAPPE_BRANCH} \
     --frappe-path=${FRAPPE_PATH} \
@@ -137,7 +148,6 @@ RUN nvm install 24 \
     --skip-redis-config-generation \
     --verbose \
     /home/frappe/frappe-bench && \
-    /home/frappe/.local/share/uv/tools/frappe-bench/bin/python -m ensurepip && \
     cd /home/frappe/frappe-bench && \
     echo "{}" > sites/common_site_config.json && \
     find apps -mindepth 1 -path "*/.git" | xargs rm -fr
