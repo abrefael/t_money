@@ -82,7 +82,7 @@ def build_template():
 			f_uri = cstr(frappe.local.site) + '/public' + f_uri
 	document = Document(f_uri)
 	body = document.body
-	paragraph = Paragraph('01/05/2028'), style="head_of_file")
+	paragraph = (Paragraph('01/05/2028'), style="head_of_file")
 	body.append(paragraph)
 	title1 = Header(1, f"קבלה: {q_num}")
 	body.append(title1)
