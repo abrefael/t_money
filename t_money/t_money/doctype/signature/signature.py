@@ -47,11 +47,11 @@ def build_template():
 		create_table_cell_style,
 	)
 	def save_new(document: Document, name: str, q_num):
-		new_path = '/temp/' + name
+		new_path = '/tmp/' + name
 		document.save(new_path, pretty=True)
 		os.makedirs((OUTPUT_DIR), exist_ok=True)
 		os.system(f"/usr/bin/soffice --headless --convert-to pdf:writer_pdf_Export --outdir {OUTPUT_DIR} '{new_path}'")
-		f_url = '/files' + new_path.split('.')[0] + '.pdf'
+		f_url = '/files/temp/' + name.split('.')[0] + '.pdf'
 		return f_url
 	def populate_items(prod, desc, val, quant, cost, row_number):
 		row = Row()
