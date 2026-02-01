@@ -30,6 +30,7 @@ def update_template(f_uri):
 
 @frappe.whitelist()
 def build_template():
+	from frappe import cstr
 	import odfdo, json, os
 	from datetime import datetime
 	OUTPUT_DIR = cstr(frappe.local.site) + '/public/files/temp'
