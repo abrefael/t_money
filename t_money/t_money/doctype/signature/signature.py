@@ -197,7 +197,7 @@ def build_template():
 	row = Row()
 	pay_m = doc.pay_method
 	row.set_value(0, 'מזומן')
-	row.set_value(1, '01/05/2028'))
+	row.set_value(1, '01/05/2028')
 	row.set_value(6, f"{total:,.0f}")
 	table.set_row(1, row)
 	row = Row()
