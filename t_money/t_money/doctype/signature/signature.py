@@ -127,10 +127,10 @@ def build_template():
 	high_price = 0
 	most_impact = ''
 	for itm in itms:
-		prod = itm.item
-		desc = itm.desc
-		price = itm.price
-		quant = itm.quant
+		prod = itm[item]
+		desc = itm[desc]
+		price = itm[price]
+		quant = itm[quant]
 		cost = price * quant
 		row_number = populate_items(prod, desc, f"{price:,.2f} ₪", str(quant), f"{cost:,.2f} ₪", row_number)
 		total = total + cost
