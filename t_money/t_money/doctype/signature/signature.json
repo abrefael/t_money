@@ -108,7 +108,7 @@
   {
    "fieldname": "build",
    "fieldtype": "Button",
-   "label": "\u05d1\u05e0\u05d4 \u05ea\u05d1\u05e0\u05d9\u05ea"
+   "label": "בנה קבלה לדוגמה"
   },
   {
    "fieldname": "signature",
