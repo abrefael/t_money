@@ -232,6 +232,7 @@ def build_template():
 		position=("0cm", "0cm"),
 		anchor_type = "as-char",
 	)
+	notes = "כמה הערות לקבלה"
 	if not notes == "":
 		body.append(Paragraph(""))
 		body.append(Paragraph('הערות:'))
