@@ -15,7 +15,7 @@ console.log([cur_frm.doc.height , cur_frm.doc.width]);
 frappe.ui.form.on("Signature", {
 	width(frm) {
 		if (frm.doc.keep_ratio){
-			frm.set_value("height",frm.doc.width*ratio);
+			frm.set_value("height",frm.doc.width/ratio);
 		}
 		else{
 			ratio = frm.doc.width/frm.doc.height;
@@ -26,7 +26,7 @@ frappe.ui.form.on("Signature", {
 frappe.ui.form.on("Signature", {
 	height(frm) {
 		if (frm.doc.keep_ratio){
-			frm.set_value("width",frm.doc.height/ratio)
+			frm.set_value("width",frm.doc.height*ratio)
 		}
 		else{
 			ratio = frm.doc.width/frm.doc.height;
