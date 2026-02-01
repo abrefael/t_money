@@ -233,10 +233,9 @@ def build_template():
 		anchor_type = "as-char",
 	)
 	notes = "כמה הערות לקבלה"
-	if not notes == "":
-		body.append(Paragraph(""))
-		body.append(Paragraph('הערות:'))
-		body.append(Paragraph(f"{notes}"))
+	body.append(Paragraph(""))
+	body.append(Paragraph('הערות:'))
+	body.append(Paragraph(f"{notes}"))
 	body.append(Paragraph(""))
 	body.append(Paragraph(""))
 	paragraph = Paragraph("", style="sign")
