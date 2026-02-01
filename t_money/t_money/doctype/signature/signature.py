@@ -47,7 +47,7 @@ def build_template():
 		create_table_cell_style,
 	)
 	def save_new(document: Document, name: str, q_num):
-		new_path = '/tmp/' + name
+		new_path = '/temp/' + name
 		document.save(new_path, pretty=True)
 		os.makedirs((OUTPUT_DIR), exist_ok=True)
 		os.system(f"/usr/bin/soffice --headless --convert-to pdf:writer_pdf_Export --outdir {OUTPUT_DIR} '{new_path}'")
