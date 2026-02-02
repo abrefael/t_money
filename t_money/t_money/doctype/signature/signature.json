@@ -108,7 +108,7 @@
   {
    "fieldname": "build",
    "fieldtype": "Button",
-   "label": "בנה קבלה לדוגמה"
+   "label": "בנה קבלה לדוגמה (הצעות מחיר וחשבוניות עסקה יראו דומה)"
   },
   {
    "fieldname": "signature",
