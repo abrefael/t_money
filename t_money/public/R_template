@@ -9,26 +9,7 @@ for itm in items:
 	quantity = itm.quantity
 	cost = price * quantity
 	total += cost
-	items_data += f"""
-		<tr>
-			<td>{item}</td>
-			<td>{description}</td>
-			<td>{price}</td>
-			<td>{quantity}</td>
-			<td>{cost} ₪</td>
-		</tr>
-final = total-discount or total*(1-discount)
-if discount > 0:
-		discount_segment = f"""
-	<tr>
-		<td class="one" >הנחה</td>
-		<td class="two" >{discount} ₪</td>
-	</tr>
-	<tr>
-		<td class="one" >סה"כ אחרי הנחה</td>
-		<td class="two" >{final} ₪</td>
-	</tr>
-		"""
+	items_data += f
 """
 -->
 
@@ -114,33 +95,33 @@ tr {
 <body>
 <header>
 <div>
-<p class="head1">{company_name}</p><!--need to get from Doctype Signature-->
+<p class="head1">{company_name}</p>
 <table id="head_tbl">
 	<tr>
 		<td>
 			<table>
-				<tr><td>ע.פ.:</td><td>{<!--need to get from Doctype Signature-->}</td></tr>
-				<tr><td>מספר טלפון:</td><td>{<!--need to get from Doctype Signature-->}</td></tr>
-				<tr><td>דואר אלקטרוני:</td><td>{<!--need to get from Doctype Signature-->}</td></tr>
+				<tr><td>ע.פ.:</td><td>{op_num>}</td></tr>
+				<tr><td>מספר טלפון:</td><td>{phone_num}</td></tr>
+				<tr><td>דואר אלקטרוני:</td><td>{email_add}</td></tr>
 			</table>
 		</td>
-		<td style="width:15%;"><img temptag="placeholder" src="logo.png" style="width:80px;"></td>
+		<td style="width:15%;"><img src="{logo_img}" style="width:80px;"></td>
 	</tr>
 </table>
 </div>
 </header>
 <div id="headding">
 <br>
-{<!--Today's Date-->}
-<h1>קבלה מס': {reciept_num}</h1>
-<!--טיוטה/מקור/העתק-->
+{date}
+<h1>קבלה מס': {q_num}</h1>
+{origin}
 </div>
 <div id="about">
 <br>
 עבור: 
 {client} <br><br>
 ע.מ/ת.ז/ע"ר: 
-{client_num}<br><br>
+{h_p}<br><br>
 </div>
 <br>
 <table style="text-align:right;">
@@ -161,7 +142,7 @@ tr {
 <table class="summ">
 	<tr>
 		<td class="one" >סה"כ</td>
-		<td class="two" >{cost} ₪</td>
+		<td class="two" >{total} ₪</td>
 	</tr>
 {discount_segment}
 	<tr>
@@ -176,7 +157,7 @@ tr {
 		<td class="one" >סה"כ לתשלום</td>
 		<td class="two" >{final} ₪</td>
 	</tr>
-</table><br>
+</table><br>{notes}<br>
 שולם באמצעות
 <table style="text-align:right;">
 	<thead>
@@ -194,7 +175,7 @@ tr {
 		<td>{pay_method}</td>
 		<td>{reciept_date}</td>
 		<td>{bank}</td>
-		<td>{bank_number}</td>
+		<td>{brench}</td>
 		<td>{account_num}</td>
 		<td>{reference}</td>
 		<td class="two">{final}</td>
