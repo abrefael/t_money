@@ -184,7 +184,7 @@ tr {
 <br><br><br>
 <div id="signature">
 	{signature}<br><br>
-	<img src="חתימה.png" style="height:50px">
+	<img src="{sign_img}" style="height:50px">
 </div>
 </body>
 </html>
