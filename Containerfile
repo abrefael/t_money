@@ -60,7 +60,6 @@ RUN apt-get update \
     libcairo2 \
     libgdk-pixbuf-2.0-0 \
     nodejs \
-    libreoffice-writer-nogui \
     && rm -rf /var/lib/apt/lists/*
 
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
@@ -166,7 +165,7 @@ ARG CACHEBUST=1
 
 RUN echo "$CACHEBUST" && \
     cd /home/frappe/frappe-bench && \
-    bench get-app --resolve-deps --branch V1.16.1 https://github.com/abrefael/t_money.git && \
+    bench get-app --resolve-deps --branch V2 https://github.com/abrefael/t_money.git && \
     bench get-app --resolve-deps --branch ${FRAPPE_BRANCH} ${FRAPPE_PATH}
 
 WORKDIR /home/frappe/frappe-bench
