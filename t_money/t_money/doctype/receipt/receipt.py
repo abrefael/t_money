@@ -9,34 +9,12 @@ class Receipt(Document):
 	
 
 @frappe.whitelist()
-def Create_Receipt(q_num, origin, objective, fisc_year, notes):
+def Create_Receipt(q_num, origin, fisc_year):
 	import os
-	if not frappe.db.exists("Income Loss Report", fisc_year):
-		doc = frappe.new_doc("Income Loss Report")
-		doc.title = fisc_year
-		doc.insert(
-			ignore_permissions=True,
-			ignore_links=True, # ignore Link validation in the document
-			ignore_if_duplicate=True, # dont insert if DuplicateEntryError is thrown
-			ignore_mandatory=True # insert even if mandatory fields are not set
-		)
-		frappe.rename_doc("Income Loss Report",doc.get_title(), fisc_year)
-		doc.db_set("year", int(fisc_year), commit=True)
-	import odfdo, json, os
-	from datetime import datetime
-	OUTPUT_DIR = cstr(frappe.local.site) + '/public/files/temp'
-	from odfdo import (
-		Cell,
-		Frame,
-		Document,
-		Header,
-		Paragraph,
-		Row,
-		Table,
-		Style,
-		create_table_cell_style,
-	)
+	final = 0
+	discount_segment = ""
 	def save_new(document: Document, name: str, q_num):
+		from weasyprint import HTML
 		new_path = '/tmp/' + name
 		document.save(new_path, pretty=True)
 		os.makedirs((OUTPUT_DIR), exist_ok=True)
@@ -54,60 +32,90 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 		frappe.db.commit()
 		os.remove(f_path)
 		return doc.file_url
-
-	def populate_items(prod, desc, val, quant, cost, row_number):
-		row = Row()
-		row.set_value("A", prod)
-		row.set_value("B", desc)
-		row.set_value("C", val)
-		row.set_value("D", quant)
-		row.set_value("E", cost)
-		row_number += 1
-		table.set_row(row_number, row)
-		return row_number
-	def populate_totals(head, val, row_number):
-		row = Row()
-		row.set_value(column - 1, head)
-		cell = Cell()
-		cell.set_value(val)
-		cell.style = style_name
-		row.set_cell(column, cell)
-		row_number += 1
-		table.set_row(row_number, row)
-		table.set_span((column - 4, row_number, column - 1, row_number), merge=True)
-		return row_number
-	TARGET = q_num + "(" + origin + ").odt"
-	f_uri = frappe.db.get_single_value("Signature", "reupload")
-	if f_uri == '' or f_uri is None:
-		f_uri = "assets/t_money/template.odt"
-	else:
-		if f_uri.split('/')[0] != 'private':
-			f_uri = cstr(frappe.local.site) + '/public' + f_uri
-	document = Document(f_uri)
-	body = document.body
+	
+	def update_income_loss()
+		if not frappe.db.exists("Income Loss Report", fisc_year):
+		doc = frappe.new_doc("Income Loss Report")
+		doc.title = fisc_year
+		doc.insert(
+			ignore_permissions=True,
+			ignore_links=True, # ignore Link validation in the document
+			ignore_if_duplicate=True, # dont insert if DuplicateEntryError is thrown
+			ignore_mandatory=True # insert even if mandatory fields are not set
+		)
+		frappe.rename_doc("Income Loss Report",doc.get_title(), fisc_year)
+		doc.db_set("year", int(fisc_year), commit=True)
+	
+	def populate_items():
+		item = f"""
+		<tr>
+			<td>{prod}</td>
+			<td>{description}</td>
+			<td>{price:,.2f}</td>
+			<td>{quantity:,.1f}</td>
+			<td>{cost:,.2f} ₪</td>
+		</tr>
+		"""
+		return (
+			item.format(
+				prod = prod,
+				description = desc,
+				price = val,
+				quantity = quant,
+				cost = cost,
+			)
+	
+	def calc_discount():
+		global final
+		global discount_segment
+		if discount > 1:
+			final = total - discount
+			disc = f"{discount:,.2f} ₪"
+		elif discount > 0 and discount < 1:
+			final = total * (1 - discount)
+			disc = f"{discount*100:,.0f} %"
+		else:
+			final = total
+			return ""
+		if final*100%100 > 0:
+			ag_round = f"""
+	<tr>
+		<td class="one" >עיגול אגורות</td>
+		<td class="two" >{final:,.0f ₪}</td>
+	</tr>
+			"""
+			final = final - final*100%100
+		else:
+			ag_round = ""
+		discount_segment = f"""
+	<tr>
+		<td class="one" >הנחה</td>
+		<td class="two" >{disc}</td>
+	</tr>
+	<tr>
+		<td class="one" >סה"כ אחרי הנחה</td>
+		<td class="two" >{final:,.2f}  ₪</td>
+	</tr>
+	{ag_round}
+		"""
+	
+	signature_doc = frappe.db.get_singles_dict("Signature")
+	company_name = signature_doc.company_name
+	op_num = signature_doc.op_num
+	phone_num = signature_doc.phone_num
+	email_add = signature_doc.email_add
+	# logo_img = signature_doc.logo_img # <- Doesn't exist yet.
+	signature = signature_doc.signature.replace("\\n","<br>")
+	sign_img = signature_doc.sign_img #needs some luven
 	doc = frappe.get_doc('Receipt', q_num)
-	paragraph = Paragraph(doc.creation.strftime('%d/%m/%Y'), style="head_of_file")
-	body.append(paragraph)
-	title1 = Header(1, f"{objective}: {q_num}")
-	body.append(title1)
-	title1 = Header(2, f"עבור: {doc.client}")
-	body.append(title1)
-	title1 = Header(2, f"ע.מ/ת.ז/ע\"ר: {doc.h_p}")
-	body.append(title1)
-	body.append(Paragraph(""))
-	body.append(Paragraph(""))
+	date = doc.creation.strftime('%d/%m/%Y')
+	client = doc.client
+	h_p = doc.h_p
+	notes = doc.notes
+	if len(notes) > 1:
+		notes = "הערות: " + notes.replace("\\n","<br>")
+	items_data=""
 	itms = frappe.db.sql(f"SELECT * FROM `tabItem Child List` WHERE parent='{q_num}'",as_dict=1)
-	table = Table("Table")
-	body.append(table)
-	row = Row()
-	row.set_values(['שם פריט/מק"ט', 'תיאור', 'מחיר', 'כמות', 'לתשלום'])
-	table.set_row("A1", row)
-	row_number = 0
-	cell_style = create_table_cell_style(
-		color="black",
-		padding_right="1mm"
-	)
-	style_name = document.insert_style(style=cell_style, automatic=True)
 	total = 0
 	high_price = 0
 	most_impact = ''
@@ -120,89 +128,18 @@ def Create_Receipt(q_num, origin, objective, fisc_year, notes):
 		if cost > high_price:
 			high_price = cost
 			most_impact = prod
-		row_number = populate_items(prod, desc, f"{price:,.2f} ₪", str(quant), f"{cost:,.2f} ₪", row_number)
-		total = total + cost
-	cols = table.width
-	column = cols - 1
-	row = Row()
-	row_number += 1
-	table.set_row(row_number, row)
-	table.set_span((0, row_number, 3, row_number))
-	row_number = populate_totals('סה"כ',f"{total:,.2f}  ₪", row_number)
-	discount = float(doc.discount)
-	if discount > 0 and discount < 1:
-		discount = discount*100
-		row_number = populate_totals('הנחה (%)',f"{discount:,.0f}", row_number)
-		total = float(total) *(1 - discount/100)
-		row_number = populate_totals('סה"כ אחרי הנחה',f"{total:,.2f}  ₪", row_number)
-	elif discount > 1:
-		row_number = populate_totals('הנחה',f"{discount:,.2f}  ₪", row_number)
-		total = float(total) - discount
-		row_number = populate_totals('סה"כ אחרי הנחה',f"{total:,.2f}  ₪", row_number)
-	row_number = populate_totals('סה"כ פטור ממע"מ',f"{total:,.2f} ₪", row_number)
-	row_number = populate_totals('מע"מ', "0.00", row_number)
-	if total*100%100 > 0:
-		row_number = populate_totals('עיגול אגורות',f"{total:,.0f}  ₪", row_number)
-	row_number = populate_totals('סה"כ',f"{total:,.0f}  ₪", row_number)
-	cell_style = create_table_cell_style(
-		color="black",
-		background_color=(210, 210, 210),
-		padding_right="1mm"
-	)
-	style_name = document.insert_style(style=cell_style, automatic=True)
-	row = table.get_row(0)
-	for cell in row.traverse():
-		cell.style = style_name
-		row.set_cell(x=cell.x, cell=cell)
-	table.set_row(row.y, row)
-	widths = ["4cm","5.5cm","3cm","1.5cm","3cm"]
-	i = 0
-	for column in table.columns:
-		col_style = Style("table-column" , width=widths[i])
-		name = document.insert_style(style=col_style, automatic=True)
-		i = i+1
-		column.style = col_style
-		table.set_column(column.x, column)
-	table = Table("Table",width=7)
-	body.append(Paragraph("שולם באמצעות:"))
-	body.append(table)
-	widths = ["3.5cm","3cm","1cm","1.43cm","2.94cm","2.93	cm","2.2cm"]
-	i = 0
-	for column in table.columns:
-		col_style = Style("table-column" , width=widths[i])
-		name = document.insert_style(style=col_style, automatic=True)
-		column.style = col_style
-		table.set_column(i, column)
-		i = i+1
-	row = Row()
-	row.set_values(['אמצעי תשלום','תאריך','בנק','סניף','מס’ חשבון','אסמכתא','סכום (₪)'])
-	table.set_row("A1", row)
-	cell_style = create_table_cell_style(background_color="#eeeeee")
-	style_name = document.insert_style(style=cell_style, automatic=True)
-	for cell in row.traverse():
-		cell.style = style_name
-		row.set_cell(x=cell.x, cell=cell)
-	table.set_row(row.y, row)
-	row = Row()
-	pay_m = doc.pay_method
-	row.set_value(0, pay_m.split(' (')[0])
-	row.set_value(1, doc.receipt_date.strftime('%d/%m/%Y'))
-	client = frappe.get_doc('Clients', doc.client)
-	if pay_m == "העברה בנקאית" or pay_m == "המחאה" or pay_m == "כרטיס דביט":
-		bank = client.bank
-		bank = bank.split(' ')[0]
-		row.set_value(2, bank)
-		row.set_value(3, client.brench)
-		row.set_value(4, client.account_num)
-	if not doc.reference == "000":
-		row.set_value(5, doc.reference)
-	row.set_value(6, f"{total:,.0f}")
-	table.set_row(1, row)
-	row = Row()
-	row.set_value(5, 'סה"כ שולם:')
-	row.set_value(6, f"{total:,.0f}")
-	table.set_row(2, row)
-	table.set_span('A3:F3', merge=True)
+		items_data += populate_items()
+		total += cost
+	pay_method = doc.pay_method.split(' (')[0]
+	receipt_date = doc.receipt_date.strftime('%d/%m/%Y')
+	# bank = doc.bank.split(' ')[0]  # <- Doesn't exist yet.
+	# brench = doc.brench  # <- Doesn't exist yet.
+	# account_num = doc.account_num  # <- Doesn't exist yet.
+	# client = frappe.get_doc('Clients', client)
+	
+	from datetime import datetime
+	OUTPUT_DIR = cstr(frappe.local.site) + '/public/files/temp'
+	TARGET = q_num + "(" + origin + ").odt"
 	if frappe.db.get_value('File',{'attached_to_name':'Signature'},'is_private') == 1:
 		uri = document.add_file(os.getcwd() + '/' + cstr(frappe.local.site) + frappe.db.get_single_value('Signature','sign_img'))
 	else:
