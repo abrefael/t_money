@@ -117,19 +117,9 @@ frappe.ui.form.on('Invoice', {
 
 frappe.ui.form.on('Invoice', {
 	create_invoice(frm) {
-	    var notes;
-	    if (!frm.doc.notes){
-	        notes='';
-	    }
-	    else{
-	        notes = frm.doc.notes;
-	    }
-	    var q_num = frm.doc.name;
         frappe.call({method:'t_money.t_money.doctype.invoice.invoice.Create_Invoice',
         args: {
-        'q_num': q_num,
-        'objective':"חשבונית עסקה מס'",
-        'notes': notes
+        'q_num': frm.doc.name,
         }
         }).then(r => {
             location.reload();
