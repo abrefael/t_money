@@ -120,7 +120,7 @@ def Create_Quotation(q_num):
 		items_data += populate_items()
 		total += cost
 	receipt_date = doc.receipt_date.strftime('%d/%m/%Y')
-	template = open("assets/t_money/QR_template", "r").read()
+	template = open("assets/t_money/Q_template", "r").read()
 	receipt_data = template.format(
 		date = date,
 		q_num = q_num,
