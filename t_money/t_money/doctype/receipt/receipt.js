@@ -361,13 +361,25 @@ frappe.ui.form.on('Receipt', {
 
 frappe.ui.form.on('Receipt', {
 	validate: function(frm) {
-		if(frm.doc.caceled) {
+		if (frm.doc.caceled) {
 			frappe.throw(__('זו קבלה מבוטלת! אין לשנותה!'));
 			validated = false;
 		}
-		if(frm.doc.created) {
+		if (frm.doc.created) {
 			frappe.throw(__('קבלה זו כבר הופקה. אין לשנותה!'));
 			validated = false;
+		}
+		let pay_method = frm.doc.pay_method;
+		if ((pay_method == "העברה בנקאית") || (pay_method == "המחאה") || (pay_method == "כרטיס דביט")){
+			client = frm.doc.client;
+			frappe.db.get_value('Clients', client, ['bank','brench','account_num'])
+			.then(r => {
+				let values = r.message;
+				if ((values.bank.length < 2) || (values.brench == 0) || (values.account_num == "00")){
+					frappe.throw(__('<div style="direction: rtl; text-align: right">הוגדר אמצעי תשלום: ' + pay_method + ', אך חסרים נתוני חשבון בנק של לקוח.</div><br><a href="/app/clients/' + client + '">לחצו כאן</a> לתיקון'));
+			validated = false;
+				}
+			})
 		}
 	}
 });
