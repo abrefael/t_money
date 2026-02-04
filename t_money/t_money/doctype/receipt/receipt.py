@@ -13,25 +13,22 @@ def Create_Receipt(q_num, origin, fisc_year):
 	import os
 	final = 0
 	discount_segment = ""
-	def save_new(document: Document, name: str, q_num):
+	def save_new():
 		from weasyprint import HTML
-		new_path = '/tmp/' + name
-		document.save(new_path, pretty=True)
-		os.makedirs((OUTPUT_DIR), exist_ok=True)
-		os.system(f"/usr/bin/soffice --headless --convert-to pdf:writer_pdf_Export --outdir {OUTPUT_DIR} '{new_path}'")
-		f_name = name.split('.')[0] + '.pdf'
-		f_path = OUTPUT_DIR + '/' + f_name
-		f_url = '/files/temp/' + f_name
-		doc = frappe.new_doc('File')
-		doc.file_url = f_url
-		doc.file_name = f_name
-		doc.is_private = 0
-		doc.insert()
-		frappe.db.commit()
-		frappe.db.set_value('Receipt', q_num,'attached_file', doc.file_url)
-		frappe.db.commit()
-		os.remove(f_path)
-		return doc.file_url
+		from frappe.utils.file_manager import save_file
+		tmp_path = 'assets/t_money/temp/' + TARGET
+		HTML(string=html_string, base_url=".").write_pdf(tmp_path)
+		with open(tmp_path, "rb") as f:
+			content = f.read()
+		pdf_f = save_file(
+			fname = TARGET,
+			content = content,
+			dt = "Receipt",
+			dn = q_num,
+			is_private = 0
+		)
+		os.remove(tmp_path)
+		return pdf_f.file_url
 	
 	def update_income_loss()
 		if not frappe.db.exists("Income Loss Report", fisc_year):
@@ -66,8 +63,8 @@ def Create_Receipt(q_num, origin, fisc_year):
 			)
 	
 	def calc_discount():
-		global final
-		global discount_segment
+		nonlocal final
+		nonlocal discount_segment
 		if discount > 1:
 			final = total - discount
 			disc = f"{discount:,.2f} ₪"
@@ -84,7 +81,7 @@ def Create_Receipt(q_num, origin, fisc_year):
 		<td class="two" >{final:,.0f ₪}</td>
 	</tr>
 			"""
-			final = final - final*100%100
+			final = float(f"{final:,.0f}")
 		else:
 			ag_round = ""
 		discount_segment = f"""
@@ -99,19 +96,27 @@ def Create_Receipt(q_num, origin, fisc_year):
 	{ag_round}
 		"""
 	
+	def get_file_uri(uri):
+		if "private/" in uri:
+			return cstr(frappe.local.site) + uri
+		else:
+			return cstr(frappe.local.site) + "/public" + uri
+	
 	signature_doc = frappe.db.get_singles_dict("Signature")
 	company_name = signature_doc.company_name
 	op_num = signature_doc.op_num
 	phone_num = signature_doc.phone_num
 	email_add = signature_doc.email_add
-	# logo_img = signature_doc.logo_img # <- Doesn't exist yet.
+	# logo_img = get_file_uri(signature_doc.logo_img)
 	signature = signature_doc.signature.replace("\\n","<br>")
-	sign_img = signature_doc.sign_img #needs some luven
+	sign_img = get_file_uri(signature_doc.sign_img)
 	doc = frappe.get_doc('Receipt', q_num)
 	date = doc.creation.strftime('%d/%m/%Y')
 	client = doc.client
 	h_p = doc.h_p
 	notes = doc.notes
+	discount = doc.discount
+	calc_discount()
 	if len(notes) > 1:
 		notes = "הערות: " + notes.replace("\\n","<br>")
 	items_data=""
@@ -133,61 +138,35 @@ def Create_Receipt(q_num, origin, fisc_year):
 	pay_method = doc.pay_method.split(' (')[0]
 	receipt_date = doc.receipt_date.strftime('%d/%m/%Y')
 	# bank = doc.bank.split(' ')[0]  # <- Doesn't exist yet.
-	# brench = doc.brench  # <- Doesn't exist yet.
-	# account_num = doc.account_num  # <- Doesn't exist yet.
-	# client = frappe.get_doc('Clients', client)
-	
-	from datetime import datetime
-	OUTPUT_DIR = cstr(frappe.local.site) + '/public/files/temp'
-	TARGET = q_num + "(" + origin + ").odt"
-	if frappe.db.get_value('File',{'attached_to_name':'Signature'},'is_private') == 1:
-		uri = document.add_file(os.getcwd() + '/' + cstr(frappe.local.site) + frappe.db.get_single_value('Signature','sign_img'))
-	else:
-		uri = document.add_file(os.getcwd() + '/' + cstr(frappe.local.site) + '/public/' + frappe.db.get_single_value('Signature','sign_img'))
-	image_frame = Frame.image_frame(
-		uri,
-		size=(
-			str(frappe.db.get_single_value(
-				'Signature',
-				'width'
-			)) +
-			frappe.db.get_single_value(
-				'Signature',
-				'u_width'
-			),
-			str(frappe.db.get_single_value(
-				'Signature',
-				'height'
-			)) +
-			frappe.db.get_single_value(
-				'Signature',
-				'u_height'
-			)
-		),
-		position=("0cm", "0cm"),
-		anchor_type = "as-char",
+	template = open("assets/t_money/R_template", "r").read()
+	receipt_data = template.format(
+		date = date,
+		q_num = q_num,
+		origin = origin,
+		client= client,
+		h_p = h_p,
+		items_data = items_data,
+		discount_segment = discount_segment,
+		total = f"{total:,.2f ₪}",
+		final = f"{final:,.0f}",
+		notes = notes,
+		pay_method = pay_method,
+		receipt_date = receipt_date,
+		brench = doc.brench, # brench = doc.brench  # <- Doesn't exist yet.
+		account_num = doc.account_num, # account_num = doc.account_num  # <- Doesn't exist yet.
+		reference = doc.reference
 	)
-	if not notes == "":
-		body.append(Paragraph(""))
-		body.append(Paragraph('הערות:'))
-		body.append(Paragraph(f"{notes}"))
-	body.append(Paragraph(""))
-	body.append(Paragraph(""))
-	paragraph = Paragraph("", style="sign")
-	paragraph.append_plain_text(frappe.db.get_single_value('Signature','signature'))
-	body.append(paragraph)
-	paragraph = Paragraph("", style="ltr")
-	paragraph.append(image_frame)
-	body.append(paragraph)
-	f_url = save_new(document,TARGET,q_num)
+	TARGET = q_num + "(" + origin + ").pdf"
+	f_url = save_new()
 	if origin == 'מקור':
+		update_income_loss()
 		doc.db_set('created', 1, commit=True)
 		incoms = frappe.db.get_all("Income Child Table", {'parent':fisc_year},['item','sum'])
 		for inc in incoms:
 			if inc['item'] == most_impact:
-				frappe.db.set_value("Income Child Table", {'parent':fisc_year,'item':most_impact},'sum',total + frappe.utils.flt(inc['sum']))
+				frappe.db.set_value("Income Child Table", {'parent':fisc_year,'item':most_impact},'sum',final + frappe.utils.flt(inc['sum']))
 				frappe.db.commit()
-				return
+				return f_url
 		doc = frappe.get_doc("Income Loss Report", fisc_year)
 		doc.append("items", {
 			"item": most_impact,
