@@ -6,27 +6,16 @@
  "engine": "InnoDB",
  "field_order": [
   "build",
+  "logo_img",
+  "op_num",
+  "col_i",
   "reupload",
   "sign_img",
-  "col_i",
-  "initials",
-  "sig_img_size_in",
-  "keep_ratio",
-  "sig_img_size_col",
-  "width",
-  "height",
-  "units_col",
-  "u_width",
-  "u_height",
-  "ratio_kept_col",
-  "ratio_html_yes",
-  "ratio_html_no",
-  "sig_img_size_out",
-  "signature",
-  "col_ii",
-  "op_num",
   "phone_num",
-  "email_add"
+  "email_add",
+  "sig_img_size_in",
+  "initials",
+  "signature"
  ],
  "fields": [
   {
@@ -34,76 +23,13 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "col_ii",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "ratio_html_yes",
-   "fieldtype": "HTML",
-   "options":"<div style=\"text-align:center;\"><p style=\"font-size: xx-large\">🔒</p>יחס נשמר</div>",
-   "depends_on":"eval:doc.keep_ratio"
-  },
-  {
-   "fieldname": "ratio_html_no",
-   "fieldtype": "HTML",
-   "options":"<div style=\"text-align:center;\"><p style=\"font-size: xx-large\">🔓</p>יחס לא נשמר</div>",
-   "depends_on":"eval:!doc.keep_ratio"
-  },
-  {
-   "default": 1,
-   "fieldname": "keep_ratio",
-   "fieldtype": "Check",
-   "label":"שמר יחס?"
-  },
-  {
-   "fieldname": "u_width",
-   "default":"cm",
-   "fieldtype": "Select",
-   "options": "cm\nmm\npx\nin"
-  },
-  {
-   "fieldname": "u_height",
-   "fieldtype": "Select",
-   "default":"cm",
-   "options": "cm\nmm\npx\nin"
-  },
-  {
-   "default": "4.40",
-   "fieldname": "width",
-   "fieldtype": "Float",
-   "label": "\u05e8\u05d5\u05d7\u05d1",
-   "precision": "2"
-  },
-  {
-   "default": "2.40",
-   "fieldname": "height",
-   "fieldtype": "Float",
-   "label": "\u05d2\u05d5\u05d1\u05d4",
-   "precision": "2"
-  },
-  {
-   "fieldname": "sig_img_size_col",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "ratio_kept_col",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "units_col",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "sig_img_size_in",
-   "fieldtype": "Section Break"
-  },{
-   "fieldname": "sig_img_size_out",
    "fieldtype": "Section Break"
   },
   {
    "fieldname": "initials",
    "fieldtype": "Data",
-   "label": "\u05e8\u05d0\u05e9\u05d9 \u05ea\u05d9\u05d1\u05d5\u05ea \u05e9\u05dc \u05d4\u05e9\u05dd \u05e9\u05dc\u05da (\u05d1\u05d0\u05e0\u05d2\u05dc\u05d9\u05ea)"
+   "label": "ראשי תיבות של השם שלך (באנגלית)"
   },
   {
    "fieldname": "build",
@@ -113,34 +39,39 @@
   {
    "fieldname": "signature",
    "fieldtype": "Text",
-   "label": "\u05d7\u05ea\u05d9\u05de\u05d4 \u05e2\u05dc \u05de\u05e1\u05de\u05db\u05d9\u05dd"
+   "label": "חתימה על מסמכים (הצעות מחיר, חשבוניות עסקה וקבלות)"
   },
   {
    "fieldname": "sign_img",
    "fieldtype": "Attach Image",
-   "label": "\u05d7\u05ea\u05d9\u05de\u05d4 (\u05ea\u05de\u05d5\u05e0\u05d4)"
+   "label": "חתימה (תמונה)"
+  },
+  {
+   "fieldname": "logo_img",
+   "fieldtype": "Attach Image",
+   "label": "לוגו (תמונה)"
   },
   {
    "fieldname": "reupload",
    "fieldtype": "Attach",
-   "label": "תבנית להצעות מחיר, חשבוניות וקבלות"
+   "hidden": 1
   },
   {
    "fieldname": "op_num",
    "fieldtype": "Data",
-   "label": "\u05de\u05e1\u05e4\u05e8 \u05e2\u05d5\u05e1\u05e7 \u05e4\u05d8\u05d5\u05e8",
+   "label": "מספר עוסק פטור",
    "options": "Phone"
   },
   {
    "fieldname": "phone_num",
    "fieldtype": "Data",
-   "label": "\u05d8\u05dc\u05e4\u05d5\u05df",
+   "label": "טלפון",
    "options": "Phone"
   },
   {
    "fieldname": "email_add",
    "fieldtype": "Data",
-   "label": "\u05d3\u05d5\u05d0\"\u05dc",
+   "label": "דואר אלקטרוני",
    "options": "Email"
   }
  ],
