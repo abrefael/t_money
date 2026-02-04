@@ -251,14 +251,7 @@ function build_the_receipt(frm,origin,q_num){
 		});
 	}
 	var items = frm.doc.item_list;
-	var notes;
 	var highest_sum = 0;
-	if (!frm.doc.notes){
-		notes='';
-	}
-	else{
-		notes = frm.doc.notes;
-	}
 	var discount = frm.doc.discount;
 	var when = frm.doc.receipt_date;
 	when = when.split('-')[0];
