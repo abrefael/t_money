@@ -53,14 +53,7 @@ def Create_Receipt(q_num, origin, fisc_year):
 			<td>{cost:,.2f} ₪</td>
 		</tr>
 		"""
-		return (
-			item.format(
-				prod = prod,
-				description = desc,
-				price = val,
-				quantity = quant,
-				cost = cost,
-			)
+		return item
 	
 	def calc_discount():
 		nonlocal final
