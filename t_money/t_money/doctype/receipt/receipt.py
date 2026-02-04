@@ -155,6 +155,7 @@ def Create_Receipt(q_num, origin, fisc_year):
 		total = f"{total:,.2f ₪}",
 		final = f"{final:,.0f}",
 		notes = notes,
+		bank = bank,
 		pay_method = pay_method,
 		receipt_date = receipt_date,
 		brench = doc.brench,
