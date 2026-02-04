@@ -1,94 +1,79 @@
-<!--
-total = 0
-discount = # need to get discount
-items_data=""
-for itm in items:
-	item = itm.item
-	description = itm.description
-	price = itm.price
-	quantity = itm.quantity
-	cost = price * quantity
-	total += cost
-	items_data += f
-"""
--->
-
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
 	<meta charset="utf-8">
 	<style>
-		@page {
+		@page {{
 			size: A4;
 			margin: 50mm 15mm 25mm 15mm;
 
-			@top-center {
+			@top-center {{
 					content: element(header);
-			}
+			}}
 
-			@bottom-right {
+			@bottom-right {{
 				content: "עמוד " counter(page) " מתוך " counter(pages);
 				font-size: 9pt;
-			}
-		}
-		header {
+			}}
+		}}
+		header {{
 			position: running(header);
-		}
+		}}
 		header table,header td{
 		border-style:none;
-		}
-		body {
+		}}
+		body {{
 			font-family: "DejaVu Sans", sans-serif;
 			direction: rtl;
 			text-align:right;
 			font-size: 12pt
-		}
-		th {
+		}}
+		th {{
 		background-color:#D2D2D2;
-		}
-		table {
+		}}
+		table {{
 			border-collapse: collapse;
 			width: 100%;
-		}
-		td, th {
+		}}
+		td, th {{
 			border: 1px solid #D2D2D2;
 			padding: 6px;
 			text-align: right;
-		}
-		.head1 {
+		}}
+		.head1 {{
 			font-size: 18pt;
 			font-weight:bold;
 			text-align: center;
-		}
-		h1 {
+		}}
+		h1 {{
 			font-size: 22pt;
-		}
+		}}
 		.one{
 			width:82.5%
-		}
+		}}
 		.two{
 			width:17.5%;
 			text-align:left
-		}
+		}}
 		#headding{
 			text-align:center
-		}
+		}}
 		#head_tbl{
 			width:100%;
-		}
+		}}
 		#about{
 			font-size: 14pt;
 			font-weight:bold;
-		}
+		}}
 		#signature{
 			text-align:left;
-		}
-		thead {
+		}}
+		thead {{
   display: table-header-group;
-}
-tr {
+}}
+tr {{
   break-inside: avoid;
-}
+}}
 
 	</style>
 </head>
