@@ -97,17 +97,20 @@ def Create_Receipt(q_num, origin, fisc_year):
 		"""
 	
 	def get_file_uri(uri):
-		if "private/" in uri:
-			return cstr(frappe.local.site) + uri
+		if uri:
+			if "private/" in uri:
+				return cstr(frappe.local.site) + uri
+			else:
+				return cstr(frappe.local.site) + "/public" + uri
 		else:
-			return cstr(frappe.local.site) + "/public" + uri
+			return ""
 	
 	signature_doc = frappe.db.get_singles_dict("Signature")
 	company_name = signature_doc.company_name
 	op_num = signature_doc.op_num
 	phone_num = signature_doc.phone_num
 	email_add = signature_doc.email_add
-	# logo_img = get_file_uri(signature_doc.logo_img)
+	logo_img = get_file_uri(signature_doc.logo_img)
 	signature = signature_doc.signature.replace("\\n","<br>")
 	sign_img = get_file_uri(signature_doc.sign_img)
 	doc = frappe.get_doc('Receipt', q_num)
