@@ -99,7 +99,7 @@ tr {{
 <br>
 {date}
 <h1>הצעת מחיר מס': {q_num}</h1>
-{origin}
+
 </div>
 <div id="about">
 <br>
