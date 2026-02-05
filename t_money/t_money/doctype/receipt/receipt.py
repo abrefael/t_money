@@ -47,9 +47,9 @@ def Create_Receipt(q_num, origin, fisc_year):
 		item = f"""
 		<tr>
 			<td>{prod}</td>
-			<td>{description}</td>
+			<td>{desc}</td>
 			<td>{price:,.2f}</td>
-			<td>{quantity:,.1f}</td>
+			<td>{quant:,.1f}</td>
 			<td>{cost:,.2f} ₪</td>
 		</tr>
 		"""
@@ -120,10 +120,10 @@ def Create_Receipt(q_num, origin, fisc_year):
 	high_price = 0
 	most_impact = ''
 	for itm in itms:
-		prod = itm.item
-		desc = itm.desc
-		price = itm.price
-		quant = itm.quant
+		prod = itm["item"]
+		desc = itm["desc"]
+		price = itm["price"]
+		quant = itm["quant"]
 		cost = price * quant
 		if cost > high_price:
 			high_price = cost
