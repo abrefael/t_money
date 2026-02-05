@@ -119,7 +119,6 @@ def build_template():
 		cost = price * quant
 		items_data += populate_items()
 		total += cost
-	doc = frappe.get_doc('Clients', client)
 	template = open("assets/t_money/R_template", "r").read()
 	receipt_data = template.format(
 		date = '01/05/2028',
