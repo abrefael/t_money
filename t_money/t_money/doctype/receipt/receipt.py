@@ -152,7 +152,7 @@ def Create_Receipt(q_num, origin, fisc_year):
 		signature = signature,
 		notes = notes,
 		logo_img = logo_img,
-		sign_img = sign_img
+		sign_img = sign_img,
 		phone_num = phone_num,
 		email_add = email_add,
 		bank = bank,
