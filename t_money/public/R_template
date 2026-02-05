@@ -19,7 +19,7 @@
 		header {{
 			position: running(header);
 		}}
-		header table,header td{
+		header table,header td{{
 		border-style:none;
 		}}
 		body {{
@@ -55,17 +55,17 @@
 			width:17.5%;
 			text-align:left
 		}}
-		#headding{
+		#headding{{
 			text-align:center
 		}}
-		#head_tbl{
+		#head_tbl{{
 			width:100%;
 		}}
-		#about{
+		#about{{
 			font-size: 14pt;
 			font-weight:bold;
 		}}
-		#signature{
+		#signature{{
 			text-align:left;
 		}}
 		thead {{
