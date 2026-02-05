@@ -131,6 +131,12 @@ def Create_Quotation(q_num):
 		total = f"{total:,.2f ₪}",
 		final = f"{final:,.0f}",
 		notes = notes
+		op_num = op_num,
+		company_name = company_name,
+		signature = signature,
+		sign_img = sign_img
+		phone_num = phone_num,
+		email_add = email_add,
 	)
 	TARGET = q_num + ".pdf"
 	f_url = save_new()
