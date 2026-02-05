@@ -144,6 +144,7 @@ def Create_Receipt(q_num, origin, fisc_year):
 		client= client,
 		h_p = h_p,
 		items_data = items_data,
+		company_name = company_name,
 		discount_segment = discount_segment,
 		total = f"{total:,.2f } ₪",
 		final = f"{final:,.0f}",
