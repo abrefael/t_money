@@ -131,6 +131,7 @@ def Create_Quotation(q_num):
 		total = f"{total:,.2f ₪}",
 		final = f"{final:,.0f}",
 		notes = notes
+		logo_img = logo_img
 		op_num = op_num,
 		company_name = company_name,
 		signature = signature,
