@@ -48,24 +48,24 @@
 		h1 {{
 			font-size: 22pt;
 		}}
-		.one{
+		.one{{
 			width:82.5%
 		}}
-		.two{
+		.two{{
 			width:17.5%;
 			text-align:left
 		}}
-		#headding{
+		#headding{{
 			text-align:center
 		}}
-		#head_tbl{
+		#head_tbl{{
 			width:100%;
 		}}
-		#about{
+		#about{{
 			font-size: 14pt;
 			font-weight:bold;
 		}}
-		#signature{
+		#signature{{
 			text-align:left;
 		}}
 		thead {{
