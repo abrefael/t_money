@@ -130,12 +130,12 @@ def Create_Quotation(q_num):
 		discount_segment = discount_segment,
 		total = f"{total:,.2f ₪}",
 		final = f"{final:,.0f}",
-		notes = notes
-		logo_img = logo_img
+		notes = notes,
+		logo_img = logo_img,
 		op_num = op_num,
 		company_name = company_name,
 		signature = signature,
-		sign_img = sign_img
+		sign_img = sign_img,
 		phone_num = phone_num,
 		email_add = email_add
 	)
