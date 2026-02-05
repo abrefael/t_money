@@ -100,7 +100,6 @@ def Create_Quotation(q_num):
 	h_p = doc.h_p
 	notes = doc.notes
 	discount = doc.discount
-	calc_discount()
 	if len(notes) > 1:
 		notes = "הערות: " + notes.replace("\\n","<br>")
 	items_data=""
@@ -120,6 +119,7 @@ def Create_Quotation(q_num):
 		items_data += populate_items()
 		total += cost
 	receipt_date = doc.receipt_date.strftime('%d/%m/%Y')
+	calc_discount()
 	template = open("assets/t_money/Q_template", "r").read()
 	receipt_data = template.format(
 		date = date,
