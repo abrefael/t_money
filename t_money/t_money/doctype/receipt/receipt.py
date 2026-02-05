@@ -112,7 +112,6 @@ def Create_Receipt(q_num, origin, fisc_year):
 	h_p = doc.h_p
 	notes = doc.notes
 	discount = doc.discount
-	calc_discount()
 	if len(notes) > 1:
 		notes = "הערות: " + notes.replace("\\n","<br>")
 	items_data=""
@@ -134,6 +133,7 @@ def Create_Receipt(q_num, origin, fisc_year):
 	pay_method = doc.pay_method.split(' (')[0]
 	reference = doc.reference
 	receipt_date = doc.receipt_date.strftime('%d/%m/%Y')
+	calc_discount()
 	doc = frappe.get_doc('Clients', client)
 	bank = doc.bank.split(' ')[0]
 	template = open("assets/t_money/R_template", "r").read()
