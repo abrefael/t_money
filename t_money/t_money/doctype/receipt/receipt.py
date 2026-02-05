@@ -32,16 +32,16 @@ def Create_Receipt(q_num, origin, fisc_year):
 	
 	def update_income_loss():
 		if not frappe.db.exists("Income Loss Report", fisc_year):
-		doc = frappe.new_doc("Income Loss Report")
-		doc.title = fisc_year
-		doc.insert(
-			ignore_permissions=True,
-			ignore_links=True, # ignore Link validation in the document
-			ignore_if_duplicate=True, # dont insert if DuplicateEntryError is thrown
-			ignore_mandatory=True # insert even if mandatory fields are not set
-		)
-		frappe.rename_doc("Income Loss Report",doc.get_title(), fisc_year)
-		doc.db_set("year", int(fisc_year), commit=True)
+			doc = frappe.new_doc("Income Loss Report")
+			doc.title = fisc_year
+			doc.insert(
+				ignore_permissions=True,
+				ignore_links=True, # ignore Link validation in the document
+				ignore_if_duplicate=True, # dont insert if DuplicateEntryError is thrown
+				ignore_mandatory=True # insert even if mandatory fields are not set
+			)
+			frappe.rename_doc("Income Loss Report",doc.get_title(), fisc_year)
+			doc.db_set("year", int(fisc_year), commit=True)
 	
 	def populate_items():
 		item = f"""
