@@ -48,10 +48,10 @@
 		h1 {{
 			font-size: 22pt;
 		}}
-		.one{
+		.one{{
 			width:82.5%
 		}}
-		.two{
+		.two{{
 			width:17.5%;
 			text-align:left
 		}}
