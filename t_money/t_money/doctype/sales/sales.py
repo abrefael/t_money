@@ -136,7 +136,7 @@ def Create_Quotation(q_num):
 		signature = signature,
 		sign_img = sign_img
 		phone_num = phone_num,
-		email_add = email_add,
+		email_add = email_add
 	)
 	TARGET = q_num + ".pdf"
 	f_url = save_new()
