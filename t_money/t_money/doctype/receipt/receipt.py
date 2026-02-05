@@ -30,7 +30,7 @@ def Create_Receipt(q_num, origin, fisc_year):
 		os.remove(tmp_path)
 		return pdf_f.file_url
 	
-	def update_income_loss()
+	def update_income_loss():
 		if not frappe.db.exists("Income Loss Report", fisc_year):
 		doc = frappe.new_doc("Income Loss Report")
 		doc.title = fisc_year
