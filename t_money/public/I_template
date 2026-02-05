@@ -99,7 +99,7 @@ tr {{
 <br>
 {date}
 <h1>חשבונית עסקה מס': {q_num}</h1>
-{origin}
+
 </div>
 <div id="about">
 <br>
@@ -130,18 +130,6 @@ tr {{
 		<td class="two" >{total} ₪</td>
 	</tr>
 {discount_segment}
-	<tr>
-		<td class="one" >סה"כ פטור ממע"מ</td>
-		<td class="two" >{final} ₪</td>
-	</tr>
-	<tr>
-		<td class="one" >מע"מ</td>
-		<td class="two" >0.00</td>
-	</tr>
-	<tr>
-		<td class="one" >סה"כ לתשלום</td>
-		<td class="two" >{final} ₪</td>
-	</tr>
 </table>
 <br><br><br>
 <div id="signature">
