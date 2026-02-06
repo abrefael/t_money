@@ -50,7 +50,7 @@ def build_template():
 			ag_round = f"""
 	<tr>
 		<td class="one" >עיגול אגורות</td>
-		<td class="two" >{final:,.0f} ₪</td>
+		<td class="two" >{final:,.0f } ₪</td>
 	</tr>
 			"""
 			final = float(f"{final:,.0f}")
