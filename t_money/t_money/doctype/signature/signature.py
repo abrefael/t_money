@@ -126,6 +126,7 @@ def build_template():
 		email_add = email_add,
 		logo_img = logo_img,
 		signature = signature,
+		sign_img = sign_img,
 		company_name = company_name,
 		phone_num = phone_num,
 		op_num = op_num,
