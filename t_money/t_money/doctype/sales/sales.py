@@ -18,7 +18,7 @@ def Create_Quotation(q_num):
 		from frappe.utils.file_manager import save_file
 		import os
 		tmp_path = 'assets/t_money/temp/' + TARGET
-		HTML(string=html_string, base_url=".").write_pdf(tmp_path)
+		HTML(string=receipt_data, base_url=".").write_pdf(tmp_path)
 		with open(tmp_path, "rb") as f:
 			content = f.read()
 		pdf_f = save_file(
@@ -35,9 +35,9 @@ def Create_Quotation(q_num):
 		item = f"""
 		<tr>
 			<td>{prod}</td>
-			<td>{description}</td>
+			<td>{desc}</td>
 			<td>{price:,.2f}</td>
-			<td>{quantity:,.1f}</td>
+			<td>{quant:,.1f}</td>
 			<td>{cost:,.2f} ₪</td>
 		</tr>
 		"""
@@ -59,7 +59,7 @@ def Create_Quotation(q_num):
 			ag_round = f"""
 	<tr>
 		<td class="one" >עיגול אגורות</td>
-		<td class="two" >{final:,.0f ₪}</td>
+		<td class="two" >{final:,.0f } ₪</td>
 	</tr>
 			"""
 			final = float(f"{final:,.0f}")
@@ -108,10 +108,10 @@ def Create_Quotation(q_num):
 	high_price = 0
 	most_impact = ''
 	for itm in itms:
-		prod = itm.item
-		desc = itm.desc
-		price = itm.price
-		quant = itm.quant
+		prod = itm["item"]
+		desc = itm["desc"]
+		price = itm["price"]
+		quant = itm["quant"]
 		cost = price * quant
 		if cost > high_price:
 			high_price = cost
@@ -128,7 +128,7 @@ def Create_Quotation(q_num):
 		h_p = h_p,
 		items_data = items_data,
 		discount_segment = discount_segment,
-		total = f"{total:,.2f ₪}",
+		total = f"{total:,.2f }",
 		final = f"{final:,.0f}",
 		notes = notes,
 		logo_img = logo_img,
