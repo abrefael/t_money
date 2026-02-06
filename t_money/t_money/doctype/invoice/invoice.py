@@ -20,7 +20,7 @@ def Create_Invoice(q_num):
 		from frappe.utils.file_manager import save_file
 		import os
 		tmp_path = 'assets/t_money/temp/' + TARGET
-		HTML(string=html_string, base_url=".").write_pdf(tmp_path)
+		HTML(string=receipt_data, base_url=".").write_pdf(tmp_path)
 		with open(tmp_path, "rb") as f:
 			content = f.read()
 		pdf_f = save_file(
