@@ -147,5 +147,5 @@ def build_template():
 	)
 	TARGET = q_num + "(" + origin + ").pdf"
 	f_url = save_new()
-	return f_url
+	return "/assets/t_money/temp/" + TARGET
 
