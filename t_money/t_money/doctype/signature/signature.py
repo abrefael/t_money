@@ -111,10 +111,10 @@ def build_template():
 		]
 	total = 0
 	for itm in itms:
-		prod = itm.item
-		desc = itm.desc
-		price = itm.price
-		quant = itm.quant
+		prod = itm["item"]
+		desc = itm["desc"]
+		price = itm["price"]
+		quant = itm["quant"]
 		cost = price * quant
 		items_data += populate_items()
 		total += cost
