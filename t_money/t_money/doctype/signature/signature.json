@@ -28,6 +28,11 @@
    "fieldtype": "Section Break"
   },
   {
+   "fieldname": "company_name",
+   "fieldtype": "Data",
+   "label": "שם עוסק"
+  },
+  {
    "fieldname": "initials",
    "fieldtype": "Data",
    "label": "ראשי תיבות של השם שלך (באנגלית)"
