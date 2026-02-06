@@ -123,6 +123,7 @@ def build_template():
 	receipt_data = template.format(
 		date = '01/05/2028',
 		q_num = q_num,
+		email_add = email_add,
 		company_name = company_name,
 		phone_num = phone_num,
 		op_num = op_num,
