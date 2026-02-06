@@ -124,6 +124,7 @@ def build_template():
 		date = '01/05/2028',
 		q_num = q_num,
 		email_add = email_add,
+		logo_img = logo_img,
 		company_name = company_name,
 		phone_num = phone_num,
 		op_num = op_num,
