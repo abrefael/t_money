@@ -20,7 +20,7 @@ def build_template():
 	def save_new():
 		from weasyprint import HTML
 		tmp_path = 'assets/t_money/temp/' + TARGET
-		HTML(string=html_string, base_url=".").write_pdf(tmp_path)
+		HTML(string=receipt_data, base_url=".").write_pdf(tmp_path)
 		return tmp_path
 	
 	def populate_items():
