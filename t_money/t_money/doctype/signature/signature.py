@@ -15,7 +15,6 @@ def build_template():
 	from frappe import cstr
 	final = 0
 	discount_segment = ""
-	q_num = "DD00265"
 	origin = "לדוגמה"
 	def save_new():
 		from weasyprint import HTML
@@ -86,6 +85,7 @@ def build_template():
 	logo_img = get_file_uri(signature_doc.logo_img)
 	signature = signature_doc.signature.replace("\\n","<br>")
 	sign_img = get_file_uri(signature_doc.sign_img)
+	q_num = signature_doc.initials + "00265"
 	h_p = "55555555"
 	discount = 0.2
 	notes = "הערות: " + "כמה הערות לקבלה"
