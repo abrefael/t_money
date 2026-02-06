@@ -99,7 +99,7 @@ def Create_Receipt(q_num, origin, fisc_year):
 			return ""
 	
 	signature_doc = frappe.db.get_singles_dict("Signature")
-	company_name = signature_doc.company_name
+	company_name = signature_doc.company_name,
 	op_num = signature_doc.op_num
 	phone_num = signature_doc.phone_num
 	email_add = signature_doc.email_add
