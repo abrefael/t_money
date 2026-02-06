@@ -11,3 +11,20 @@ frappe.ui.form.on("Signature", {
 });
 
 
+frappe.ui.form.on ("Signature",{
+	onload(frm) {
+		if (!(frm.doc.company_name)){
+			var user_id = frappe.session.user;
+			frappe.call({
+				method: 'frappe.client.get',
+				args: {
+					doctype: 'User',
+					name: user_id
+				},
+				callback: function (data) {
+					frm.set_value("company_name",data.message.full_name);
+				}
+			});
+		}
+	}
+});
