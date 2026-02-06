@@ -88,7 +88,6 @@ def build_template():
 	sign_img = get_file_uri(signature_doc.sign_img)
 	h_p = "55555555"
 	discount = 0.2
-	calc_discount()
 	notes = "הערות: " + "כמה הערות לקבלה"
 	items_data=""
 	itms = [
@@ -119,6 +118,7 @@ def build_template():
 		cost = price * quant
 		items_data += populate_items()
 		total += cost
+	calc_discount()
 	template = open("assets/t_money/R_template", "r").read()
 	receipt_data = template.format(
 		date = '01/05/2028',
