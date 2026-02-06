@@ -6,8 +6,9 @@
  "engine": "InnoDB",
  "field_order": [
   "build",
-  "logo_img",
+  "company_name",
   "op_num",
+  "logo_img",
   "col_i",
   "reupload",
   "sign_img",
