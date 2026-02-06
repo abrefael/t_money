@@ -1,7 +1,10 @@
-frappe.listview_settings['Expenses'].onload = function(listview) {
-    listview.page.add_action_item(__("הצג שנה"), function() {
-    	filter_year( listview );
-});
+frappe.listview_settings['Expenses'] = {
+
+    onload: function (listview) {
+        listview.page.add_inner_button(__("הצג שנה"), function () {
+            filter_year(listview);
+        })
+    }
 };
 
 function filter_year( listview )
@@ -20,7 +23,7 @@ let d = new frappe.ui.Dialog({
     size: 'small', // small, large, extra-large 
     primary_action_label: 'בחר',
     primary_action(values) {
-        location.href + '?when=["Between"%2C["' + String(values) + '-01-01"%2C"' + String(values) + '-31-12"]]';
+        window.location.href = location.href.split("?")[0] + '?when=["Between"%2C["' + String(values) + '-01-01"%2C"' + String(values) + '-31-12"]]';
         d.hide();
     }
 });
