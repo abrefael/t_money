@@ -27,9 +27,9 @@ def build_template():
 		item = f"""
 		<tr>
 			<td>{prod}</td>
-			<td>{description}</td>
+			<td>{desc}</td>
 			<td>{price:,.2f}</td>
-			<td>{quantity:,.1f}</td>
+			<td>{quant:,.1f}</td>
 			<td>{cost:,.2f} ₪</td>
 		</tr>
 		"""
