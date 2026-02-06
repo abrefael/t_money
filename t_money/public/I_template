@@ -85,7 +85,7 @@ tr {{
 	<tr>
 		<td>
 			<table>
-				<tr><td>ע.פ.:</td><td>{op_num>}</td></tr>
+				<tr><td>ע.פ.:</td><td>{op_num}</td></tr>
 				<tr><td>מספר טלפון:</td><td>{phone_num}</td></tr>
 				<tr><td>דואר אלקטרוני:</td><td>{email_add}</td></tr>
 			</table>
