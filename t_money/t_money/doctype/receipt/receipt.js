@@ -325,12 +325,12 @@ frappe.ui.form.on('Receipt', {
 		when = when.split('-')[0];
 		frappe.call({method:'t_money.t_money.doctype.receipt.receipt.cancel_receipt',
 		args: {
-		"fisc_year": when,
-		'q_num': frm.doc.name
+			"fisc_year": when,
+			'q_num': frm.doc.name
 		}
 		}).then(r => {
 			location.reload();
-			window.open(`${window.location.href}(מבוטלת)`, '_blank').focus();
+			window.open(`${window.location.origin}/files/${q_num}(מבוטלת)`, '_blank').focus();
 		});
 	}
 });
