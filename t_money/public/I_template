@@ -19,7 +19,7 @@
 		header {{
 			position: running(header);
 		}}
-		header table,header td{
+		header table,header td{{
 		border-style:none;
 		}}
 		body {{
