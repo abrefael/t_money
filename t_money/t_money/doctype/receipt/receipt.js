@@ -113,7 +113,6 @@ frappe.ui.form.on('Receipt', {
 			}
 		}
 		N = invs_n_quots.length;
-		console.log(N);
 		if (N == 0){
 			frappe.throw(__('קודם צריך לבחור הצעות מחיר ו/או חשבוניות עסקה'));
 		}
@@ -134,6 +133,7 @@ frappe.ui.form.on('Receipt', {
 				let source_doc = frappe.model.get_doc(dtype, itm);
 				let src_lst = source_doc.item_list;
 				let discount = source_doc.discount;
+				console.log (discount);
 				if (N == 1){
 					frm.set_value('discount', discount);
 					frm.refresh_field('discount');
