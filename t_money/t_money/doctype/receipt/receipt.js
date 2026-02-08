@@ -112,7 +112,8 @@ frappe.ui.form.on('Receipt', {
 				invs_n_quots.push(quot_lst[i].quot);
 			}
 		}
-		N = invs_n_quots.length
+		N = invs_n_quots.length;
+		console.log(N);
 		if (N == 0){
 			frappe.throw(__('קודם צריך לבחור הצעות מחיר ו/או חשבוניות עסקה'));
 		}
