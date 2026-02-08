@@ -148,20 +148,21 @@ def Create_Receipt(q_num, origin, fisc_year):
 		reference = reference
 	)
 	TARGET = q_num + "(" + origin + ").pdf"
+	f_url = "/files/" + TARGET
 	from weasyprint import HTML
 	pdf_bytes = HTML(string=receipt_data, base_url=".").write_pdf(os.getcwd() + "/" + cstr(frappe.local.site) + "/public/files/" + TARGET)
-#	with open(cstr(frappe.local.site) + "/public/" + TARGET, "wb") as f:
-#		f.write(pdf_bytes)
 	file_doc = frappe.get_doc({
 		"doctype": "File",
-		"file_name": TARGET,
-		"file_url": "/files/" + TARGET,
-		"attached_to_doctype": "Receipt",
-		"attached_to_name": q_num,
-		"is_private": 0
+		"file_name": TARGET
 	})
 	file_doc.insert(ignore_permissions=True)
-	f_url = file_doc.file_url
+	file_doc.file_url = f_url
+	file_doc.save()
+	frappe.db.commit()
+	file_doc.attached_to_doctype = "Receipt"
+	file_doc.attached_to_name = q_num
+	file_doc.save()
+	frappe.db.commit()
 	if origin == 'מקור':
 		update_income_loss()
 		doc.db_set('created', 1, commit=True)
