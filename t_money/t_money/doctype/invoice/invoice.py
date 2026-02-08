@@ -102,8 +102,13 @@ def Create_Invoice(q_num):
 	h_p = doc.h_p
 	notes = doc.notes
 	discount = doc.discount
-	if len(notes) > 1:
-		notes = "הערות: " + notes.replace("\\n","<br>")
+	if notes:
+		if len(notes) > 1:
+			notes = "הערות: " + notes.replace("\\n","<br>")
+		else:
+			notes = ""
+	else:
+		notes = ""
 	items_data=""
 	itms = frappe.db.sql(f"SELECT * FROM `tabItem Child List` WHERE parent='{q_num}'",as_dict=1)
 	total = 0
