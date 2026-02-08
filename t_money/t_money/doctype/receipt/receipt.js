@@ -7,6 +7,11 @@
 // 	},
 // });small_business_accounting
 
+
+
+var flag = false;
+var total_discounts = '<p style="direction: rtl; text-align: right">שימו לב!<p style="direction: rtl; text-align: right">';
+
 frappe.ui.form.on('Receipt', {
 	send_mail(frm) {
 		frappe.db.get_value(
@@ -80,8 +85,6 @@ frappe.ui.form.on('Receipt', {
 });
 
 
-var flag = false;
-var total_discounts = '<p style="direction: rtl; text-align: right">שימו לב!<p style="direction: rtl; text-align: right">';
 
 
 
@@ -117,12 +120,15 @@ frappe.ui.form.on('Receipt', {
 		}
 		for (let i = 0; i < N; i++){
 			let itm = invs_n_quots[i];
-			let dtype;
+			var dtype;
+			var dtype_heb;
 			if (itm[0] == 'Q'){
 				dtype = 'Sales';
+				dtype_heb = "הצעת מחיר ";
 			}
 			else{
 				dtype = 'Invoice';
+				dtype_heb = "חשבונית עסקה ";
 			}
 			frappe.db.get_value(dtype, itm, ['discount','sum'])
 				.then(r => {
@@ -135,28 +141,13 @@ frappe.ui.form.on('Receipt', {
 						sum_discount = discount;
 					}
 					else{
-					let q_v;
-					if (dtype == 'Sales'){
 						if (discount > 1){
-							q_v = 'הצעת מחיר ' + itm + ' כוללת הנחה בסך: ';
-							total_discounts += q_v + (sum - discounted_sum) + ' ש"ח.<p style="direction: rtl; text-align: right">';
+							total_discounts += dtype_heb + itm + ' כוללת הנחה בסך: ' + discount + ' ש"ח.<p style="direction: rtl; text-align: right">';
 						}
 						else {
-							q_v = 'הצעת מחיר ' + itm + ' כוללת הנחה בערך של ';
-							total_discounts += q_v + (sum - discounted_sum) + '% מהצעת המחיר.<p style="direction: rtl; text-align: right">';
+							total_discounts += dtype_heb + itm + ' כוללת הנחה בערך של ' + discount + '% מהצעת המחיר.<p style="direction: rtl; text-align: right">';
 						}
-					}
-					else{
-						if (discount > 1){
-							q_v = 'חשבונית עסקה ' + itm + ' כוללת הנחה בסך: ';
-							total_discounts += q_v + (sum - discounted_sum) + ' ש"ח.<p style="direction: rtl; text-align: right">';
-						}
-						else {
-							q_v = 'חשבונית עסקה ' + itm + ' כוללת הנחה בערך של ';
-							total_discounts += q_v + (sum - discounted_sum) + '% מהחשבונית.<p style="direction: rtl; text-align: right">';
-						}
-					}
-					flag = true;
+						flag = true;
 					}
 				});
 			frappe.model.with_doc(dtype, itm, function () {
@@ -225,14 +216,16 @@ frappe.ui.form.on('Receipt', {
 	create_draft(frm) {
 		frm.save();
 		var pay_method = frm.doc.pay_method;
-		if ((pay_method != "מזומן")||(pay_method.includes("אפליקציה להעברת כסף"))){
+		if (((pay_method != "מזומן")||(pay_method.includes("אפליקציה להעברת כסף")))&&(frm.doc.reference == "000")){
 			frappe.msgprint({
 				title: __('שימו לב'),
 				indicator: 'green',
-				message: __('האם יש לרשום מספר אסמכתא?')
+				message: __('יש לרשום מספר אסמכתא!')
 			});
 		}
-		build_the_receipt(frm,'טיוטה',frm.doc.name);
+		else {
+			build_the_receipt(frm,'טיוטה',frm.doc.name);
+		}
 	}
 });
 
