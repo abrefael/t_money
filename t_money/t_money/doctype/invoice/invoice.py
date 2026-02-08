@@ -125,7 +125,6 @@ def Create_Invoice(q_num):
 			most_impact = prod
 		items_data += populate_items()
 		total += cost
-	receipt_date = doc.receipt_date.strftime('%d/%m/%Y')
 	calc_discount()
 	template = open("assets/t_money/I_template", "r").read()
 	receipt_data = template.format(
