@@ -9,7 +9,7 @@
 
 frappe.ui.form.on('Invoice', {
 	onload(frm) {
-		if((!frm.doc.r_name)||(frm.doc.name.includes("new-sales")||(!frm.doc.r_name.includes("Q"))){
+		if((!frm.doc.r_name)||(frm.doc.name.includes("new-sales"))||(!frm.doc.r_name.includes("Q"))){
 		frappe.db.count('Invoice')
 			.then(count => {
 					var name = 'I' + String(count+6).padStart(5, '0');
