@@ -150,6 +150,9 @@ def Create_Receipt(q_num, origin, fisc_year):
 	TARGET = q_num + "(" + origin + ").pdf"
 	from weasyprint import HTML
 	from frappe.utils.file_manager import save_file
+	existing = frappe.db.get_value("File", {"file_url": '/files/'+TARGET}, "name")
+	if existing:
+		frappe.delete_doc("File", existing, ignore_permissions=True)
 	content = HTML(string=receipt_data, base_url=".").write_pdf()
 	pdf_f = save_file(
 		fname = TARGET,
@@ -174,7 +177,7 @@ def Create_Receipt(q_num, origin, fisc_year):
 		})
 		doc.save()
 		frappe.db.commit()
-	pdf_f.file_url
+	pdf_f['file_url']
 
 
 @frappe.whitelist()
