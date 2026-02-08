@@ -132,7 +132,7 @@ def Create_Quotation(q_num):
 		h_p = h_p,
 		items_data = items_data,
 		discount_segment = discount_segment,
-		total = f"{total:,.2f }",
+		total = f"{total:,.2f}",
 		final = f"{final:,.0f}",
 		notes = notes,
 		logo_img = logo_img,
