@@ -146,7 +146,11 @@ frappe.ui.form.on('Receipt', {
 					else {
 						total_discounts += '<p style="direction: rtl; text-align: right">' + dtype_heb + itm + ' כוללת הנחה בערך של ' + discount + '% מהסכום הכולל.';
 					}
-					flag = true;
+					frappe.msgprint({
+						title: __('הנחה'),
+						indicator: 'blue',
+						message: __(total_discounts)
+					});
 				}
 				for (let i = 0; i < src_lst.length; i++){
 					var addChild = frm.add_child("item_list");
@@ -155,11 +159,6 @@ frappe.ui.form.on('Receipt', {
 					addChild.price = src_lst[i].price;
 					frm.refresh_field('item_list');
 				}
-				frappe.msgprint({
-					title: __('הנחה'),
-					indicator: 'blue',
-					message: __(total_discounts)
-				});
 			});
 		}
 	}
