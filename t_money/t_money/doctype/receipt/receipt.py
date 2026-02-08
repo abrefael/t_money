@@ -139,8 +139,8 @@ def Create_Receipt(q_num, origin, fisc_year):
 	reference = doc.reference
 	receipt_date = doc.receipt_date.strftime('%d/%m/%Y')
 	calc_discount()
-	doc = frappe.get_doc('Clients', client)
-	bank = doc.bank.split(' ')[0]
+	c_doc = frappe.get_doc('Clients', client)
+	bank = c_doc.bank.split(' ')[0]
 	template = open("assets/t_money/R_template", "r").read()
 	receipt_data = template.format(
 		date = date,
@@ -163,8 +163,8 @@ def Create_Receipt(q_num, origin, fisc_year):
 		bank = bank,
 		pay_method = pay_method,
 		receipt_date = receipt_date,
-		brench = doc.brench,
-		account_num = doc.account_num,
+		brench = c_doc.brench,
+		account_num = c_doc.account_num,
 		reference = reference
 	)
 	TARGET = q_num + "(" + origin + ").pdf"
