@@ -9,8 +9,6 @@
 
 
 
-var flag = false;
-var total_discounts = '<p style="direction: rtl; text-align: right">שימו לב!<p style="direction: rtl; text-align: right">';
 
 frappe.ui.form.on('Receipt', {
 	send_mail(frm) {
@@ -119,6 +117,7 @@ frappe.ui.form.on('Receipt', {
 			frappe.throw(__('קודם צריך לבחור הצעות מחיר ו/או חשבוניות עסקה'));
 		}
 		for (let i = 0; i < N; i++){
+			var total_discounts = '<p style="direction: rtl; text-align: right">שימו לב!<p style="direction: rtl; text-align: right">';
 			let itm = invs_n_quots[i];
 			var dtype;
 			var dtype_heb;
@@ -130,29 +129,24 @@ frappe.ui.form.on('Receipt', {
 				dtype = 'Invoice';
 				dtype_heb = "חשבונית עסקה ";
 			}
-			frappe.db.get_value(dtype, itm, ['discount','sum'])
-				.then(r => {
-					let sum = r.message.sum;
-					let discount = r.message.discount;
-					console.log(discount);
-					if (N == 1){
-						frm.set_value('discount', discount);
-						frm.refresh_field('discount');
-						sum_discount = discount;
-					}
-					else{
-						if (discount > 1){
-							total_discounts += dtype_heb + itm + ' כוללת הנחה בסך: ' + discount + ' ש"ח.<p style="direction: rtl; text-align: right">';
-						}
-						else {
-							total_discounts += dtype_heb + itm + ' כוללת הנחה בערך של ' + discount + '% מהצעת המחיר.<p style="direction: rtl; text-align: right">';
-						}
-						flag = true;
-					}
-				});
 			frappe.model.with_doc(dtype, itm, function () {
 				let source_doc = frappe.model.get_doc(dtype, itm);
 				let src_lst = source_doc.item_list;
+				let discount = source_doc.discount;
+				if (N == 1){
+					frm.set_value('discount', discount);
+					frm.refresh_field('discount');
+					sum_discount = discount;
+				}
+				else{
+					if (discount > 1){
+						total_discounts += '<p style="direction: rtl; text-align: right">' + dtype_heb + itm + ' כוללת הנחה בסך: ' + discount + ' ש"ח.';
+					}
+					else {
+						total_discounts += '<p style="direction: rtl; text-align: right">' + dtype_heb + itm + ' כוללת הנחה בערך של ' + discount + '% מהסכום הכולל.';
+					}
+					flag = true;
+				}
 				for (let i = 0; i < src_lst.length; i++){
 					var addChild = frm.add_child("item_list");
 					addChild.item = src_lst[i].item;
@@ -160,6 +154,11 @@ frappe.ui.form.on('Receipt', {
 					addChild.price = src_lst[i].price;
 					frm.refresh_field('item_list');
 				}
+				frappe.msgprint({
+					title: __('הנחה'),
+					indicator: 'blue',
+					message: __(total_discounts)
+				});
 			});
 		}
 	}
@@ -286,19 +285,7 @@ frappe.ui.form.on('Receipt', {
 		else{
 			origin = 'מקור';
 			frm.save();
-			if (flag) {
-				flag = false;
-				frappe.confirm(total_discounts + 'בטוחים שרוצים להמשיך?',
-				() => {
-					build_the_receipt(frm,origin,q_num);
-					return;
-				}, () => {
-					return;
-				});
-			}
-			else{
-				build_the_receipt(frm,origin,q_num);
-			}
+			build_the_receipt(frm,origin,q_num);
 		}
 	}
 });
