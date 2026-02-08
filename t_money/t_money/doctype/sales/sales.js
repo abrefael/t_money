@@ -12,8 +12,8 @@ frappe.ui.form.on('Sales', {
 		if((!frm.doc.r_name)||(frm.doc.name.includes("new-sales"))){
 		frappe.db.count('Sales')
 			.then(count => {
-					var name = 'Q' + String(count+6).padStart(5, '0');
-					frm.set_value('r_name', name);
+				var name = 'Q' + String(count+6).padStart(5, '0');
+				frm.set_value('r_name', name);
 			});
 		}
 	}
@@ -130,22 +130,22 @@ frappe.ui.form.on('Sales', {
 
 frappe.ui.form.on('Sales', {
 	invoice(frm) {
-	    var items = frm.doc.item_list;
-	    var item_list = [];
+		var items = frm.doc.item_list;
+		var item_list = [];
 		var sum = 0;
 		var discounted_sum = 0;
 		var discount = frm.doc.discount;
-	    for (let i = 0; i < items.length; i++){
+		for (let i = 0; i < items.length; i++){
 			let row = items[i];
 			let quant = row.quant;
 			let price = row.price;
 			sum += quant * price;
-	        item_list.push({
-	            'item' : row.item,
-	            'quant' : quant,
-	            'price' : price
-	        });
-	    }
+			item_list.push({
+				'item' : row.item,
+				'quant' : quant,
+				'price' : price
+			});
+		}
 		frm.set_value('sum',sum);
 		if (discount > 1){
 			discounted_sum = sum - discount;
@@ -155,16 +155,21 @@ frappe.ui.form.on('Sales', {
 		}
 		frm.set_value('discounted_sum',discounted_sum);
 		frm.save();
-	    frappe.db.insert({
-            doctype: 'Invoice',
-            client: frm.doc.client,
-            item_list: item_list,
-            discount: frm.doc.discount,
-			discounted_sum: discounted_sum,
-			sum: sum,
-            h_p: frm.doc.h_p
-        }).then(function(doc) {
-            window.open(`${window.location.origin}/app/${doc.doctype.toLowerCase()}/${doc.name}`, '_blank').focus();
-        });
+		frappe.db.count('Invoice')
+		.then(count => {
+			let name = 'I' + String(count+6).padStart(5, '0');
+			frappe.db.insert({
+				doctype: 'Invoice',
+				client: frm.doc.client,
+				item_list: item_list,
+				discount: frm.doc.discount,
+				discounted_sum: discounted_sum,
+				sum: sum,
+				h_p: frm.doc.h_p,
+				r_name: name
+			}).then(function(doc) {
+				window.open(`${window.location.origin}/app/${doc.doctype.toLowerCase()}/${doc.name}`, '_blank').focus();
+			});
+		});
 	}
 });
