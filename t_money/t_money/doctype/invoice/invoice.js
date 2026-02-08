@@ -14,6 +14,7 @@ frappe.ui.form.on('Invoice', {
 			.then(count => {
 					var name = 'I' + String(count+6).padStart(5, '0');
 					frm.set_value('r_name', name);
+					frm.refresh_field('r_name');
 			});
 		}
 	}
