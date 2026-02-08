@@ -153,10 +153,11 @@ frappe.ui.form.on('Receipt', {
 					});
 				}
 				for (let i = 0; i < src_lst.length; i++){
-					var addChild = frm.add_child("item_list");
-					addChild.item = src_lst[i].item;
-					addChild.quant = src_lst[i].quant;
-					addChild.price = src_lst[i].price;
+					let src_chld = src_lst[i];
+					let addChild = frm.add_child("item_list");
+					addChild.item = src_chld.item;
+					addChild.quant = src_chld.quant;
+					addChild.price = src_chld.price;
 					frm.refresh_field('item_list');
 				}
 			});
