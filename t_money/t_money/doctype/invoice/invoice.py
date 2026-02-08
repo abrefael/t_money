@@ -135,7 +135,7 @@ def Create_Invoice(q_num):
 		logo_img = logo_img,
 		items_data = items_data,
 		discount_segment = discount_segment,
-		total = f"{total:,.2f }",
+		total = f"{total:,.2f}",
 		final = f"{final:,.0f}",
 		op_num = op_num,
 		company_name = company_name,
