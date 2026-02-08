@@ -150,17 +150,21 @@ def Create_Receipt(q_num, origin, fisc_year):
 	TARGET = q_num + "(" + origin + ").pdf"
 	from weasyprint import HTML
 	from frappe.utils.file_manager import save_file
+	pdf_bytes = HTML(string=receipt_data, base_url=base_url).write_pdf()
 	existing = frappe.db.get_value("File", {"file_url": '/files/'+TARGET}, "name")
 	if existing:
-		frappe.delete_doc("File", existing, ignore_permissions=True)
-	content = HTML(string=receipt_data, base_url=".").write_pdf()
-	pdf_f = save_file(
-		fname = TARGET,
-		content = content,
-		dt = "Receipt",
-		dn = q_num,
-		is_private = 0
-	)
+		file_doc = frappe.get_doc("File", existing)
+		file_doc.content = pdf_bytes
+		file_doc.save(ignore_permissions=True)
+	else:
+		file_doc = save_file(
+			fname=fname_path,
+			content=pdf_bytes,
+			dt=dt,
+			dn=dn,
+			is_private=is_private
+		)
+	f_url = file_doc.file_url
 	if origin == 'מקור':
 		update_income_loss()
 		doc.db_set('created', 1, commit=True)
@@ -169,7 +173,7 @@ def Create_Receipt(q_num, origin, fisc_year):
 			if inc['item'] == most_impact:
 				frappe.db.set_value("Income Child Table", {'parent':fisc_year,'item':most_impact},'sum',final + frappe.utils.flt(inc['sum']))
 				frappe.db.commit()
-				return pdf_f.file_url
+				return f_url
 		doc = frappe.get_doc("Income Loss Report", fisc_year)
 		doc.append("items", {
 			"item": most_impact,
@@ -177,7 +181,7 @@ def Create_Receipt(q_num, origin, fisc_year):
 		})
 		doc.save()
 		frappe.db.commit()
-	return pdf_f.file_url
+	return f_url
 
 
 @frappe.whitelist()
