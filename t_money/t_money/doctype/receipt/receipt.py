@@ -122,17 +122,13 @@ def Create_Receipt(q_num, origin, fisc_year):
 	items_data=""
 	itms = frappe.db.sql(f"SELECT * FROM `tabItem Child List` WHERE parent='{q_num}'",as_dict=1)
 	total = 0
-	high_price = 0
-	most_impact = ''
+	most_impact = doc.most_impact
 	for itm in itms:
 		prod = itm["item"]
 		desc = itm["desc"]
 		price = itm["price"]
 		quant = itm["quant"]
 		cost = price * quant
-		if cost > high_price:
-			high_price = cost
-			most_impact = prod
 		items_data += populate_items()
 		total += cost
 	pay_method = doc.pay_method.split(' (')[0]
@@ -181,7 +177,7 @@ def Create_Receipt(q_num, origin, fisc_year):
 		doc = frappe.get_doc("Income Loss Report", fisc_year)
 		doc.append("items", {
 			"item": most_impact,
-			"sum": total,
+			"sum": final,
 		})
 		doc.save()
 		frappe.db.commit()
