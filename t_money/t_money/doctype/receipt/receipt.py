@@ -169,7 +169,7 @@ def Create_Receipt(q_num, origin, fisc_year):
 			if inc['item'] == most_impact:
 				frappe.db.set_value("Income Child Table", {'parent':fisc_year,'item':most_impact},'sum',final + frappe.utils.flt(inc['sum']))
 				frappe.db.commit()
-				pdf_f.file_url
+				return pdf_f.file_url
 		doc = frappe.get_doc("Income Loss Report", fisc_year)
 		doc.append("items", {
 			"item": most_impact,
@@ -177,7 +177,7 @@ def Create_Receipt(q_num, origin, fisc_year):
 		})
 		doc.save()
 		frappe.db.commit()
-	return pdf_f['file_url']
+	return pdf_f.file_url
 
 
 @frappe.whitelist()
