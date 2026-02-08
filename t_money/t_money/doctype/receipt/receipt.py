@@ -16,10 +16,7 @@ def Create_Receipt(q_num, origin, fisc_year):
 	def save_new():
 		from weasyprint import HTML
 		from frappe.utils.file_manager import save_file
-		tmp_path = 'assets/t_money/temp/' + TARGET
-		HTML(string=receipt_data, base_url=".").write_pdf(tmp_path)
-		with open(tmp_path, "rb") as f:
-			content = f.read()
+		content = HTML(string=receipt_data, base_url=".").write_pdf()
 		pdf_f = save_file(
 			fname = TARGET,
 			content = content,
@@ -27,7 +24,6 @@ def Create_Receipt(q_num, origin, fisc_year):
 			dn = q_num,
 			is_private = 0
 		)
-		os.remove(tmp_path)
 		return pdf_f.file_url
 	
 	def update_income_loss():
