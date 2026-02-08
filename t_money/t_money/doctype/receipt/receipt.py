@@ -177,7 +177,7 @@ def Create_Receipt(q_num, origin, fisc_year):
 		})
 		doc.save()
 		frappe.db.commit()
-	pdf_f['file_url']
+	return pdf_f['file_url']
 
 
 @frappe.whitelist()
