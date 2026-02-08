@@ -149,9 +149,9 @@ def Create_Receipt(q_num, origin, fisc_year):
 	)
 	TARGET = q_num + "(" + origin + ").pdf"
 	from weasyprint import HTML
-	pdf_bytes = HTML(string=receipt_data, base_url=".").write_pdf()
-	with open(cstr(frappe.local.site) + "/public/" + TARGET, "wb") as f:
-		f.write(pdf_bytes)
+	pdf_bytes = HTML(string=receipt_data, base_url=".").write_pdf("sites" + cstr(frappe.local.site) + "/public/" + TARGET)
+#	with open(cstr(frappe.local.site) + "/public/" + TARGET, "wb") as f:
+#		f.write(pdf_bytes)
 	file_doc = frappe.get_doc({
 		"doctype": "File",
 		"file_name": TARGET,
