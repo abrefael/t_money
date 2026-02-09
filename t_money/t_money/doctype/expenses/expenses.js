@@ -16,17 +16,6 @@ var flag = false;
 frappe.ui.form.on('Expenses', {
 	before_save(frm) {
 		if ((frm.is_new())||(flag)) {
-			frappe.call({
-				method: 't_money.t_money.doctype.expenses.expenses.get_doc_data',
-				args: {
-					"doc_name":frm.doc.name
-				}
-			})
-			.then(r => {
-				location.reload();
-				console.log(r.message);
-			});
-			
 	//Every expense has a precentage aknowladged by the IRS as deductable, thus the impact on the losses calculated.
 			var sum_var = Math.round(frm.doc.sum);
 			var actual_sum = Math.round(sum_var * frm.doc.impact);
@@ -44,9 +33,13 @@ frappe.ui.form.on('Expenses', {
 					"old_sum": old_sum,
 					"old_type":old_type,
 					"old_when":old_when,
-					"old_actual_sum":old_actual_sum
+					"old_actual_sum":old_actual_sum,
+					"doc_name":frm.doc.name
 				}
-			});
+			//});
+			}).then(r => {
+				location.reload();
+				console.log(r.message);});
 	//Once Income Loss Report is updated, we need to reset global variables.
 			old_sum = 0;
 			old_type = '';
