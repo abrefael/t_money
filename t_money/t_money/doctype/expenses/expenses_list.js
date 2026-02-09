@@ -19,7 +19,7 @@ let d = new frappe.ui.Dialog({
             options: YEARS
         }
     ],
-    size: 'small', // small, large, extra-large 
+    size: 'small',
     primary_action_label: 'בחר',
     primary_action(values) {
         window.location.href = location.href.split("?")[0] + '?when=["Between"%2C["' + values.year + '-01-01"%2C"' + values.year + '-12-31"]]';
