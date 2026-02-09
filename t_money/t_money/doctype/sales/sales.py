@@ -122,7 +122,7 @@ def Create_Quotation(q_num):
 		phone_num = phone_num,
 		email_add = email_add
 	)
-	TARGET = q_num + "(" + origin + ").pdf"
+	TARGET = q_num + ".pdf"
 	f_url = "/files/" + TARGET
 	from weasyprint import HTML
 	pdf_bytes = HTML(string=receipt_data, base_url=".").write_pdf(os.getcwd() + "/" + cstr(frappe.local.site) + "/public/files/" + TARGET)
@@ -134,7 +134,7 @@ def Create_Quotation(q_num):
 	file_doc.file_url = f_url
 	file_doc.save()
 	frappe.db.commit()
-	file_doc.attached_to_doctype = "Receipt"
+	file_doc.attached_to_doctype = "Sales"
 	file_doc.attached_to_name = q_num
 	file_doc.save()
 	frappe.db.commit()
