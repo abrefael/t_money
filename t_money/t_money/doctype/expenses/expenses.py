@@ -66,7 +66,7 @@ def add_expenss(fisc_year, actual_sum, sum_var, ex_type, old_sum, old_actual_sum
 
 @frappe.whitelist()
 def get_doc_data(doc_name):
-	return frappe.get_doc("Expenses", doc_name)
+	return (frappe.get_doc("Expenses", doc_name))
 
 
 
