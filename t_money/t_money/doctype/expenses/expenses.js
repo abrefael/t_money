@@ -33,13 +33,9 @@ frappe.ui.form.on('Expenses', {
 					"old_sum": old_sum,
 					"old_type":old_type,
 					"old_when":old_when,
-					"old_actual_sum":old_actual_sum,
-					"doc_name":frm.doc.name
+					"old_actual_sum":old_actual_sum
 				}
-			//});
-			}).then(r => {
-				location.reload();
-				console.log(r.message);});
+			});
 	//Once Income Loss Report is updated, we need to reset global variables.
 			old_sum = 0;
 			old_type = '';
