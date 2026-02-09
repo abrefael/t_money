@@ -138,6 +138,7 @@ def Create_Quotation(q_num):
 	file_doc.attached_to_name = q_num
 	file_doc.save()
 	frappe.db.commit()
+	doc.db_set('attached_file', f_url, commit=True)
 	return f_url
 
 
