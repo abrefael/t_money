@@ -11,6 +11,11 @@ class Expenses(Document):
 
 
 @frappe.whitelist()
+def get_doc_data(doc_name):
+	return (frappe.get_doc("Expenses", doc_name))
+
+
+@frappe.whitelist()
 def add_expenss(fisc_year, actual_sum, sum_var, ex_type, old_sum, old_actual_sum, old_type, old_when):
 	type_dic = {'משרדיות ואחזקה':'office','הוצאות רכב':'car','ביטוח מקצועי והשתלמויות':'insurance','קבלני משנה':'subconturctors','נסיעות (תחב"ץ)':'transport'}
 	sum_var = frappe.utils.flt(sum_var)
@@ -63,8 +68,4 @@ def add_expenss(fisc_year, actual_sum, sum_var, ex_type, old_sum, old_actual_sum
 		add_it(old_when, ex_type,(-1) * actual_sum,(-1) * old_sum)
 	add_it(fisc_year, ex_type,actual_sum,sum_var)
 
-
-@frappe.whitelist()
-def get_doc_data(doc_name):
-	return (frappe.get_doc("Expenses", doc_name))
 
