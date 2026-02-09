@@ -14,7 +14,7 @@ def build_template():
 	import os
 	final = 0
 	discount_segment = ""
-	origin = "לדוגמה
+	origin = "לדוגמה"
 	def save_new():
 		from weasyprint import HTML
 		tmp_path = 'assets/t_money/temp/' + TARGET
