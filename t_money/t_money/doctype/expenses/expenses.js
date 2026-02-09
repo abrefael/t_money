@@ -17,8 +17,8 @@ frappe.ui.form.on('Expenses', {
 	before_save(frm) {
 		if ((frm.is_new())||(flag)) {
 	//Every expense has a precentage aknowladged by the IRS as deductable, thus the impact on the losses calculated.
-			var sum_var = frm.doc.sum;
-			var actual_sum = sum_var * frm.doc.impact;
+			var sum_var = Math.round(frm.doc.sum);
+			var actual_sum = Math.round(sum_var * frm.doc.impact);
 	//We need to update the Income Loss Report...
 			frm.set_value('actual_sum', actual_sum);
 			var when = frm.doc.when;
@@ -52,8 +52,8 @@ frappe.ui.form.on('Expenses', {
 		if (!frm.is_new()) {
 			frappe.db.get_value('Expenses', frm.doc.name, ['sum','actual_sum']
 			).then(r => {
-				old_sum = r.message.sum;
-				old_actual_sum = r.message.actual_sum;
+				old_sum = Math.round(r.message.sum);
+				old_actual_sum = Math.round(r.message.actual_sum);
 				flag = true;
 			 })
 		}
