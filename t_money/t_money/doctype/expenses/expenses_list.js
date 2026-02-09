@@ -15,14 +15,14 @@ let d = new frappe.ui.Dialog({
             label: 'שנה לתצוגה',
             fieldname: 'year',
             default: curr_year,
-            fieldtype: 'select',
+            fieldtype: 'Select',
             options: YEARS
         }
     ],
     size: 'small', // small, large, extra-large 
     primary_action_label: 'בחר',
     primary_action(values) {
-        window.location.href = location.href.split("?")[0] + '?when=["Between"%2C["' + values.year + '-01-01"%2C"' + values.year + '-31-12"]]';
+        window.location.href = location.href.split("?")[0] + '?when=["Between"%2C["' + values.year + '-01-01"%2C"' + values.year + '-12-31"]]';
         d.hide();
     }
 });
