@@ -1,4 +1,4 @@
-frappe.listview_settings.Expenses = {
+frappe.listview_settings.Invoice = {
 	onload(listview) {
 		listview.page.add_inner_button("הפעל פילטר שנתי", () => filter_year());
 	}
