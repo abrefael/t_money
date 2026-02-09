@@ -20,11 +20,12 @@ frappe.ui.form.on('Expenses', {
 				method: 't_money.t_money.doctype.expenses.expenses.get_doc_data',
 				args: {
 					"doc_name":frm.doc.name
-				})
-				.then(r => {
-					location.reload();
-					console.log(r.message);
-				});
+				}
+			})
+			.then(r => {
+				location.reload();
+				console.log(r.message);
+			});
 			
 	//Every expense has a precentage aknowladged by the IRS as deductable, thus the impact on the losses calculated.
 			var sum_var = Math.round(frm.doc.sum);
