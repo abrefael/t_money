@@ -1,4 +1,4 @@
-frappe.listview_settings['Expenses'] = {
+frappe.listview_settings.Expenses = {
     onload: function (listview) {
         listview.page.add_inner_button("Test", function () {
             frappe.msgprint("Ping Pong");
