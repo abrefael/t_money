@@ -1,10 +1,12 @@
 frappe.listview_settings.Expenses = {
     onload: function (listview) {
+      console.log("Expenses list JS loaded in");
         listview.page.add_inner_button("Test", function () {
             frappe.msgprint("Ping Pong");
         });
     }
 };
+console.log("Expenses list JS loaded out");
 
 //frappe.listview_settings['Expenses'] = {
 //	onload(listview) {
