@@ -1,8 +1,5 @@
 frappe.listview_settings.Expenses = {
 	onload(listview) {
-		if (!(window.location.href.includes('?'))) {
-			window.location.assign(url);
-		}
 		listview.page.add_inner_button("הפעל פילטר שנתי", () => filter_year());
 	}
 };
