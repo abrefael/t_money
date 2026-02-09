@@ -1,21 +1,20 @@
 # Copyright (c) 2024, Alon Ben Refael and contributors
 # For license information, please see license.txt
-
 import frappe
 from frappe.model.document import Document
+from frappe.utils import cstr
 
 
 class Signature(Document):
 	pass
 
 
-
 @frappe.whitelist()
 def build_template():
-	from frappe import cstr
+	import os
 	final = 0
 	discount_segment = ""
-	origin = "לדוגמה"
+	origin = "לדוגמה
 	def save_new():
 		from weasyprint import HTML
 		tmp_path = 'assets/t_money/temp/' + TARGET
@@ -147,5 +146,5 @@ def build_template():
 	)
 	TARGET = q_num + "(" + origin + ").pdf"
 	f_url = save_new()
-	return "/assets/t_money/temp/" + TARGET
+	return f_url
 
