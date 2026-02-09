@@ -1,6 +1,5 @@
 # Copyright (c) 2024, Alon Ben Refael and contributors
 # For license information, please see license.txt
-
 import frappe
 from frappe.model.document import Document
 from frappe.utils import cstr
@@ -9,27 +8,12 @@ from frappe.utils import cstr
 class Sales(Document):
 	pass
 
+
 @frappe.whitelist()
 def Create_Quotation(q_num):
+	import os
 	final = 0
 	discount_segment = ""
-	def save_new():
-		from weasyprint import HTML
-		from frappe.utils.file_manager import save_file
-		import os
-		tmp_path = 'assets/t_money/temp/' + TARGET
-		HTML(string=receipt_data, base_url=".").write_pdf(tmp_path)
-		with open(tmp_path, "rb") as f:
-			content = f.read()
-		pdf_f = save_file(
-			fname = TARGET,
-			content = content,
-			dt = "Sales",
-			dn = q_num,
-			is_private = 0
-		)
-		os.remove(tmp_path)
-		return pdf_f.file_url
 	
 	def populate_items():
 		item = f"""
@@ -110,17 +94,12 @@ def Create_Quotation(q_num):
 	items_data=""
 	itms = frappe.db.sql(f"SELECT * FROM `tabItem Child List` WHERE parent='{q_num}'",as_dict=1)
 	total = 0
-	high_price = 0
-	most_impact = ''
 	for itm in itms:
 		prod = itm["item"]
 		desc = itm["desc"]
 		price = itm["price"]
 		quant = itm["quant"]
 		cost = price * quant
-		if cost > high_price:
-			high_price = cost
-			most_impact = prod
 		items_data += populate_items()
 		total += cost
 	calc_discount()
@@ -130,21 +109,35 @@ def Create_Quotation(q_num):
 		q_num = q_num,
 		client= client,
 		h_p = h_p,
+		op_num = op_num,
 		items_data = items_data,
+		company_name = company_name,
 		discount_segment = discount_segment,
 		total = f"{total:,.2f}",
 		final = f"{final:,.0f}",
+		signature = signature,
 		notes = notes,
 		logo_img = logo_img,
-		op_num = op_num,
-		company_name = company_name,
-		signature = signature,
 		sign_img = sign_img,
 		phone_num = phone_num,
 		email_add = email_add
 	)
-	TARGET = q_num + ".pdf"
-	f_url = save_new()
+	TARGET = q_num + "(" + origin + ").pdf"
+	f_url = "/files/" + TARGET
+	from weasyprint import HTML
+	pdf_bytes = HTML(string=receipt_data, base_url=".").write_pdf(os.getcwd() + "/" + cstr(frappe.local.site) + "/public/files/" + TARGET)
+	file_doc = frappe.get_doc({
+		"doctype": "File",
+		"file_name": TARGET
+	})
+	file_doc.insert(ignore_permissions=True)
+	file_doc.file_url = f_url
+	file_doc.save()
+	frappe.db.commit()
+	file_doc.attached_to_doctype = "Receipt"
+	file_doc.attached_to_name = q_num
+	file_doc.save()
+	frappe.db.commit()
 	return f_url
 
 
