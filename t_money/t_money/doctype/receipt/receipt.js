@@ -8,6 +8,27 @@
 // });small_business_accounting
 
 frappe.ui.form.on('Receipt', {
+	client(frm) {
+		const TXT = `<p style="color:red" dir=rtl>
+			יש לוודא כי קיימים כל פרטי חשבון הבנק של הלקוח!
+		</p>
+		<p dir=rtl>
+			<a href="/app/clients/{client}">לחצו כאן</a> על מנת לוודא
+		</p>`
+		frm.set_df_property("warning", "options", TXT.replace('{client}',frm.doc.client));
+	}
+});
+
+
+frappe.ui.form.on('Receipt', {
+	onload_post_render(frm) {
+		if (frm.doc.created){
+			$('li a span:contains("⇧+Ctrl+D")').parent().hide();
+		}
+	}
+});
+
+frappe.ui.form.on('Receipt', {
 	send_mail(frm) {
 		frappe.db.get_value(
 			'Clients',
@@ -47,7 +68,7 @@ frappe.ui.form.on('Receipt', {
 						default: ''
 					}
 				],
-				size: 'large', // small, large, extra-large 
+				size: 'large',
 				primary_action_label: 'שלח',
 				primary_action(values) {
 					values.q_num = q_num;
@@ -63,23 +84,6 @@ frappe.ui.form.on('Receipt', {
 	}
 });
 
-frappe.ui.form.on('Receipt', {
-	onload(frm) {
-		if((!frm.doc.r_name)||(frm.doc.name.includes("new-receipt"))){
-		frappe.db.count('Receipt')
-			.then(count => {
-				frappe.db.get_single_value('Signature','initials')
-					.then(inits => {
-						var name = inits + String(count+1).padStart(5, '0');
-						frm.set_value('r_name', name);
-						frm.set_value('caceled', 0);
-					});
-			});
-		}
-	}
-});
-
-
 var flag = false;
 var total_discounts = '<p style="direction: rtl; text-align: right">שימו לב!<p style="direction: rtl; text-align: right">';
 
@@ -87,7 +91,9 @@ var total_discounts = '<p style="direction: rtl; text-align: right">שימו ל�
 
 frappe.ui.form.on('Receipt', {
 	before_save(frm) {
-		calculate_sum(frm);
+		if (! frm.doc.created){
+			calculate_sum(frm);
+		}
 	}
 });
 
@@ -177,26 +183,16 @@ frappe.ui.form.on('Receipt', {
 function calculate_sum(frm){
 	var items = frm.doc.item_list;
 	var sum = 0;
-	var row_sum = 0;
-	var highest_sum = 0;
 	var discounted_sum = 0;
 	var discount = frm.doc.discount;
-	if (discount == 0){
-		discount = sum_discount;
-	}
 	for (let i = 0; i < items.length; i++){
 		let row = items[i];
 		let quant = row.quant;
 		let price = row.price;
-		row_sum = quant * price;
-		sum += row_sum;
-		if (row_sum > highest_sum){
-			frm.set_value("most_impact",row.item);
-			refresh_field("most_impact");
-			highest_sum = row_sum;
-		}
+		sum += quant * price;
 	}
-	if (discount > 1){
+	frm.set_value('sum',sum);
+	if (discount >= 1){
 		discounted_sum = sum - discount;
 	}
 	else {
@@ -214,12 +210,9 @@ frappe.ui.form.on('Receipt', {
 
 frappe.ui.form.on('Receipt', {
 	calc_sum(frm) {
-		calculate_sum(frm);
 		frm.save();
 	}
 });
-
-
 
 frappe.ui.form.on('Receipt', {
 	create_draft(frm) {
@@ -246,12 +239,12 @@ function build_the_receipt(frm,origin,q_num){
 				"fisc_year": when
 			}
 		}).then(r => {
-			location.reload();
-			window.open(`${window.location.origin + r.message}`, '_blank').focus();
+			let uri = window.location.origin + r.message;
+			window.location.reload();
+			window.open(uri, '_blank').focus();
 		});
 	}
 	var items = frm.doc.item_list;
-	var highest_sum = 0;
 	var discount = frm.doc.discount;
 	var when = frm.doc.receipt_date;
 	when = when.split('-')[0];
@@ -268,7 +261,7 @@ frappe.ui.form.on('Receipt', {
 			return;
 		}
 		var pay_method = frm.doc.pay_method;
-		if (((pay_method != "מזומן")||(pay_method.includes("אפליקציה להעברת כסף")))&&(frm.doc.reference == "000")){
+		if ((pay_method != "מזומן")&&(!pay_method.includes("אפליקציה להעברת כסף"))&&(!frm.doc.reference)){
 			frappe.msgprint({
 				title: __('שימו לב'),
 				indicator: 'red',
@@ -276,6 +269,7 @@ frappe.ui.form.on('Receipt', {
 			});
 			return;
 		}
+		$('li a span:contains("⇧+Ctrl+D")').parent().hide();
 		var origin;
 		var q_num = frm.doc.name;
 		if (frm.doc.created){
@@ -314,12 +308,23 @@ frappe.ui.form.on('Receipt', {
 frappe.ui.form.on('Receipt', {
 	validate: function(frm) {
 		if (frm.doc.caceled) {
-			frappe.throw(__('זו קבלה מבוטלת! אין לשנותה!'));
-			validated = false;
+			if (frm.is_new()){
+				frm.set_value("caceled",0);
+				frm.set_value("created",0);
+				frm.refresh_field("canceled");
+				frm.refresh_field("created");
+			}
+			else {
+				frappe.throw(__('זו קבלה מבוטלת! אין לשנותה!'));
+			}
 		}
 		if (frm.doc.created) {
-			frappe.throw(__('קבלה זו כבר הופקה. אין לשנותה!'));
-			validated = false;
+			if (frm.is_new()){
+				frm.set_value("created",0);
+			}
+			else {
+				frappe.throw(__('קבלה זו כבר הופקה. אין לשנותה!'));
+			}
 		}
 		let pay_method = frm.doc.pay_method;
 		if ((pay_method == "העברה בנקאית") || (pay_method == "המחאה") || (pay_method == "כרטיס דביט")){
@@ -328,8 +333,7 @@ frappe.ui.form.on('Receipt', {
 			.then(r => {
 				let values = r.message;
 				if ((values.bank.length < 2) || (values.brench == 0) || (values.account_num == "00")){
-					frappe.throw(__('<div style="direction: rtl; text-align: right">הוגדר אמצעי תשלום: ' + pay_method + ', אך חסרים נתוני חשבון בנק של לקוח.</div><br><a href="/app/clients/' + client + '">לחצו כאן</a> לתיקון'));
-			validated = false;
+					frappe.throw(__('<div style="direction: rtl; text-align: right">הוגדר אמצעי תשלום: ' + pay_method + ', אך חסרים פרטי חשבון בנק של לקוח.</div><br><a href="/app/clients/' + client + '">לחצו כאן</a> לתיקון'));
 				}
 			})
 		}
@@ -348,23 +352,9 @@ frappe.ui.form.on('Receipt', {
 		'q_num': frm.doc.name
 		}
 		}).then(r => {
-			location.reload();
-			window.open(`${window.location.href}(מבוטלת)`, '_blank').focus();
+			window.location(`${window.location.href}(מבוטלת)`);
 		});
 	}
 });
 
 
-
-frappe.ui.form.on('Receipt', {
-	pay_method(frm) {
-		var pay_method = frm.doc.pay_method;
-		if ((pay_method != "מזומן")||(pay_method.includes("אפליקציה להעברת כסף"))){
-			frappe.msgprint({
-				title: __('שימו לב'),
-				indicator: 'green',
-				message: __('האם יש לרשום מספר אסמכתא?')
-			});
-		}
-	}
-});

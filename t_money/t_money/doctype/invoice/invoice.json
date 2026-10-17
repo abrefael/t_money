@@ -1,57 +1,59 @@
 {
  "actions": [],
- "allow_rename": 1,
  "allow_import": 1,
- "autoname": "format:{r_name}",
  "creation": "2024-05-16 11:12:17.116431",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "create_invoice",
-  "column_break_II",
+  "create_draft",
+  "column_break_ii",
   "send_mail",
+  "column_break_pyty",
+  "create_invoice",
+  "section_break_uulv",
   "client",
-  "section_break_I",
+  "discounted_sum",
+  "column_break_rwyz",
+  "attached_file",
+  "calc_sum",
+  "section_break_i",
   "item_list",
   "itm_sec",
-  "calc_sum",
   "discount",
-  "column_break_I",
+  "html_grkd",
+  "column_break_i",
   "sum",
-  "discounted_sum",
-  "section_break_II",
-  "attached_file",
+  "section_break_ii",
   "h_p",
   "notes",
-  "r_name"
+  "canceled",
+  "created",
+  "cancel_i"
  ],
  "fields": [
-  {
-   "fieldname": "r_name",
-   "fieldtype": "Data",
-   "hidden": 1
-  },
   {
    "default": "0.00",
    "fieldname": "sum",
    "fieldtype": "Float",
    "label": "\u05e1\u05db\u05d5\u05dd (\u05dc\u05dc\u05d0 \u05d4\u05e0\u05d7\u05d4)",
-   "precision": "2"
+   "precision": "2",
+   "read_only": 1
   },
   {
    "fieldname": "attached_file",
    "fieldtype": "Data",
-   "label":"\u05e7\u05d5\u05d1\u05e5 \u05d7\u05e9\u05d1\u05d5\u05e0\u05d9\u05ea",
+   "in_list_view": 1,
+   "label": "\u05e7\u05d5\u05d1\u05e5 \u05d7\u05e9\u05d1\u05d5\u05e0\u05d9\u05ea",
    "options": "URL",
-   "read_only": 1,
-   "in_list_view": 1
+   "read_only": 1
   },
   {
    "default": "0.00",
    "fieldname": "discounted_sum",
    "fieldtype": "Float",
    "label": "\u05e1\u05db\u05d5\u05dd \u05dc\u05d0\u05d7\u05e8 \u05d4\u05e0\u05d7\u05d4",
-   "precision": "2"
+   "precision": "2",
+   "read_only": 1
   },
   {
    "fieldname": "calc_sum",
@@ -59,23 +61,7 @@
    "label": "\u05d7\u05e9\u05d1 \u05e1\u05db\u05d5\u05dd"
   },
   {
-   "fieldname": "column_break_I",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_II",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_I",
-   "fieldtype": "Section Break"
-  },
-  {
    "fieldname": "itm_sec",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "section_break_II",
    "fieldtype": "Section Break"
   },
   {
@@ -116,18 +102,74 @@
    "label": "\u05e9\u05dc\u05d7 \u05d7\u05e9\u05d1\u05d5\u05e0\u05d9\u05ea \u05e2\u05e1\u05e7\u05d4"
   },
   {
+   "default": "<p style=\"text-align:right\" class=\"ql-direction-rtl\"></p>",
    "fieldname": "notes",
-   "fieldtype": "Text",
+   "fieldtype": "Text Editor",
    "label": "\u05d4\u05e2\u05e8\u05d5\u05ea"
+  },
+  {
+   "fieldname": "column_break_ii",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_i",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_i",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_ii",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "html_grkd",
+   "fieldtype": "HTML",
+   "options": "<div dir=rtl style=\"text-align:right\">\u05d9\u05e9 \u05dc\u05d4\u05db\u05e0\u05d9\u05e1 \u05d4\u05e0\u05d7\u05d4 \u05d1\u05e1\u05db\u05d5\u05dd \u05de\u05e1\u05e4\u05e8\u05d9 (\u05dc\u05de\u05e9\u05dc: 300 \u05e9\"\u05d7) \u05d0\u05d5 \u05d1\u05e9\u05d1\u05e8 (\u05dc\u05de\u05e9\u05dc: 0.2) \u05e2\u05d1\u05d5\u05e8 \u05d0\u05d7\u05d5\u05d6\u05d9\u05dd (20%)</div>"
+  },
+  {
+   "fieldname": "create_draft",
+   "fieldtype": "Button",
+   "label": "\u05d4\u05e4\u05e7\u05ea \u05d8\u05d9\u05d5\u05d8\u05d4"
+  },
+  {
+   "fieldname": "column_break_pyty",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_uulv",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_rwyz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "canceled",
+   "fieldtype": "Check",
+   "hidden": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "created",
+   "fieldtype": "Check",
+   "hidden": 1
+  },
+  {
+   "fieldname": "cancel_i",
+   "fieldtype": "Button",
+   "label": "\u05d1\u05d9\u05d8\u05d5\u05dc \u05d7\u05e9\u05d1\u05d5\u05e0\u05d9\u05ea"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-05-18 13:23:30.335049",
+ "modified": "2026-10-12 16:44:53.729715",
  "modified_by": "Administrator",
- "module":"T-Money",
+ "module": "T-Money",
  "name": "Invoice",
- "naming_rule": "Expression",
+ "naming_rule": "By script",
  "owner": "Administrator",
  "permissions": [
   {
@@ -143,6 +185,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

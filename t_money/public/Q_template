@@ -19,7 +19,7 @@
 		header {{
 			position: running(header);
 		}}
-		header table,header td{
+		header table,header td{{
 		border-style:none;
 		}}
 		body {{
@@ -49,10 +49,10 @@
 			font-size: 22pt;
 		}}
 		.one{{
-			width:82.5%
+			width:80%
 		}}
 		.two{{
-			width:17.5%;
+			width:20%;
 			text-align:left
 		}}
 		#headding{{
@@ -98,8 +98,7 @@ tr {{
 <div id="headding">
 <br>
 {date}
-<h1>הצעת מחיר מס': {q_num}</h1>
-
+<h1>הצעת מחיר: {q_num}</h1>
 </div>
 <div id="about">
 <br>
@@ -131,12 +130,12 @@ tr {{
 	</tr>
 {discount_segment}
 </table>
-<br><br><br>
+{notes}
+<br>
 <div id="signature">
-	{signature}<br><br>
-	<img src="{sign_img}" style="height:50px">
+	{signature}
+	<img src="{sign_img}" style="height:50px; margin-top:-25px;">
 </div>
-<br><br>{notes}
 </body>
 </html>
 

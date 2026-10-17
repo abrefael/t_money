@@ -1,0 +1,19 @@
+{
+ "app": "t_money",
+ "bg_color": "gray",
+ "creation": "2026-09-29 14:33:06.508674",
+ "docstatus": 0,
+ "doctype": "Desktop Icon",
+ "hidden": 0,
+ "icon_type": "Folder",
+ "idx": 3,
+ "label": "Untitled 1",
+ "link_type": "Workspace Sidebar",
+ "modified": "2026-09-29 14:33:06.508674",
+ "modified_by": "alonbr@pm.me",
+ "name": "Untitled 1",
+ "owner": "alonbr@pm.me",
+ "restrict_removal": 0,
+ "roles": [],
+ "standard": 1
+}

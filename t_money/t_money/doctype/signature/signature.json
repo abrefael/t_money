@@ -1,22 +1,22 @@
 {
  "actions": [],
- "allow_rename": 1,
  "creation": "2024-08-12 09:03:37.420788",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "build",
   "company_name",
-  "op_num",
   "logo_img",
-  "col_i",
-  "reupload",
   "sign_img",
+  "column_break_hjdv",
+  "op_num",
+  "\u05d0\u05d9\u05e9\u05d5\u05e8_\u05e2\u05d5\u05e1\u05e7_\u05e4\u05d8\u05d5\u05e8",
+  "col_i",
   "phone_num",
   "email_add",
-  "sig_img_size_in",
   "initials",
-  "signature"
+  "sig_img_size_in",
+  "signature",
+  "sample_receipt"
  ],
  "fields": [
   {
@@ -30,63 +30,68 @@
   {
    "fieldname": "company_name",
    "fieldtype": "Data",
-   "label": "שם עוסק"
+   "label": "\u05e9\u05dd \u05e2\u05d5\u05e1\u05e7"
   },
   {
    "fieldname": "initials",
    "fieldtype": "Data",
-   "label": "ראשי תיבות של השם שלך (באנגלית)"
-  },
-  {
-   "fieldname": "build",
-   "fieldtype": "Button",
-   "label": "בנה קבלה לדוגמה (הצעות מחיר וחשבוניות עסקה יראו דומה)"
+   "label": "\u05e8\u05d0\u05e9\u05d9 \u05ea\u05d9\u05d1\u05d5\u05ea \u05e9\u05dc \u05d4\u05e9\u05dd \u05e9\u05dc\u05da (\u05d1\u05d0\u05e0\u05d2\u05dc\u05d9\u05ea)"
   },
   {
    "fieldname": "signature",
-   "fieldtype": "Text",
-   "label": "חתימה על מסמכים (הצעות מחיר, חשבוניות עסקה וקבלות)"
+   "fieldtype": "Text Editor",
+   "label": "\u05d7\u05ea\u05d9\u05de\u05d4 \u05e2\u05dc \u05de\u05e1\u05de\u05db\u05d9\u05dd (\u05d4\u05e6\u05e2\u05d5\u05ea \u05de\u05d7\u05d9\u05e8, \u05d7\u05e9\u05d1\u05d5\u05e0\u05d9\u05d5\u05ea \u05e2\u05e1\u05e7\u05d4 \u05d5\u05e7\u05d1\u05dc\u05d5\u05ea)"
   },
   {
    "fieldname": "sign_img",
    "fieldtype": "Attach Image",
-   "label": "חתימה (תמונה)"
+   "label": "\u05d7\u05ea\u05d9\u05de\u05d4 (\u05ea\u05de\u05d5\u05e0\u05d4)"
   },
   {
    "fieldname": "logo_img",
    "fieldtype": "Attach Image",
-   "label": "לוגו (תמונה)"
-  },
-  {
-   "fieldname": "reupload",
-   "fieldtype": "Attach",
-   "hidden": 1
+   "label": "\u05dc\u05d5\u05d2\u05d5 (\u05ea\u05de\u05d5\u05e0\u05d4)"
   },
   {
    "fieldname": "op_num",
    "fieldtype": "Data",
-   "label": "מספר עוסק פטור",
+   "label": "\u05de\u05e1\u05e4\u05e8 \u05e2\u05d5\u05e1\u05e7 \u05e4\u05d8\u05d5\u05e8",
    "options": "Phone"
   },
   {
    "fieldname": "phone_num",
    "fieldtype": "Data",
-   "label": "טלפון",
+   "label": "\u05d8\u05dc\u05e4\u05d5\u05df",
    "options": "Phone"
   },
   {
    "fieldname": "email_add",
    "fieldtype": "Data",
-   "label": "דואר אלקטרוני",
+   "label": "\u05d3\u05d5\u05d0\u05e8 \u05d0\u05dc\u05e7\u05d8\u05e8\u05d5\u05e0\u05d9",
    "options": "Email"
+  },
+  {
+   "fieldname": "sample_receipt",
+   "fieldtype": "HTML",
+   "label": "\u05e7\u05d1\u05dc\u05d4 \u05dc\u05d3\u05d5\u05d2\u05de\u05d4",
+   "options": "\n\t<style>\n\t\t.a4-preview-container {\n\t\t\twidth: 210mm;\n\t\t\tmin-height: 297mm;\n\t\t\tmargin: 20px auto;\n\t\t\tpadding: 20mm;\n\t\t\tbackground: white;\n\t\t\tbox-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);\n\t\t\tbox-sizing: border-box;\n\t\t\tfont-family: \"DejaVu Sans\", sans-serif;\n\t\t\tdirection: rtl;\n\t\t\ttext-align: right;\n\t\t\tfont-size: 12pt;\n\t\t\tposition: relative;\n\t\t}\n\t\t.a4-preview-header {\n\t\t\tposition: absolute;\n\t\t\ttop: 0;\n\t\t\tleft: 0;\n\t\t\tright: 0;\n\t\t\ttext-align: center;\n\t\t\tmargin-top: 5mm;\n\t\t}\n\t\t.a4-preview-footer {\n\t\t\tposition: absolute;\n\t\t\tbottom: 0;\n\t\t\tleft: 0;\n\t\t\tright: 25mm;\n\t\t\ttext-align: right;\n\t\t\tmargin-bottom: 5mm;\n\t\t\tfont-size: 9pt;\n\t\t}\n\t\t.a4-preview-container th,\n\t\t.a4-preview-container td {\n\t\t\tborder: 1px solid #D2D2D2;\n\t\t\tpadding: 6px;\n\t\t\ttext-align: right;\n\t\t}\n\t\t.a4-preview-container th {\n\t\tbackground-color:#D2D2D2;\n\t\t}\n\t\t.a4-preview-container table {\n\t\t\tborder-collapse: collapse;\n\t\t\twidth: 100%;\n\t\t\ttext-align:right;\n\t\t}\n\t\t.a4-preview-container thead {\n\t\t\tdisplay: table-header-group;\n\t\t}\n\t\t.a4-preview-container tr {\n\t\t\tbreak-inside: avoid;\n\t\t}\n\t\t.head1 {\n\t\t\tfont-size: 18pt;\n\t\t\tfont-weight:bold;\n\t\t\ttext-align: center;\n\t\t}\n\t\t.a4-preview-container h1 {\n\t\t\tfont-size: 22pt;\n\t\t}\n\t\t.one{\n\t\t\twidth:82.5%\n\t\t}\n\t\t.two{\n\t\t\twidth:17.5%;\n\t\t\ttext-align:left\n\t\t}\n\t\t#headding{\n\t\t\ttext-align:center\n\t\t}\n\t\t.head_tbl{\n\t\t\twidth:100%;\n\t\t\tborder-style:none;\n\t\t}\n\t\t#about{\n\t\t\tfont-size: 14pt;\n\t\t\tfont-weight:bold;\n\t\t}\n\t\t#signature{\n\t\t\ttext-align:left;\n\t\t}\n\t</style>\n<div class=\"a4-preview-container\">\n<p class=\"head1\">{company_name}</p>\n<table class=\"head_tbl\">\n\t<tr>\n\t\t<td>\n\t\t\t<table class=\"head_tbl\">\n\t\t\t\t<tr><td>\u05e2.\u05e4.:</td><td>{op_num}</td></tr>\n\t\t\t\t<tr><td>\u05de\u05e1\u05e4\u05e8 \u05d8\u05dc\u05e4\u05d5\u05df:</td><td>{phone_num}</td></tr>\n\t\t\t\t<tr><td>\u05d3\u05d5\u05d0\u05e8 \u05d0\u05dc\u05e7\u05d8\u05e8\u05d5\u05e0\u05d9:</td><td>{email_add}</td></tr>\n\t\t\t</table>\n\t\t</td>\n\t\t<td style=\"width:15%;\"><img src=\"{logo_img}\" style=\"width:80px;\"></td>\n\t</tr>\n</table>\n<div id=\"headding\">\n<br>\n{date}\n<h1>\u05e7\u05d1\u05dc\u05d4 \u05de\u05e1': {q_num}</h1>\n{origin}\n</div>\n<div id=\"about\">\n<br>\n\u05e2\u05d1\u05d5\u05e8: \n{client} <br><br>\n\u05e2.\u05de/\u05ea.\u05d6/\u05e2\"\u05e8: \n{h_p}<br><br>\n</div>\n<br>\n<table>\n\t<thead>\n\t\t<tr>\n\t\t\t<th style=\"width:20%;\">\u05e9\u05dd \u05e4\u05e8\u05d9\u05d8/\u05de\u05e7\"\u05d8</th>\n\t\t\t<th style=\"width:35%;\">\u05ea\u05d9\u05d0\u05d5\u05e8</th>\n\t\t\t<th style=\"width:17%;\">\u05de\u05d7\u05d9\u05e8</th>\n\t\t\t<th style=\"width:8%;\">\u05db\u05de\u05d5\u05ea</th>\n\t\t\t<th class=\"two\">\u05dc\u05ea\u05e9\u05dc\u05d5\u05dd</th>\n\t\t</tr>\n\t</thead>\n{items_data}\n</table>\n<table class=\"summ\"><tr><td class=\"one\" ></td>\n\t\t<td class=\"two\" ></td></tr>\n</table>\n<table class=\"summ\">\n\t<tr>\n\t\t<td class=\"one\" >\u05e1\u05d4\"\u05db</td>\n\t\t<td class=\"two\" >{total} \u20aa</td>\n\t</tr>\n{discount_segment}\n\t<tr>\n\t\t<td class=\"one\" >\u05e1\u05d4\"\u05db \u05e4\u05d8\u05d5\u05e8 \u05de\u05de\u05e2\"\u05de</td>\n\t\t<td class=\"two\" >{final} \u20aa</td>\n\t</tr>\n\t<tr>\n\t\t<td class=\"one\" >\u05de\u05e2\"\u05de</td>\n\t\t<td class=\"two\" >0.00</td>\n\t</tr>\n\t<tr>\n\t\t<td class=\"one\" >\u05e1\u05d4\"\u05db \u05dc\u05ea\u05e9\u05dc\u05d5\u05dd</td>\n\t\t<td style=\"text-align:left;\" >{final} \u20aa</td>\n\t</tr>\n</table><br>\n\u05e9\u05d5\u05dc\u05dd \u05d1\u05d0\u05de\u05e6\u05e2\u05d5\u05ea\n<table>\n\t<thead>\n\t\t<tr>\n\t\t\t<th style=\"width:20%;\">\u05d0\u05de\u05e6\u05e2\u05d9 \u05ea\u05e9\u05dc\u05d5\u05dd</th>\n\t\t\t<th style=\"width:18%;\">\u05ea\u05d0\u05e8\u05d9\u05da</th>\n\t\t\t<th style=\"width:5%;\">\u05d1\u05e0\u05e7</th>\n\t\t\t<th style=\"width:8%;\">\u05e1\u05e0\u05d9\u05e3</th>\n\t\t\t<th style=\"width:16%;\">\u05de\u05e1' \u05d7\u05e9\u05d1\u05d5\u05df</th>\n\t\t\t<th style=\"width:16%;\">\u05d0\u05e1\u05de\u05db\u05ea\u05d0</th>\n\t\t\t<th style=\"width:17%;\">\u05e1\u05db\u05d5\u05dd (\u20aa)</th>\n\t\t</tr>\n\t</thead>\n\t<tr>\n\t\t<td>{pay method}</td>\n\t\t<td>{receipt date}</td>\n\t\t<td>{bank}</td>\n\t\t<td>{brench}</td>\n\t\t<td>{account num}</td>\n\t\t<td>{reference}</td>\n\t\t<td class=\"two\">{final}</td>\n\t</tr>\n</table>\n<br><br><br>\n<div id=\"signature\">\n\t{signature}<br><br>\n\t<img src=\"{sign_img}\" style=\"height:50px\">\n</div>\n<br><br>{notes}\n\n\t<div class=\"a4-preview-footer\">\n\u05e2\u05de\u05d5\u05d3 1 \u05de\u05ea\u05d5\u05da 1\n\t</div>\n</div>\n\n\n"
+  },
+  {
+   "fieldname": "column_break_hjdv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "\u05d0\u05d9\u05e9\u05d5\u05e8_\u05e2\u05d5\u05e1\u05e7_\u05e4\u05d8\u05d5\u05e8",
+   "fieldtype": "Attach",
+   "label": "\u05d0\u05d9\u05e9\u05d5\u05e8 \u05e2\u05d5\u05e1\u05e7 \u05e4\u05d8\u05d5\u05e8"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-08-12 09:04:00.156195",
- "modified_by": "Administrator",
- "module":"T-Money",
+ "modified": "2026-10-10 13:48:49.184364",
+ "modified_by": "alonbr@pm.me",
+ "module": "T-Money",
  "name": "Signature",
  "owner": "Administrator",
  "permissions": [
@@ -101,6 +106,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

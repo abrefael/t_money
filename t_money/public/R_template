@@ -49,10 +49,10 @@
 			font-size: 22pt;
 		}}
 		.one{{
-			width:82.5%
+			width:80%
 		}}
 		.two{{
-			width:17.5%;
+			width:20%;
 			text-align:left
 		}}
 		#headding{{
@@ -98,7 +98,7 @@ tr {{
 <div id="headding">
 <br>
 {date}
-<h1>קבלה מס': {q_num}</h1>
+<h1>קבלה: {q_num}</h1>
 {origin}
 </div>
 <div id="about">
@@ -166,12 +166,12 @@ tr {{
 		<td class="two">{final}</td>
 	</tr>
 </table>
-<br><br><br>
+{notes}
+<br>
 <div id="signature">
-	{signature}<br><br>
-	<img src="{sign_img}" style="height:50px">
+	{signature}
+	<img src="{sign_img}" style="height:50px; margin-top:-25px;">
 </div>
-<br><br>{notes}
 </body>
 </html>
 
