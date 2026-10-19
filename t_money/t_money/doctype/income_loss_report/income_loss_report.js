@@ -3,26 +3,54 @@
 
 
 
-
 frappe.ui.form.on('Income Loss Report', {
-	calc(frm) {
-		var total_income = 0;
-		var incoms = frm.doc.items;
-//	Calculate the total incom from receipts.
-		for (let i = 0; i < incoms.length; i++) {
-			total_income += flt(incoms[i].sum);
-		}
-//	Calculate the total losses due to: expenses (office, car, subcontructors and insurenses)
-//	plus the travel expenses and the losses on assets.
-		var losses = flt(frm.doc.office) + flt(frm.doc.insurance) + flt(frm.doc.subconturctors) + flt(frm.doc.travel) + flt(frm.doc.transport) + flt(frm.doc.car) + flt(frm.doc.asset_loss);
-//	Calculate the "רווח נקי לא מתואם", whatever that means...
-		var net_non = total_income - losses;
-//	Calculate the "רווח נקי מתואם", whatever that means...
-		var net_adj = net_non + flt(frm.doc.car_non);
-		frm.set_value('total_profit', total_income);
-		frm.set_value('profit_pre', net_non);
-		frm.set_value('profit_adj', net_adj);
-		frm.refresh();
-		frm.save();
+	copy_car(frm) {
+		const FIELD_LST = ["car_desc", "car_producer", "car_model", "car_vol", "car_price_point", "car_lic", "car_no_of_months"];
+		frappe.call({
+			method:"frappe.client.get",
+			args: {
+				doctype: "Income Loss Report",
+				name: String(frm.doc.year - 1)
+			},
+			callback: function(r) {
+				const doc = r.message;
+				const n = doc.new_car ? "new_" : "";
+				if (!doc.car_desc){
+					frappe.throw(__('לא קיים רכב עבור שנה שעברה'));
+				}
+				frm.set_value("car_milage_init", doc[n + "car_milage_end"]);
+				FIELD_LST.forEach((fld) => {
+					frm.set_value(fld, doc[n + fld]);
+					frm.refresh_field(fld);
+				});
+			},
+			error: function(err) {
+				frappe.throw(__('דוח לא קיים עבור שנה שעברה'));
+			}
+		});
 	}
 });
+
+
+frappe.ui.form.on('Income Loss Report', {
+	onload_post_render(frm) {
+		function build(frm) {
+			console.log(frm.doc); //Build Income Loss Report file
+		}
+		$(frm.fields_dict.build_btn.wrapper).find('button').off('click').on('click', function() {
+			build(frm);
+		});
+	}
+});
+
+
+
+
+
+
+
+
+
+
+
+

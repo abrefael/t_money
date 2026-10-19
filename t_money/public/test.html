@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+	<meta charset="utf-8">
+	<style>
+		@page {
+			size: A4;
+			margin: 50mm 15mm 25mm 15mm;
+
+			@top-center {
+					content: element(header);
+			}
+
+			@bottom-right {
+				content: "עמוד " counter(page) " מתוך " counter(pages);
+				font-size: 9pt;
+			}
+		}
+		header {
+			position: running(header);
+		}
+		header table,header td{
+		border-style:none;
+		}
+		body {
+			font-family: "DejaVu Sans", sans-serif;
+			direction: rtl;
+			text-align:right;
+			font-size: 12pt
+		}
+		th {
+		background-color:#D2D2D2;
+		}
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		td, th {
+			border: 1px solid #D2D2D2;
+			padding: 6px;
+			text-align: right;
+		}
+		.head1 {
+			font-size: 18pt;
+			font-weight:bold;
+			text-align: center;
+		}
+		h1 {
+			font-size: 22pt;
+		}
+		.one{
+			width:82.5%
+		}
+		.two{
+			width:17.5%;
+			text-align:left
+		}
+		#headding{
+			text-align:center
+		}
+		#head_tbl{
+			width:100%;
+		}
+		#about{
+			font-size: 14pt;
+			font-weight:bold;
+		}
+		#signature{
+			text-align:left;
+		}
+		thead {
+  display: table-header-group;
+}
+tr {
+  break-inside: avoid;
+}
+
+	</style>
+</head>
+<body>
+<header>
+<div>
+<p class="head1">החברה שלי</p>
+<table id="head_tbl">
+	<tr>
+		<td>
+			<table>
+				<tr><td>ע.פ.:</td><td>00000000</td></tr>
+				<tr><td>מספר טלפון:</td><td>0505050505</td></tr>
+				<tr><td>דואר אלקטרוני:</td><td>me@my-company.com</td></tr>
+			</table>
+		</td>
+		<td style="width:15%;"><img temptag="placeholder" src="logo.png" style="width:80px;"></td>
+	</tr>
+</table>
+</div>
+</header>
+<div id="headding">
+<br>
+03/02/2026
+<h1>קבלה מס': {reciept_num}</h1>
+טיוטה/מקור/העתק
+</div>
+<div id="about">
+<br>
+עבור: 
+{client} <br><br>
+ע.מ/ת.ז/ע"ר: 
+{client_num}<br><br>
+</div>
+<br>
+<table style="text-align:right;">
+	<thead>
+		<tr>
+			<th style="width:20%;">שם פריט/מק"ט</th>
+			<th style="width:35%;">תיאור</th>
+			<th style="width:17%;">מחיר</th>
+			<th style="width:8%;">כמות</th>
+			<th class="two">לתשלום</th>
+		</tr>
+	</thead>
+	<tr>
+		<td>{item}</td>
+		<td>{description}</td>
+		<td>{price}</td>
+		<td>{quantity}</td>
+		<td>{cost} ₪</td>
+	</tr>
+</table>
+<table class="summ"><tr><td class="one" ></td>
+		<td class="two" ></td></tr>
+</table>
+<table class="summ">
+	<tr>
+		<td class="one" >סה"כ</td>
+		<td class="two" >{cost} ₪</td>
+	</tr>
+	<tr>
+		<td class="one" >הנחה</td>
+		<td class="two" >{discount} ₪</td>
+	</tr>
+	<tr>
+		<td class="one" >סה"כ אחרי הנחה</td>
+		<td class="two" >{final} ₪</td>
+	</tr>
+	<tr>
+		<td class="one" >סה"כ פטור ממע"מ</td>
+		<td class="two" >{final} ₪</td>
+	</tr>
+	<tr>
+		<td class="one" >מע"מ</td>
+		<td class="two" >0.00</td>
+	</tr>
+	<tr>
+		<td class="one" >סה"כ לתשלום</td>
+		<td class="two" >{final} ₪</td>
+	</tr>
+</table><br>
+שולם באמצעות
+<table style="text-align:right;">
+	<thead>
+		<tr>
+			<th style="width:20%;">אמצעי תשלום</th>
+			<th style="width:18%;">תאריך</th>
+			<th style="width:5%;">בנק</th>
+			<th style="width:8%;">סניף</th>
+			<th style="width:16%;">מס' חשבון</th>
+			<th style="width:16%;">אסמכתא</th>
+			<th style="width:17%;">סכום (₪)</th>
+		</tr>
+	</thead>
+	<tr>
+		<td>{pay_method}</td>
+		<td>{reciept_date}</td>
+		<td>{bank}</td>
+		<td>{bank_number}</td>
+		<td>{account_num}</td>
+		<td>{reference}</td>
+		<td class="two">{final}</td>
+	</tr>
+</table>
+<br><br><br>
+<div id="signature">
+	{signature}<br><br>
+	<img src="חתימה.png" style="height:50px">
+</div>
+</body>
+</html>
+
+

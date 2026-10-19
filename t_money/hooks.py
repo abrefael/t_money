@@ -9,6 +9,8 @@ app_logo_url = "/assets/t_money/images/T-money-logo.svg"
 website_context = {
 	"favicon": "/assets/t_money/images/T-money-logo.svg",
 	"splash_image": "/assets/t_money/images/T-money-logo.svg",
+#	"footer_powered": 'Powered By <a href="https://frappeframework.com/homepage">Frappe Framework</a>',
+#	"copyright": "Created by Alon Ben Refael",
 }
 # required_apps = []
 
@@ -19,10 +21,12 @@ website_context = {
 app_include_css = "/assets/t_money/css/t_money.css"
 app_include_js = "/assets/t_money/js/t_money.js"
 # required_apps = []
+#app_include_html = [
+#	"/templates/includes/global_footer.html"
+#]
 
 # Includes in <head>
 # ------------------
-
 # include js, css files in header of desk.html
 # app_include_css = "/assets/t_money/css/t_money.css"
 # app_include_js = "/assets/t_money/js/t_money.js"
@@ -42,8 +46,10 @@ app_include_js = "/assets/t_money/js/t_money.js"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
-# doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
+# doctype_js = {"Income Loss Report" : "public/js/ILR.js"}
+# doctype_list_js = {
+#	"Expenses" : "t_money/doctype/expenses/expenses-list.js"
+#}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 

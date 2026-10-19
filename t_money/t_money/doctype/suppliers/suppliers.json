@@ -1,20 +1,25 @@
 {
  "actions": [],
- "allow_rename": 1,
  "allow_import": 1,
+ "allow_rename": 1,
  "autoname": "format:{supp_name}",
  "creation": "2024-05-11 17:12:42.577691",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "stat",
   "supp_name",
   "id_num",
+  "column_break_svcv",
   "email",
   "phone",
+  "column_break_bgrk",
+  "stat",
   "reg_date",
-  "etras",
-  "supp_act"
+  "column_break_shzk",
+  "debt",
+  "credit",
+  "section_break_ngth",
+  "notes"
  ],
  "fields": [
   {
@@ -56,25 +61,45 @@
    "label": "\u05ea\u05d0\u05e8\u05d9\u05da \u05e8\u05d9\u05e9\u05d5\u05dd"
   },
   {
-   "fieldname": "etras",
+   "fieldname": "column_break_svcv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_bgrk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "debt",
    "fieldtype": "Float",
-   "label": "\u05d9\u05d9\u05ea\u05e8\u05d5\u05ea",
+   "label": "\u05d7\u05d5\u05d1",
    "precision": "2"
   },
   {
-   "fieldname": "supp_act",
-   "fieldtype": "Link",
-   "label": "\u05e4\u05e2\u05d5\u05dc\u05d5\u05ea",
-   "options": "Suppliers action"
+   "fieldname": "credit",
+   "fieldtype": "Float",
+   "label": "\u05d6\u05db\u05d5\u05ea"
+  },
+  {
+   "fieldname": "column_break_shzk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_ngth",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text Editor",
+   "label": "\u05d4\u05e2\u05e8\u05d5\u05ea"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-05-11 17:18:29.025200",
+ "modified": "2026-10-16 15:58:48.004089",
  "modified_by": "Administrator",
- "module":"T-Money",
+ "module": "T-Money",
  "name": "Suppliers",
- "naming_rule": "Expression",
+ "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {
@@ -90,6 +115,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

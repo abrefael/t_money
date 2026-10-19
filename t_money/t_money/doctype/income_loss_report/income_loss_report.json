@@ -1,47 +1,83 @@
 {
  "actions": [],
- "allow_rename": 1,
  "allow_import": 1,
  "creation": "2024-06-03 13:38:51.167695",
- "autoname": "format:{year}",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "gen_tab",
   "year",
-  "calc",
-  "car_non",
+  "column_break_gohk",
+  "section_break_fslh",
+  "total_profit",
   "column_break_rcmz",
   "profit_pre",
+  "column_break_kbic",
   "profit_adj",
-  "income_section",
-  "total_profit",
-  "column_break_rdffdf",
-  "items",
+  "section_break_szpk",
+  "html_cvqt",
+  "section_break_gwkx",
+  "build_btn",
+  "ex_tab",
   "expenses_section",
-  "office",
+  "expense_head",
   "insurance",
   "subconturctors",
   "travel",
   "column_break_yoeb",
-  "expense_head",
   "transport",
+  "office",
   "car",
-  "asset_loss"
+  "asset_loss",
+  "car_tab",
+  "\u05e4\u05e8\u05d8\u05d9_\u05e8\u05db\u05d1_section",
+  "html_dbda",
+  "column_break_boql",
+  "copy_car",
+  "c",
+  "car_desc",
+  "column_break_quyu",
+  "car_producer",
+  "column_break_uowa",
+  "car_model",
+  "column_break_gxrc",
+  "car_vol",
+  "column_break_vkvj",
+  "car_price_point",
+  "html_isbz",
+  "section_break_kphj",
+  "car_lic",
+  "column_break_blrx",
+  "car_no_of_months",
+  "html_fpsk",
+  "column_break_qkjt",
+  "car_milage_init",
+  "car_milage_end",
+  "section_break_rtan",
+  "new_car",
+  "section_break_mgql",
+  "new_car_desc",
+  "column_break_lcxm",
+  "new_car_producer",
+  "column_break_bmjy",
+  "new_car_model",
+  "column_break_nrks",
+  "new_car_vol",
+  "column_break_rvng",
+  "new_car_price_p",
+  "section_break_lbhy",
+  "new_car_lic_num",
+  "column_break_wpkv",
+  "new_car_no_of_months",
+  "column_break_qnzt",
+  "new_car_milage_init",
+  "new_car_milage_end"
  ],
  "fields": [
   {
    "fieldname": "year",
    "fieldtype": "Int",
    "label": "\u05e9\u05e0\u05d4 \u05e4\u05d9\u05e1\u05e7\u05dc\u05d9\u05ea"
-  },
-  {
-   "fieldname": "calc",
-   "fieldtype": "Button",
-   "label": "\u05d7\u05e9\u05d1"
-  },
-  {
-   "fieldname": "column_break_rdffdf",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "column_break_rcmz",
@@ -60,18 +96,8 @@
    "precision": "0"
   },
   {
-   "fieldname": "income_section",
-   "fieldtype": "Section Break"
-  },
-  {
    "fieldname": "expenses_section",
    "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "items",
-   "fieldtype": "Table",
-   "label": "\u05d4\u05db\u05e0\u05e1\u05d5\u05ea",
-   "options": "Income Child Table"
   },
   {
    "fieldname": "total_profit",
@@ -125,13 +151,6 @@
   },
   {
    "default": "0",
-   "fieldname": "car_non",
-   "fieldtype": "Float",
-   "label": "\u05d4\u05d5\u05e6\u05d0\u05d5\u05ea \u05e8\u05db\u05d1 \u05dc\u05d0 \u05de\u05d5\u05db\u05e8",
-   "precision": "0"
-  },
-  {
-   "default": "0",
    "fieldname": "asset_loss",
    "fieldtype": "Float",
    "label": "\u05e4\u05d7\u05ea",
@@ -143,15 +162,262 @@
    "fieldtype": "Float",
    "label": "\u05e7\u05d1\u05dc\u05e0\u05d9 \u05de\u05e9\u05e0\u05d4",
    "precision": "0"
+  },
+  {
+   "fieldname": "section_break_fslh",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "\u05e4\u05e8\u05d8\u05d9_\u05e8\u05db\u05d1_section",
+   "fieldtype": "Section Break",
+   "label": "\u05e4\u05e8\u05d8\u05d9 \u05e8\u05db\u05d1"
+  },
+  {
+   "fieldname": "html_dbda",
+   "fieldtype": "HTML",
+   "options": "<div dir=rtl style=\"text-align:right\">\u05d4\u05e1\u05d1\u05e8 \u05dc\u05d2\u05d1\u05d9 \u05d7\u05dc\u05e7 \u05d6\u05d4 \u05e0\u05d9\u05ea\u05df \u05dc\u05de\u05e6\u05d5\u05d0 <u><a target=\"_blank\" href=\"https://misim.gov.il/mm_usecar10\" underline>\u05d1\u05dc\u05d9\u05e0\u05e7 \u05d4\u05d6\u05d4</a></u><br>\u05d0\u05d5 \u05e4\u05e9\u05d5\u05d8 \u05dc\u05d7\u05e6\u05d5 \u05e2\u05dc \u05d4\u05e2\u05ea\u05e7\u05d4 \u05de\u05e9\u05e0\u05d4 \u05e7\u05d5\u05d3\u05de\u05ea</div>"
+  },
+  {
+   "fieldname": "c",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_quyu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_uowa",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_gxrc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_vkvj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "html_isbz",
+   "fieldtype": "HTML",
+   "options": "<a href=\"https://mag.calltext.co.il/storage/8514/Misim%20Book2025.pdf#page=77\" target=\"_blank\">\u05d4\u05e1\u05d1\u05e8</a>"
+  },
+  {
+   "fieldname": "section_break_kphj",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_blrx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "html_fpsk",
+   "fieldtype": "HTML",
+   "options": "<div dir=rtl style=\"text-align:right\">\u05d9\u05e9 \u05dc\u05e6\u05d9\u05d9\u05df \u05de\u05e1\u05e4\u05e8 \u05e9\u05dc\u05dd \u05d1\u05d9\u05df 1-12</div>"
+  },
+  {
+   "fieldname": "column_break_qkjt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "new_car",
+   "fieldname": "section_break_mgql",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "new_car_desc",
+   "fieldtype": "Data",
+   "label": "\u05ea\u05d9\u05d0\u05d5\u05e8 \u05d4\u05e8\u05db\u05d1"
+  },
+  {
+   "fieldname": "column_break_lcxm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "new_car_producer",
+   "fieldtype": "Data",
+   "label": "\u05e7\u05d5\u05d3 \u05ea\u05d5\u05e6\u05e8"
+  },
+  {
+   "fieldname": "column_break_bmjy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "new_car_model",
+   "fieldtype": "Data",
+   "label": "\u05e7\u05d5\u05d3 \u05d3\u05d2\u05dd"
+  },
+  {
+   "fieldname": "column_break_nrks",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "new_car_vol",
+   "fieldtype": "Data",
+   "label": "\u05e0\u05e4\u05d7 \u05de\u05e0\u05d5\u05e2"
+  },
+  {
+   "fieldname": "column_break_rvng",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "new_car_price_p",
+   "fieldtype": "Data",
+   "label": "\u05e7\u05d1\u05d5\u05e6\u05ea \u05de\u05d7\u05d9\u05e8"
+  },
+  {
+   "depends_on": "new_car",
+   "fieldname": "section_break_lbhy",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "new_car_lic_num",
+   "fieldtype": "Data",
+   "label": "\u05de\u05e1\u05e4\u05e8 \u05e8\u05d9\u05e9\u05d5\u05d9"
+  },
+  {
+   "fieldname": "column_break_wpkv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "new_car_no_of_months",
+   "fieldtype": "Int",
+   "label": "\u05de\u05e1\u05e4\u05e8 \u05d7\u05d5\u05d3\u05e9\u05d9\u05dd \u05d1\u05e9\u05d9\u05de\u05d5\u05e9 \u05d1\u05e9\u05e0\u05ea \u05d4\u05de\u05e1"
+  },
+  {
+   "fieldname": "column_break_qnzt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "new_car_milage_init",
+   "fieldtype": "Float",
+   "label": "\u05e7\"\u05de \u05d1\u05ea\u05d7\u05d9\u05dc\u05ea \u05d4\u05e9\u05d9\u05de\u05d5\u05e9",
+   "precision": "0"
+  },
+  {
+   "fieldname": "new_car_milage_end",
+   "fieldtype": "Float",
+   "label": "\u05e7\"\u05de \u05d1\u05e1\u05d5\u05e3 \u05d4\u05e9\u05e0\u05d4",
+   "precision": "0"
+  },
+  {
+   "fieldname": "section_break_rtan",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "new_car",
+   "fieldtype": "Check",
+   "label": "\u05d4\u05d7\u05dc\u05e4\u05ea\u05d9 \u05e8\u05db\u05d1 \u05d1\u05de\u05d4\u05dc\u05da \u05d4\u05e9\u05e0\u05d4"
+  },
+  {
+   "fieldname": "column_break_boql",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:!doc.car_desc",
+   "fieldname": "html_cvqt",
+   "fieldtype": "HTML",
+   "options": "<div class=\"ql-editor read-mode\">\n<p style=\"text-align:right;color:red\" class=\"ql-direction-rtl\">\n* \u05e9\u05d9\u05de\u05d5 \u05dc\u05d1 - \u05dc\u05d0 \u05d4\u05d5\u05d2\u05d3\u05e8 \u05e8\u05db\u05d1. \u05d4\u05d0\u05dd \u05d9\u05e9 \u05d4\u05d5\u05e6\u05d0\u05d5\u05ea \u05e8\u05db\u05d1?\n</p>\n\n<p style=\"text-align:right\" class=\"ql-direction-rtl\">\n<a href=\"#car_tab\">\u05dc\u05d7\u05e6\u05d5 \u05db\u05d0\u05df \u05dc\u05d4\u05d5\u05e1\u05e4\u05ea \u05e8\u05db\u05d1</a>\n</p>\n</div>"
+  },
+  {
+   "fieldname": "car_desc",
+   "fieldtype": "Data",
+   "label": "\u05ea\u05d9\u05d0\u05d5\u05e8 \u05d4\u05e8\u05db\u05d1"
+  },
+  {
+   "fieldname": "car_tab",
+   "fieldtype": "Tab Break",
+   "label": "\u05e8\u05db\u05d1"
+  },
+  {
+   "fieldname": "copy_car",
+   "fieldtype": "Button",
+   "label": "\u05d4\u05e2\u05ea\u05e7\u05d4 \u05de\u05e9\u05e0\u05d4 \u05e7\u05d5\u05d3\u05de\u05ea"
+  },
+  {
+   "fieldname": "car_producer",
+   "fieldtype": "Data",
+   "label": "\u05e7\u05d5\u05d3 \u05ea\u05d5\u05e6\u05e8"
+  },
+  {
+   "fieldname": "car_model",
+   "fieldtype": "Data",
+   "label": "\u05e7\u05d5\u05d3 \u05d3\u05d2\u05dd"
+  },
+  {
+   "fieldname": "car_price_point",
+   "fieldtype": "Data",
+   "label": "\u05e7\u05d1\u05d5\u05e6\u05ea \u05de\u05d7\u05d9\u05e8"
+  },
+  {
+   "fieldname": "car_lic",
+   "fieldtype": "Data",
+   "label": "\u05de\u05e1\u05e4\u05e8 \u05e8\u05d9\u05e9\u05d5\u05d9"
+  },
+  {
+   "default": "12",
+   "fieldname": "car_no_of_months",
+   "fieldtype": "Int",
+   "label": "\u05de\u05e1\u05e4\u05e8 \u05d7\u05d5\u05d3\u05e9\u05d9\u05dd \u05d1\u05e9\u05d9\u05de\u05d5\u05e9 \u05d1\u05e9\u05e0\u05ea \u05d4\u05de\u05e1"
+  },
+  {
+   "fieldname": "car_milage_init",
+   "fieldtype": "Float",
+   "label": "\u05e7\"\u05de \u05d1\u05ea\u05d7\u05d9\u05dc\u05ea \u05d4\u05e9\u05e0\u05d4/\u05d4\u05e9\u05d9\u05de\u05d5\u05e9",
+   "precision": "0"
+  },
+  {
+   "fieldname": "car_milage_end",
+   "fieldtype": "Float",
+   "label": "\u05e7\"\u05de \u05d1\u05e1\u05d5\u05e3 \u05d4\u05e9\u05e0\u05d4/\u05d4\u05e9\u05d9\u05de\u05d5\u05e9",
+   "precision": "0"
+  },
+  {
+   "fieldname": "car_vol",
+   "fieldtype": "Data",
+   "label": "\u05e0\u05e4\u05d7 \u05de\u05e0\u05d5\u05e2"
+  },
+  {
+   "fieldname": "section_break_szpk",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_gohk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_kbic",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_gwkx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "gen_tab",
+   "fieldtype": "Tab Break",
+   "label": "\u05db\u05dc\u05dc\u05d9"
+  },
+  {
+   "fieldname": "ex_tab",
+   "fieldtype": "Tab Break",
+   "label": "\u05d4\u05d5\u05e6\u05d0\u05d5\u05ea"
+  },
+  {
+   "fieldname": "build_btn",
+   "fieldtype": "HTML",
+   "options": "<div style=\"text-align:center\"><button class=\"btn btn-xs btn-default\" title=\"\u05d4\u05e4\u05e7 \u05d3\u05d5\u05d7 \u05e8\u05d5\u05d5\u05d7/\u05d4\u05e4\u05e1\u05d3 \u05de\u05e7\u05d5\u05e6\u05e8\" style=\"font-size:22px\"><b>&emsp;&emsp;&emsp;\u05d4\u05e4\u05e7 \u05d3\u05d5\u05d7 \u05e8\u05d5\u05d5\u05d7/\u05d4\u05e4\u05e1\u05d3 \u05de\u05e7\u05d5\u05e6\u05e8&emsp;&emsp;&emsp;</b></button></div>"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-03 13:51:59.125883",
+ "modified": "2026-10-16 18:09:41.923094",
  "modified_by": "Administrator",
- "module":"T-Money",
+ "module": "T-Money",
  "name": "Income Loss Report",
- "naming_rule": "Expression",
+ "naming_rule": "By script",
  "owner": "Administrator",
  "permissions": [
   {
@@ -167,6 +433,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

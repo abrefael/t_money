@@ -9,67 +9,143 @@ class Signature(Document):
 	pass
 
 
-@frappe.whitelist()
-def update_template(f_uri):
-	from frappe import cstr
-	def check_the_file(f_uri):
-		import odfdo
-		try:
-			odfdo.Document(cstr(frappe.local.site) + f_uri)
-		except:
-			return 1
-	
-	if not 'private' in f_uri:
-		f_uri = '/public' + f_uri
-	if check_the_file(f_uri) == 1:
-		return('1')
-	else:
-		return('0')
-
-
 
 @frappe.whitelist()
 def build_template():
-	from odfdo import (
-		Cell,
-		Frame,
-		Document,
-		Header,
-		Paragraph,
-		Row,
-		Table,
-		Style
-	)
-	import os
 	from frappe import cstr
-	f_uri = frappe.db.get_single_value("Signature", "reupload")
-	if f_uri == '' or f_uri is None:
-		f_uri = "frontend/public/templates/template.odt"
-	else:
-		if f_uri.split('/')[1] == 'files':
-			f_uri = cstr(frappe.local.site) + '/public/' + f_uri
-	document = Document(f_uri)
-	e = document.styles.root.get_elements('office:master-styles')[0].get_elements('style:master-page')[0].get_elements('style:header')[0]
-	i=0
-	head_in_temp = e.children[i]
-	while not isinstance(head_in_temp,Paragraph):
-		i+= 1
-		head_in_temp = e.children[i]
-	head_in_temp.replace('HEADER',frappe.utils.get_fullname())
-	i=0
-	head_in_temp = e.children[i]
-	while not isinstance(head_in_temp,Table):
-		i+= 1
-		head_in_temp = e.children[i]
-	row = head_in_temp.rows[0]
-	row.set_value('B',frappe.db.get_single_value('Signature','op_num'))
-	head_in_temp.set_row(row.y, row)
-	row = head_in_temp.rows[1]
-	row.set_value('B',frappe.db.get_single_value('Signature','phone_num'))
-	head_in_temp.set_row(row.y, row)
-	row = head_in_temp.rows[2]
-	row.set_value('B',frappe.db.get_single_value('Signature','email_add'))
-	head_in_temp.set_row(row.y, row)
-	document.save(pretty=True)
-	os.system(f"/usr/bin/soffice --headless --convert-to pdf:writer_pdf_Export --outdir 'frontend/public/templates' '{f_uri}'")
+	final = 0
+	discount_segment = ""
+	origin = "לדוגמה"
+	def save_new():
+		from weasyprint import HTML
+		tmp_path = 'assets/t_money/temp/' + TARGET
+		HTML(string=receipt_data, base_url=".").write_pdf(tmp_path)
+		return tmp_path
+	
+	def populate_items():
+		item = f"""
+		<tr>
+			<td>{prod}</td>
+			<td>{desc}</td>
+			<td>{price:,.2f}</td>
+			<td>{quant:,.1f}</td>
+			<td>{cost:,.2f} ₪</td>
+		</tr>
+		"""
+		return item
+	
+	def calc_discount():
+		nonlocal final
+		nonlocal discount_segment
+		if discount > 1:
+			final = total - discount
+			disc = f"{discount:,.2f} ₪"
+		elif discount > 0 and discount < 1:
+			final = total * (1 - discount)
+			disc = f"{discount*100:,.0f} %"
+		else:
+			final = total
+			return ""
+		if final*100%100 > 0:
+			ag_round = f"""
+	<tr>
+		<td class="one" >עיגול אגורות</td>
+		<td class="two" >{final:,.0f } ₪</td>
+	</tr>
+			"""
+			final = float(f"{final:,.0f}")
+		else:
+			ag_round = ""
+		discount_segment = f"""
+	<tr>
+		<td class="one" >הנחה</td>
+		<td class="two" >{disc}</td>
+	</tr>
+	<tr>
+		<td class="one" >סה"כ אחרי הנחה</td>
+		<td class="two" >{final:,.2f}  ₪</td>
+	</tr>
+	{ag_round}
+		"""
+	
+	def get_file_uri(uri):
+		if uri:
+			if "private/" in uri:
+				return cstr(frappe.local.site) + uri
+			else:
+				return cstr(frappe.local.site) + "/public" + uri
+		else:
+			return ""
+	
+	signature_doc = frappe.db.get_singles_dict("Signature")
+	company_name = signature_doc.company_name
+	op_num = signature_doc.op_num
+	phone_num = signature_doc.phone_num
+	email_add = signature_doc.email_add
+	logo_img = get_file_uri(signature_doc.logo_img)
+	signature = signature_doc.signature.replace("\\n","<br>")
+	sign_img = get_file_uri(signature_doc.sign_img)
+	q_num = signature_doc.initials + "00265"
+	h_p = "55555555"
+	discount = 0.2
+	notes = "הערות: " + "כמה הערות לקבלה"
+	items_data=""
+	itms = [
+			{
+				'item': 'פריט אחת',
+				'desc': 'פירוט בנוגע לפריט אחת',
+				'quant': 2.0, 'price': 200.0
+			},
+			{
+				'item': 'פריט שתיים',
+				'desc': 'פירוט בנוגע לפריט שתיים',
+				'quant': 1.0,
+				'price': 100.0
+			},
+			{
+				'item': 'פריט שלוש',
+				'desc': 'פירוט בנוגע לפריט שלוש',
+				'quant': 2.0,
+				'price': 500.0
+			}
+		]
+	total = 0
+	for itm in itms:
+		prod = itm["item"]
+		desc = itm["desc"]
+		price = itm["price"]
+		quant = itm["quant"]
+		cost = price * quant
+		items_data += populate_items()
+		total += cost
+	calc_discount()
+	template = open("assets/t_money/R_template", "r").read()
+	receipt_data = template.format(
+		date = '01/05/2028',
+		q_num = q_num,
+		email_add = email_add,
+		logo_img = logo_img,
+		signature = signature,
+		sign_img = sign_img,
+		company_name = company_name,
+		phone_num = phone_num,
+		op_num = op_num,
+		origin = origin,
+		client= "לקוח מספר 346",
+		h_p = h_p,
+		items_data = items_data,
+		discount_segment = discount_segment,
+		total = f"{total:,.2f}",
+		final = f"{final:,.0f}",
+		notes = notes,
+		bank = "",
+		pay_method = "מזומן",
+		receipt_date = '01/05/2028',
+		brench = "",
+		account_num = "",
+		reference = ""
+	)
+	TARGET = q_num + "(" + origin + ").pdf"
+	f_url = save_new()
+	return "/assets/t_money/temp/" + TARGET
 

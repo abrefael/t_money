@@ -2,24 +2,30 @@
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "format:{client_name}",
+ "autoname": "field:client_name",
  "creation": "2024-05-11 16:50:17.932210",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "\u05e1\u05d8\u05d8\u05d5\u05e1",
+  "\u05db\u05dc\u05dc\u05d9_section",
   "client_name",
   "id_num",
-  "email",
   "phone_num",
+  "column_break_qnpf",
+  "\u05e1\u05d8\u05d8\u05d5\u05e1",
   "\u05ea\u05d0\u05e8\u05d9\u05da_\u05e8\u05d9\u05e9\u05d5\u05dd",
+  "email",
   "section_break_kabq",
   "bank",
+  "column_break_dphd",
   "brench",
+  "column_break_kcev",
   "account_num",
   "section_break_ihof",
-  "extras",
-  "actions"
+  "debt",
+  "credit",
+  "column_break_nzqt",
+  "bills"
  ],
  "fields": [
   {
@@ -34,7 +40,8 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "\u05e9\u05dd \u05dc\u05e7\u05d5\u05d7",
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   },
   {
    "default": " ",
@@ -56,18 +63,6 @@
    "label": "\u05ea\u05d0\u05e8\u05d9\u05da \u05e8\u05d9\u05e9\u05d5\u05dd"
   },
   {
-   "fieldname": "extras",
-   "fieldtype": "Float",
-   "label": "\u05d9\u05d9\u05ea\u05e8\u05d5\u05ea",
-   "precision": "2"
-  },
-  {
-   "fieldname": "actions",
-   "fieldtype": "Link",
-   "label": "\u05e4\u05e2\u05d5\u05dc\u05d5\u05ea",
-   "options": "Clients Action"
-  },
-  {
    "fieldname": "phone_num",
    "fieldtype": "Data",
    "label": "\u05d8\u05dc\u05e4\u05d5\u05df",
@@ -75,7 +70,8 @@
   },
   {
    "fieldname": "section_break_kabq",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "\u05e4\u05e8\u05d8\u05d9 \u05d1\u05e0\u05e7"
   },
   {
    "fieldname": "bank",
@@ -84,29 +80,69 @@
    "options": "\n4 (\u05d1\u05e0\u05e7 \u05d9\u05d4\u05d1 \u05dc\u05e2\u05d5\u05d1\u05d3\u05d9 \u05d4\u05de\u05d3\u05d9\u05e0\u05d4 \u05d1\u05e2\"\u05de)\n9 (\u05d1\u05e0\u05e7 \u05d4\u05d3\u05d5\u05d0\u05e8)\n10 (\u05d1\u05e0\u05e7 \u05dc\u05d0\u05d5\u05de\u05d9 \u05dc\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05e2\"\u05de)\n11 (\u05d1\u05e0\u05e7 \u05d3\u05d9\u05e1\u05e7\u05d5\u05e0\u05d8 \u05dc\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05e2\"\u05de)\n12 (\u05d1\u05e0\u05e7 \u05d4\u05e4\u05d5\u05e2\u05dc\u05d9\u05dd \u05d1\u05e2\"\u05de)\n13 (\u05d1\u05e0\u05e7 \u05d0\u05d2\u05d5\u05d3 \u05dc\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05e2\"\u05de)\n14 (\u05d1\u05e0\u05e7 \u05d0\u05d5\u05e6\u05e8 \u05d4\u05d7\u05d9\u05d9\u05dc \u05d1\u05e2\"\u05de)\n17 (\u05d1\u05e0\u05e7 \u05de\u05e8\u05db\u05e0\u05ea\u05d9\u05dc \u05d3\u05d9\u05e1\u05e7\u05d5\u05e0\u05d8 \u05d1\u05e2\"\u05de)\n18 (\u05d4\u05d1\u05e0\u05e7 \u05d4\u05d3\u05d9\u05d2\u05d9\u05d8\u05dc\u05d9 \u05d1\u05e2\"\u05de - One Zero)\n20 (\u05d1\u05e0\u05e7 \u05de\u05d6\u05e8\u05d7\u05d9 \u05d8\u05e4\u05d7\u05d5\u05ea \u05d1\u05e2\"\u05de)\n22 (Citibank N.A)\n23 (HSBC Bank plc)\n26 (\u05d9\u05d5\u05d1\u05e0\u05e7 \u05d1\u05e2\"\u05de)\n27 (Barclays Bank PLC)\n30 (\u05d1\u05e0\u05e7 \u05dc\u05de\u05e1\u05d7\u05e8 \u05d1\u05e2\"\u05de (\u05dc\u05d1\u05e0\u05e7 \u05de\u05d5\u05e0\u05d4 \u05de\u05e4\u05e8\u05e7 \u05d6\u05de\u05e0\u05d9))\n31 (\u05d4\u05d1\u05e0\u05e7 \u05d4\u05d1\u05d9\u05e0\u05dc\u05d0\u05d5\u05de\u05d9 \u05d4\u05e8\u05d0\u05e9\u05d5\u05df \u05dc\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05e2\"\u05de)\n34 (\u05d1\u05e0\u05e7 \u05e2\u05e8\u05d1\u05d9 \u05d9\u05e9\u05e8\u05d0\u05dc\u05d9 \u05d1\u05e2\"\u05de)\n39 (SBI State Bank of India)\n46 (\u05d1\u05e0\u05e7 \u05de\u05e1\u05d3 \u05d1\u05e2\"\u05de)\n50 (\u05de\u05e8\u05db\u05d6 \u05e1\u05dc\u05d9\u05e7\u05d4 \u05d1\u05e0\u05e7\u05d0\u05d9 \u05d1\u05e2\"\u05de)\n52 (\u05d1\u05e0\u05e7 \u05e4\u05d5\u05e2\u05dc\u05d9 \u05d0\u05d2\u05d5\u05d3\u05ea \u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05e2\"\u05de)\n54 (\u05d1\u05e0\u05e7 \u05d9\u05e8\u05d5\u05e9\u05dc\u05d9\u05dd \u05d1\u05e2\"\u05de)\n59 (\u05e9\u05d9\u05e8\u05d5\u05ea\u05d9 \u05d1\u05e0\u05e7 \u05d0\u05d5\u05d8\u05d5\u05de\u05d8\u05d9\u05d9\u05dd \u05d1\u05e2\"\u05de)\n65 (\u05d7\u05e1\u05da \u05e7\u05d5\u05e4\u05ea \u05d7\u05e1\u05db\u05d5\u05df \u05dc\u05d7\u05d9\u05e0\u05d5\u05da \u05d1\u05e2\"\u05de, \u05d7\u05d9\u05e4\u05d4)\n68 (\u05d1\u05e0\u05e7 \u05d3\u05e7\u05e1\u05d9\u05d4 \u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05e2\"\u05de)\n99 (\u05d1\u05e0\u05e7 \u05d9\u05e9\u05e8\u05d0\u05dc)"
   },
   {
+   "default": "0",
    "fieldname": "brench",
    "fieldtype": "Int",
-   "label": "\u05e1\u05e0\u05d9\u05e3 (\u05de\u05e1\u05e4\u05e8)",
-   "default": 0
+   "label": "\u05e1\u05e0\u05d9\u05e3 (\u05de\u05e1\u05e4\u05e8)"
   },
   {
+   "default": "00",
    "fieldname": "account_num",
    "fieldtype": "Data",
-   "label": "\u05de\u05e1\u05e4\u05e8 \u05d7\u05e9\u05d1\u05d5\u05df",
-   "default": "00"
+   "label": "\u05de\u05e1\u05e4\u05e8 \u05d7\u05e9\u05d1\u05d5\u05df"
   },
   {
    "fieldname": "section_break_ihof",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_qnpf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_dphd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_kcev",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "debt",
+   "fieldtype": "Float",
+   "label": "\u05d7\u05d5\u05d1\u05d4",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "credit",
+   "fieldtype": "Float",
+   "label": "\u05d6\u05db\u05d5\u05ea",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_nzqt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "bills",
+   "fieldtype": "Table MultiSelect",
+   "label": "\u05d7\u05e9\u05d1\u05d5\u05e0\u05d9\u05d5\u05ea \u05e9\u05dc\u05d0 \u05e9\u05d5\u05dc\u05de\u05d5",
+   "options": "List of Invoices"
+  },
+  {
+   "fieldname": "\u05db\u05dc\u05dc\u05d9_section",
+   "fieldtype": "Section Break",
+   "label": "\u05db\u05dc\u05dc\u05d9"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-05-16 11:59:44.435121",
+ "modified": "2026-10-16 15:51:32.141496",
  "modified_by": "Administrator",
- "module":"T-Money",
+ "module": "T-Money",
  "name": "Clients",
- "naming_rule": "Expression",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
@@ -122,6 +158,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

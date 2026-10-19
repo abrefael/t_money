@@ -1,27 +1,16 @@
-// Copyright (c) 2024, Alon Ben Refael and contributors
+// Copyright (c) 2026, Alon Ben Refael and contributors
 // For license information, please see license.txt
 
-// frappe.ui.form.on("Sales", {
+// frappe.ui.form.on("Quotation", {
 // 	refresh(frm) {
 
 // 	},
 // });
 
-frappe.ui.form.on('Sales', {
-	onload(frm) {
-		if((!frm.doc.r_name)||(frm.doc.name.includes("new-sales"))){
-		frappe.db.count('Sales')
-			.then(count => {
-					var name = 'Q' + String(count+6).padStart(5, '0');
-					frm.set_value('r_name', name);
-			});
-		}
-	}
-});
 
 
 
-frappe.ui.form.on('Sales', {
+frappe.ui.form.on('Quotation', {
 	send_mail(frm) {
 		frappe.db.get_value(
 			'Clients',
@@ -61,12 +50,11 @@ frappe.ui.form.on('Sales', {
 						default: ''
 					}
 				],
-				size: 'large', // small, large, extra-large 
+				size: 'large',
 				primary_action_label: 'שלח',
 				primary_action(values) {
 					values.q_num = q_num;
-					console.log(values);
-					frappe.call({method:'t_money.t_money.doctype.sales.sales.send_mail',
+					frappe.call({method:'t_money.t_money.doctype.quotation.quotation.send_mail',
 						args: values
 						});
 					d.hide();
@@ -77,31 +65,25 @@ frappe.ui.form.on('Sales', {
 	}
 });
 
-frappe.ui.form.on('Sales', {
+frappe.ui.form.on('Quotation', {
 	quotation(frm) {
-		var notes;
-		if (!frm.doc.notes){
-			notes='';
-		}
-		else{
-				notes = frm.doc.notes;
-		}
 		var q_num = frm.doc.name;
-		frappe.call({method:'t_money.t_money.doctype.sales.sales.Create_Quotation',
+		frappe.call({method:'t_money.t_money.doctype.quotation.quotation.Create_Quotation',
 			args: {
-			'q_num': q_num,
-			'objective':"הצעת מחיר מס'",
-			'notes': notes
+			'q_num': q_num
 			}
 			}).then(r => {
-				location.reload();
-				window.open(`${window.location.origin + r.message}`, '_blank').focus();
+				let uri = window.location.origin + r.message;
+				frm.set_value("attached_file",uri);
+				frm.refresh_field("attached_file");
+				frm.save();
+				window.open(uri, '_blank').focus();
 			});
 	}
 });
 
 
-frappe.ui.form.on('Sales', {
+frappe.ui.form.on('Quotation', {
 	calc_sum(frm) {
 		calculate_sum(frm);
 	}
@@ -129,7 +111,7 @@ function calculate_sum(frm){
 	frm.save();
 }
 
-frappe.ui.form.on('Sales', {
+frappe.ui.form.on('Quotation', {
 	discount(frm) {
 		calculate_sum(frm);
 	}
@@ -137,7 +119,7 @@ frappe.ui.form.on('Sales', {
 
 
 
-frappe.ui.form.on('Sales', {
+frappe.ui.form.on('Quotation', {
 	invoice(frm) {
 	    var items = frm.doc.item_list;
 	    var item_list = [];

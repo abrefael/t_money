@@ -3,6 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
+from datetime import datetime
 
 
 class Assets(Document):
@@ -18,3 +19,6 @@ def del_frm(frm_name):
 	doc.db_set('asset_loss', curr_val - loss_requested, commit=True)
 	frappe.delete_doc('Assets', frm_name)
 	return
+	
+
+
