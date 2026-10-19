@@ -21,7 +21,7 @@ Created by<br>
 </div>
 `;
 
-function frappe_ready() {
+function make_footer() {
 	let footer;
 	if (window.location.href.includes("view/calendar/")){
 		footer = document.querySelector("footer");
@@ -38,9 +38,24 @@ function frappe_ready() {
 	}
 }
 
+function fix_home() {
+	const home = $('use[href="#icon-home"]:visible');
+	if (home.length){
+		const a = home[0].closest('a');
+		console.log('a:', a);
+		console.log('before:', a?.href);
+		if (a){
+			a.href = '/desk/t_money';
+			a.innerHTML='<img src="/assets/bitum_laboratory/images/T-money-logo.svg" height=20px />'
+			console.log('after:', a.href);
+		}
+	}
+}
+
+
 
 $(document).on("page-change", () => {
-	frappe_ready();
+	make_footer();
 });
 
 
