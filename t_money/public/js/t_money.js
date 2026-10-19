@@ -22,16 +22,30 @@ Created by
 `;
 
 function frappe_ready() {
-    if (document.getElementById(FOOTER_ID)) return;
-    console.log("trying");
-    let footer = document.querySelector("footer");
-    if (footer) {
-        footer.innerHTML = FOOTER_HTML;
-    }
+	let footer;
+	if (window.location.href.includes("view/calendar/")){
+		footer = document.querySelector("footer");
+		if (footer) {
+			footer.innerHTML = "";
+			return;
+		}
+	}
+	if (document.getElementById(FOOTER_ID)) return;
+	if (window.self !== window.top) return;
+	footer = document.querySelector("footer");
+	if (footer) {
+		footer.innerHTML = FOOTER_HTML;
+	}
 }
 
-    
+
 $(document).on("page-change", () => {
-    frappe_ready();
+	frappe_ready();
 });
 
+
+
+
+
+//$("#svg1").attr("transform", "rotate(0)")
+//$("#svg1").attr("transform", "rotate(270)")
