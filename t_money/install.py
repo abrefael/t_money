@@ -1,12 +1,12 @@
 csv_file = 'assets/t_money/asset_type_list.csv'
 powered = '''
-Powered by 
+Powered by<br>
 <a href="https://frappeframework.com/homepage" target="_blank" rel="noopener">
 	<img src="/assets/frappe/images/frappe-logo.png" alt="Frappe Framework" style="height: 58px" />
 </a>
 '''
 created = '''
-Created by 
+Created by<br>
 <a href="mailto:alonbr@bitum.co.il">
 	<img src="/assets/t_money/images/a-logo.svg" alt="Alon Ben Refael"/>
 </a>

@@ -13,16 +13,18 @@ class Expenses(Document):
 			if frappe.db.exists(ILR, fisc_year):
 				return frappe.get_doc(ILR, fisc_year)
 			else:
-				doc = frappe.new_doc(ILR)
+				doc = frappe.get_doc({
+					"doctype":ILR,
+					"title":fisc_year,
+					"name":fisc_year,
+					"year":int(fisc_year)
+				})
 				doc.insert(
 					ignore_permissions=True,
 					ignore_links=True, # ignore Link validation in the document
 					ignore_if_duplicate=True, # dont insert if DuplicateEntryError is thrown
 					ignore_mandatory=True # insert even if mandatory fields are not set
 				)
-				title = doc.get_title()
-				doc = frappe.get_doc(ILR, frappe.rename_doc(ILR, title, fisc_year))
-				doc.set("year", int(fisc_year))
 				frappe.db.commit()
 				return doc
 		flag = self.is_new 
@@ -41,7 +43,8 @@ class Expenses(Document):
 		doc = get_year_doc(year)
 		if not flag:
 			if old_year == year:
-				doc.set(old_ex_type, doc.get(old_ex_type) - old_actual_sum)
+				old_ex_type_sum = doc.get(old_ex_type)
+				doc.set(old_ex_type, old_ex_type_sum - old_actual_sum)
 				doc.flags.ignore_validate = True
 				doc.save(ignore_permissions=True)
 				old_doc = None

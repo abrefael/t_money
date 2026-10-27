@@ -7,9 +7,10 @@ from datetime import datetime
 
 
 class Assets(Document):
-	pass
+	def calc_assets(self):
+		pass
 	
-	
+
 @frappe.whitelist()
 def del_frm(frm_name):
 	fisc_year, loss_requested = frappe.db.get_value('Assets', frm_name, ['fiscal_year','loss_requested'])
@@ -21,4 +22,6 @@ def del_frm(frm_name):
 	return
 	
 
-
+@frappe.whitelist()
+def calc_this_asset(name):
+	frappe.get_doc("Assets", name).calc_assets()

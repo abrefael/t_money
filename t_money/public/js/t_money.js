@@ -42,12 +42,9 @@ function fix_home() {
 	const home = $('use[href="#icon-home"]:visible');
 	if (home.length){
 		const a = home[0].closest('a');
-		console.log('a:', a);
-		console.log('before:', a?.href);
 		if (a){
 			a.href = '/desk/t_money';
 			a.innerHTML='<img src="/assets/bitum_laboratory/images/T-money-logo.svg" height=20px />'
-			console.log('after:', a.href);
 		}
 	}
 }
@@ -56,11 +53,28 @@ function fix_home() {
 
 $(document).on("page-change", () => {
 	make_footer();
+	fix_home();
+	
+});
+
+
+$(document).on("click", ".explain_arrow", function () {
+	var $el = $(this);
+	if (!$el.is(":visible")) {
+		return;
+	}
+	var $target = $el.nextAll("div.explanation-section").first();
+	if ($el.data("rotated")) {
+		$el.attr("transform", "rotate(180)");
+		$el.data("rotated", false);
+	} else {
+		$el.attr("transform", "rotate(90)");
+		$el.data("rotated", true);
+	}
+	if ($target.length) {
+		$target.toggle();
+	}
 });
 
 
 
-
-
-//$("#svg1").attr("transform", "rotate(0)")
-//$("#svg1").attr("transform", "rotate(270)")
