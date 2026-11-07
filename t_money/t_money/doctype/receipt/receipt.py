@@ -9,6 +9,13 @@ class Receipt(Document):
 	def autoname(self):
 		self.name = "R" + frappe.db.get_single_value('Signature','initials') + "{:06d}".format(frappe.db.count('Receipt') + 1)
 	
+	def on_trash():
+		if created:
+			frappe.throw(
+				title='שגיאה!',
+				msg='אסור למחוק קבלה שהופקה!!'
+			)
+	
 
 def get_file_uri(uri):
 	if uri:
