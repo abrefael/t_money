@@ -3,10 +3,16 @@
 
 import frappe
 from frappe.model.document import Document
-
+from frappe.model.naming import getseries
 
 class IncomeLossReport(Document):
-	pass
+	def autoname(self):
+		self.name = str(self.year)
+		
+	def update_report(self,in_or_ex, old_doc):
+		if old_doc:
+			pass
+
 
 #@frappe.whitelist()
 #def get_data(fisc_year):

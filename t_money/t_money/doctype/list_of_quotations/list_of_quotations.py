@@ -1,4 +1,4 @@
-# Copyright (c) 2024, Alon Ben Refael and contributors
+# Copyright (c) 2026, Alon Ben Refael and contributors
 # For license information, please see license.txt
 
 # import frappe

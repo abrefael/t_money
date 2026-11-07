@@ -8,7 +8,7 @@
 // });
 frappe.ui.form.on('Asset Type List', {
 	additional_information(frm) {
-            const URL = 'https://www.nevo.co.il/law_html/law01/255_001.htm';
+            const URL = 'https://mag.calltext.co.il/storage/8514/Misim%20Book2025.pdf#page=81';
             window.open(URL, '_blank').focus();
 	}
 });

@@ -1,31 +1,32 @@
 {
  "actions": [],
- "allow_rename": 1,
  "allow_import": 1,
- "autoname": "format:{r_name}",
+ "allow_rename": 1,
  "creation": "2024-05-11 21:24:06.516883",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "quotation",
-  "column_break_I",
+  "column_break_i",
   "send_mail",
-  "column_break_IV",
+  "column_break_iv",
   "invoice",
-  "section_break_I",
+  "section_break_wrdv",
   "client",
-  "item_list",
-  "section_break_II",
-  "calc_sum",
-  "discount",
-  "column_break_II",
-  "sum",
   "discounted_sum",
-  "section_break_III",
+  "column_break_zdyu",
   "attached_file",
+  "calc_sum",
+  "section_break_i",
+  "item_list",
+  "section_break_ii",
+  "discount",
+  "html_mgby",
+  "column_break_ii",
+  "sum",
+  "section_break_iii",
   "notes",
-  "h_p",
-  "r_name"
+  "h_p"
  ],
  "fields": [
   {
@@ -36,17 +37,12 @@
    "precision": "2"
   },
   {
-   "fieldname": "r_name",
-   "fieldtype": "Data",
-   "hidden": 1
-  },
-  {
    "fieldname": "attached_file",
    "fieldtype": "Data",
-   "label":"\u05e7\u05d5\u05d1\u05e5 \u05d4\u05e6\u05e2\u05ea \u05de\u05d7\u05d9\u05e8",
+   "in_list_view": 1,
+   "label": "\u05e7\u05d5\u05d1\u05e5 \u05d4\u05e6\u05e2\u05ea \u05de\u05d7\u05d9\u05e8",
    "options": "URL",
-   "read_only": 1,
-   "in_list_view": 1
+   "read_only": 1
   },
   {
    "default": "0.00",
@@ -59,30 +55,6 @@
    "fieldname": "calc_sum",
    "fieldtype": "Button",
    "label": "\u05d7\u05e9\u05d1 \u05e1\u05db\u05d5\u05dd"
-  },
-  {
-   "fieldname": "column_break_I",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_IV",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_I",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_II",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_II",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "section_break_III",
-   "fieldtype": "Section Break"
   },
   {
    "fieldname": "client",
@@ -119,7 +91,7 @@
   },
   {
    "fieldname": "notes",
-   "fieldtype": "Text",
+   "fieldtype": "Text Editor",
    "label": "\u05d4\u05e2\u05e8\u05d5\u05ea"
   },
   {
@@ -131,15 +103,52 @@
    "fieldname": "invoice",
    "fieldtype": "Button",
    "label": "\u05e6\u05d5\u05e8 \u05d7\u05e9\u05d1\u05d5\u05e0\u05d9\u05ea \u05e2\u05e1\u05e7\u05d4"
+  },
+  {
+   "fieldname": "column_break_i",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_iv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_i",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_ii",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "html_mgby",
+   "fieldtype": "HTML",
+   "options": "<div dir=rtl style=\"text-align:right\">\u05d9\u05e9 \u05dc\u05d4\u05db\u05e0\u05d9\u05e1 \u05d4\u05e0\u05d7\u05d4 \u05d1\u05e1\u05db\u05d5\u05dd \u05de\u05e1\u05e4\u05e8\u05d9 (\u05dc\u05de\u05e9\u05dc: 300 \u05e9\"\u05d7) \u05d0\u05d5 \u05d1\u05e9\u05d1\u05e8 (\u05dc\u05de\u05e9\u05dc: 0.2) \u05e2\u05d1\u05d5\u05e8 \u05d0\u05d7\u05d5\u05d6\u05d9\u05dd (20%)</div>"
+  },
+  {
+   "fieldname": "column_break_ii",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_iii",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_wrdv",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_zdyu",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-05-18 13:24:32.431130",
+ "modified": "2026-10-11 13:48:08.474487",
  "modified_by": "Administrator",
- "module":"T-Money",
- "name": "Sales",
- "naming_rule": "Expression",
+ "module": "T-Money",
+ "name": "Quotation",
+ "naming_rule": "By script",
  "owner": "Administrator",
  "permissions": [
   {
@@ -155,6 +164,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

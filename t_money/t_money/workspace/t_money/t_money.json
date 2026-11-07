@@ -1,6 +1,7 @@
 {
+ "app": "t_money",
  "charts": [],
- "content": "[{\"id\":\"qJQT_3724k\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">T-Money</span>\",\"col\":12}},{\"id\":\"4yFnlD0uz4\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"\u05d4\u05d5\u05e6\u05d0\u05d5\u05ea\",\"col\":4}},{\"id\":\"y4SiplZqWm\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"\u05d4\u05e6\u05e2\u05d5\u05ea \u05de\u05d7\u05d9\u05e8\",\"col\":4}},{\"id\":\"111YVcsOgx\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"\u05d7\u05e9\u05d1\u05d5\u05e0\u05d9\u05d5\u05ea \u05e2\u05e1\u05e7\u05d4\",\"col\":4}},{\"id\":\"f194XQ-E1U\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"\u05e7\u05d1\u05dc\u05d5\u05ea\",\"col\":4}},{\"id\":\"6CtWwHmSVN\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"\u05e0\u05db\u05e1\u05d9\u05dd (\u05d3\u05d5\u05d7 \u05e4\u05d7\u05ea)\",\"col\":4}},{\"id\":\"HSWrquWt_P\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"\u05d3\u05d5\u05d7 \u05e0\u05e1\u05d9\u05e2\u05d4 \u05dc\u05d7\u05d5\\\"\u05dc\",\"col\":4}},{\"id\":\"YoXqC_UZe2\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"\u05d3\u05d5\u05d7 \u05e8\u05d5\u05d5\u05d7/\u05d4\u05e4\u05e1\u05d3 \u05de\u05e7\u05d5\u05e6\u05e8\",\"col\":4}},{\"id\":\"bv7a2MhCl7\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"\u05dc\u05e7\u05d5\u05d7\u05d5\u05ea\",\"col\":4}},{\"id\":\"YqlC_L2CbB\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"\u05e1\u05e4\u05e7\u05d9\u05dd\",\"col\":4}}]",
+ "content": "[{\"id\":\"qJQT_3724k\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">T-Money</span>\",\"col\":12}},{\"id\":\"4yFnlD0uz4\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"\u05d4\u05d5\u05e6\u05d0\u05d5\u05ea\",\"col\":4}},{\"id\":\"y4SiplZqWm\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"\u05d4\u05e6\u05e2\u05d5\u05ea \u05de\u05d7\u05d9\u05e8\",\"col\":4}},{\"id\":\"111YVcsOgx\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"\u05d7\u05e9\u05d1\u05d5\u05e0\u05d9\u05d5\u05ea \u05e2\u05e1\u05e7\u05d4\",\"col\":4}},{\"id\":\"f194XQ-E1U\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"\u05e7\u05d1\u05dc\u05d5\u05ea\",\"col\":4}},{\"id\":\"6CtWwHmSVN\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"\u05e0\u05db\u05e1\u05d9\u05dd (\u05d3\u05d5\u05d7 \u05e4\u05d7\u05ea)\",\"col\":4}},{\"id\":\"HSWrquWt_P\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"\u05d3\u05d5\u05d7 \u05e0\u05e1\u05d9\u05e2\u05d4 \u05dc\u05d7\u05d5\\\"\u05dc\",\"col\":4}},{\"id\":\"YoXqC_UZe2\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"\u05d3\u05d5\u05d7 \u05e8\u05d5\u05d5\u05d7/\u05d4\u05e4\u05e1\u05d3 \u05de\u05e7\u05d5\u05e6\u05e8\",\"col\":4}},{\"id\":\"bv7a2MhCl7\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"\u05dc\u05e7\u05d5\u05d7\u05d5\u05ea\",\"col\":4}},{\"id\":\"YqlC_L2CbB\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"\u05e1\u05e4\u05e7\u05d9\u05dd\",\"col\":4}},{\"id\":\"sjFHcKxUAn\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"\u05e4\u05e8\u05d8\u05d9\u05dd \u05d0\u05d9\u05e9\u05d9\u05d9\u05dd\",\"col\":3}}]",
  "creation": "2024-08-05 08:15:27.414073",
  "custom_blocks": [],
  "docstatus": 0,
@@ -13,7 +14,7 @@
  "is_hidden": 0,
  "label": "T-Money",
  "links": [],
- "modified": "2024-08-05 09:00:36.323969",
+ "modified": "2026-10-16 15:31:07.656573",
  "modified_by": "Administrator",
  "module": "T-Money",
  "name": "T-Money",
@@ -28,7 +29,7 @@
    "quick_list_filter": "[]"
   },
   {
-   "document_type": "Sales",
+   "document_type": "Quotation",
    "label": "\u05d4\u05e6\u05e2\u05d5\u05ea \u05de\u05d7\u05d9\u05e8",
    "quick_list_filter": "[]"
   },
@@ -59,6 +60,13 @@
   {
    "color": "Grey",
    "doc_view": "List",
+   "label": "\u05e4\u05e8\u05d8\u05d9\u05dd \u05d0\u05d9\u05e9\u05d9\u05d9\u05dd",
+   "link_to": "Signature",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
    "label": "\u05d3\u05d5\u05d7 \u05e8\u05d5\u05d5\u05d7/\u05d4\u05e4\u05e1\u05d3 \u05de\u05e7\u05d5\u05e6\u05e8",
    "link_to": "Income Loss Report",
    "stats_filter": "[]",
@@ -81,5 +89,6 @@
    "type": "DocType"
   }
  ],
- "title": "T-Money"
+ "title": "T-Money",
+ "type": "Workspace"
 }

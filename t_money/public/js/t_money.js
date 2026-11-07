@@ -9,29 +9,72 @@ const FOOTER_HTML = `
     border-top:1px solid var(--border-color);
     background: var(--bg-color);
 "><div style="text-align:left; width: 50%; float: left;">
-Created by 
+Created by<br>
 <a href="mailto:alonbr@bitum.co.il">
 	<img src="/assets/t_money/images/a-logo.svg" alt="Alon Ben Refael"/>
 </a> </div>
     <div style="text-align:right; width: 50%; float: right;">
-    Powered by 
+    Powered by<br>
 <a href="https://frappeframework.com/homepage" target="_blank" rel="noopener">
 	<img src="/assets/frappe/images/frappe-logo.png" alt="Frappe Framework" style="height: 58px" />
     </a></div>
 </div>
 `;
 
-function frappe_ready() {
-    if (document.getElementById(FOOTER_ID)) return;
-    console.log("trying");
-    let footer = document.querySelector("footer");
-    if (footer) {
-        footer.innerHTML = FOOTER_HTML;
-    }
+function make_footer() {
+	let footer;
+	if (window.location.href.includes("view/calendar/")){
+		footer = document.querySelector("footer");
+		if (footer) {
+			footer.innerHTML = "";
+			return;
+		}
+	}
+	if (document.getElementById(FOOTER_ID)) return;
+	if (window.self !== window.top) return;
+	footer = document.querySelector("footer");
+	if (footer) {
+		footer.innerHTML = FOOTER_HTML;
+	}
 }
 
-    
+function fix_home() {
+	const home = $('use[href="#icon-home"]:visible');
+	if (home.length){
+		const a = home[0].closest('a');
+		if (a){
+			a.href = '/desk/t_money';
+			a.innerHTML='<img src="/assets/bitum_laboratory/images/T-money-logo.svg" height=20px />'
+		}
+	}
+}
+
+
+
 $(document).on("page-change", () => {
-    frappe_ready();
+	make_footer();
+	fix_home();
+	
 });
+
+
+$(document).on("click", ".explain_arrow", function () {
+	var $el = $(this);
+	if (!$el.is(":visible")) {
+		return;
+	}
+	var $target = $el.nextAll("div.explanation-section").first();
+	if ($el.data("rotated")) {
+		$el.attr("transform", "rotate(180)");
+		$el.data("rotated", false);
+	} else {
+		$el.attr("transform", "rotate(90)");
+		$el.data("rotated", true);
+	}
+	if ($target.length) {
+		$target.toggle();
+	}
+});
+
+
 
