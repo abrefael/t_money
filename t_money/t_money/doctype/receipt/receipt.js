@@ -20,13 +20,13 @@ frappe.ui.form.on('Receipt', {
 });
 
 
-frappe.ui.form.on('Receipt', {
-	onload_post_render(frm) {
-		if (frm.doc.created){
-			$('li a span:contains("⇧+Ctrl+D")').parent().hide();
-		}
-	}
-});
+//frappe.ui.form.on('Receipt', {
+//	onload_post_render(frm) {
+//		if (frm.doc.created){
+//			$('li a span:contains("⇧+Ctrl+D")').parent().hide();
+//		}
+//	}
+//});
 
 frappe.ui.form.on('Receipt', {
 	send_mail(frm) {
