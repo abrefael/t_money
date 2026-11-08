@@ -11,20 +11,13 @@
   "expense_name",
   "sum",
   "refernce",
-  "when",
   "column_break_dvrb",
-  "id_num",
   "type",
   "actual_sum",
-  "impact"
+  "impact",
+  "when"
  ],
  "fields": [
-  {
-   "fieldname": "id_num",
-   "fieldtype": "Int",
-   "label": "#",
-   "search_index": 1
-  },
   {
    "fieldname": "type",
    "fieldtype": "Select",
@@ -66,16 +59,17 @@
    "precision": "2"
   },
   {
+   "default": "0",
    "fieldname": "sum",
    "fieldtype": "Float",
-   "label": "סכום",
+   "label": "\u05e1\u05db\u05d5\u05dd",
    "precision": "2",
    "reqd": 1
   },
   {
    "fieldname": "actual_sum",
    "fieldtype": "Float",
-   "label": "סכום לדיווח",
+   "label": "\u05e1\u05db\u05d5\u05dd \u05dc\u05d3\u05d9\u05d5\u05d5\u05d7",
    "precision": "2"
   },
   {
@@ -91,11 +85,11 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-05-18 13:34:26.800977",
+ "modified": "2026-10-16 16:16:27.073432",
  "modified_by": "Administrator",
- "module":"T-Money",
+ "module": "T-Money",
  "name": "Expenses",
- "naming_rule": "Expression",
+ "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {
@@ -111,6 +105,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

@@ -1,0 +1,96 @@
+<style>{style}</style>
+<div class="doc_data">
+<div>
+<p class="head1">{company_name}</p>
+<table id="head_tbl">
+	<tr>
+		<td>
+			<table>
+				<tr><td>ע.פ.:</td><td>{op_num}</td></tr>
+				<tr><td>מספר טלפון:</td><td>{phone_num}</td></tr>
+				<tr><td>דואר אלקטרוני:</td><td>{email_add}</td></tr>
+			</table>
+		</td>
+		<td style="width:15%;"><img src="{logo_img}" style="width:80px;"></td>
+	</tr>
+</table>
+</div>
+</header>
+<div id="headding">
+<br>
+{date}
+<h1>קבלה: {q_num}</h1>
+{origin}
+</div>
+<div id="about">
+<br>
+עבור: 
+{client} <br><br>
+ע.מ/ת.ז/ע"ר: 
+{h_p}<br><br>
+</div>
+<br>
+<table style="text-align:right;">
+	<thead>
+		<tr>
+			<th style="width:20%;">שם פריט/מק"ט</th>
+			<th style="width:35%;">תיאור</th>
+			<th style="width:17%;">מחיר</th>
+			<th style="width:8%;">כמות</th>
+			<th class="two">לתשלום</th>
+		</tr>
+	</thead>
+{items_data}
+</table>
+<table class="summ"><tr><td class="one" ></td>
+		<td class="two" ></td></tr>
+</table>
+<table class="summ">
+	<tr>
+		<td class="one" >סה"כ</td>
+		<td class="two" >{total} ₪</td>
+	</tr>
+{discount_segment}
+	<tr>
+		<td class="one" >סה"כ פטור ממע"מ</td>
+		<td class="two" >{final} ₪</td>
+	</tr>
+	<tr>
+		<td class="one" >מע"מ</td>
+		<td class="two" >0.00</td>
+	</tr>
+	<tr>
+		<td class="one" >סה"כ לתשלום</td>
+		<td class="two" >{final} ₪</td>
+	</tr>
+</table><br>
+שולם באמצעות
+<table style="text-align:right;">
+	<thead>
+		<tr>
+			<th style="width:20%;">אמצעי תשלום</th>
+			<th style="width:18%;">תאריך</th>
+			<th style="width:5%;">בנק</th>
+			<th style="width:8%;">סניף</th>
+			<th style="width:16%;">מס' חשבון</th>
+			<th style="width:16%;">אסמכתא</th>
+			<th style="width:17%;">סכום (₪)</th>
+		</tr>
+	</thead>
+	<tr>
+		<td>{pay_method}</td>
+		<td>{receipt_date}</td>
+		<td>{bank}</td>
+		<td>{brench}</td>
+		<td>{account_num}</td>
+		<td>{reference}</td>
+		<td class="two">{final}</td>
+	</tr>
+</table>
+{notes}
+<br>
+<div id="signature">
+	{signature}
+	<img src="{sign_img}" style="height:50px; margin-top:-25px;">
+</div>
+</div>

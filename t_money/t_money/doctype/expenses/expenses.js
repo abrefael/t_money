@@ -14,6 +14,27 @@ var old_actual_sum = 0;
 var flag = false;
 
 frappe.ui.form.on('Expenses', {
+	impact(frm){
+		let sum = frm.doc.sum;
+		if (sum > 0){
+			frm.set_value('actual_sum', sum * frm.doc.impact);
+		}
+	}
+});
+
+
+frappe.ui.form.on('Expenses', {
+	sum(frm){
+		let impact = frm.doc.impact;
+		if (impact){
+			frm.set_value('actual_sum', frm.doc.sum * impact);
+		}
+	}
+});
+
+
+
+frappe.ui.form.on('Expenses', {
 	before_save(frm) {
 		if ((frm.is_new())||(flag)) {
 	//Every expense has a precentage aknowladged by the IRS as deductable, thus the impact on the losses calculated.

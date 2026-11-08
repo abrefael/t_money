@@ -107,7 +107,6 @@ if docker ps -a --format '{{.Names}}' | grep -Fq "$container_name"; then
 else
     create_site="yes"
 fi
-append_env "create_site" "$create_site"
 
 if [[ "$create_site" == "yes" ]]; then
     read -r -p "Please enter port number [8080]: " port_num
@@ -143,12 +142,7 @@ if [[ -f Containerfile ]]; then
 fi
 docker compose -f pwd.yml up --force-recreate -d
 service_name="${PWD##*/}-create-site-1"
-until docker ps --format '{{.Names}} {{.Status}}' \
-  | awk '{print $1,$2}' \
-  | grep -E "^${service_name} (Up|Running)"; do
-  echo "Waiting for ${service_name} to start..."
-  sleep 1
-done
+sleep 3
 sed -i '/^create_site=/d' .env
 sed -i '/^db_backup=/d' .env
 docker logs -f "$service_name"

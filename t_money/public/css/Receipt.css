@@ -1,0 +1,71 @@
+		@page {
+			size: A4;
+			margin: 40mm 10mm 25mm 10mm;
+
+			@top-center {
+					content: element(header);
+			}
+
+			@bottom-right {
+				content: "עמוד " counter(page) " מתוך " counter(pages);
+				font-size: 9pt;
+			}
+		}
+		header {
+			position: running(header);
+		}
+		header table,header td{
+		border-style:none;
+		}
+		.doc_data {
+			font-family: "DejaVu Sans", sans-serif;
+			direction: rtl;
+			text-align:right;
+			font-size: 12pt
+		}
+		th {
+		background-color:#D2D2D2;
+		}
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		td, th {
+			border: 1px solid #D2D2D2;
+			padding: 6px;
+			text-align: right;
+		}
+		.head1 {
+			font-size: 18pt;
+			font-weight:bold;
+			text-align: center;
+		}
+		h1 {
+			font-size: 22pt;
+		}
+		.one{
+			width:80%
+		}
+		.two{
+			width:20%;
+			text-align:left
+		}
+		#headding{
+			text-align:center
+		}
+		#head_tbl{
+			width:100%;
+		}
+		#about{
+			font-size: 14pt;
+			font-weight:bold;
+		}
+		#signature{
+			text-align:left;
+		}
+		thead {
+  display: table-header-group;
+}
+tr {
+  break-inside: avoid;
+}
