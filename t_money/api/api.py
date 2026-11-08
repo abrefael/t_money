@@ -50,9 +50,9 @@ def get_file_uri(uri):
 	from frappe.utils import cstr
 	if uri:
 		if "private/" in uri:
-			return cstr(frappe.local.site) + uri
+			return frappe.get_site_path() + uri
 		else:
-			return cstr(frappe.local.site) + "/public" + uri
+			return frappe.get_site_path("public") + uri
 	else:
 		return ""
 
